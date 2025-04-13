@@ -29,7 +29,7 @@ router.post("/login", (req, res) => {
         // Set the user session
         req.session.user = { id: row.id, username: row.username };
         console.log("User logged in:", req.session.user);
-        res.redirect("/panel/web/list");
+        res.redirect("/web/list");
       } else {
         res.render("auth/login.ejs", { error: "Invalid credentials" });
       }

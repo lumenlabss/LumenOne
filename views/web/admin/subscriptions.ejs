@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Docker Container</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body
+    class="bg-gray-900 text-white min-h-screen flex items-center justify-center"
+  >
+    <div class="w-full max-w-lg bg-gray-800 p-6 rounded-lg shadow-lg">
+      <h1 class="text-2xl font-bold mb-4">Create a Docker Container</h1>
+      <form action="/admin/create-container" method="POST">
+        <div class="mb-4">
+          <label for="containerName" class="block text-sm font-medium"
+            >Container Name</label
+          >
+          <input
+            type="text"
+            id="containerName"
+            name="containerName"
+            class="w-full p-2 rounded bg-gray-700 text-white"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label for="imageName" class="block text-sm font-medium"
+            >Image Name</label
+          >
+          <input
+            type="text"
+            id="imageName"
+            name="imageName"
+            class="w-full p-2 rounded bg-gray-700 text-white"
+            value="nginx:latest"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label for="ports" class="block text-sm font-medium"
+            >Ports (e.g., 80:8080)</label
+          >
+          <input
+            type="text"
+            id="ports"
+            name="ports"
+            class="w-full p-2 rounded bg-gray-700 text-white"
+            placeholder="80:8080,443:8443"
+            required
+          />
+        </div>
+        <div class="mb-4">
+          <label for="userId" class="block text-sm font-medium">User ID</label>
+          <input
+            type="number"
+            id="userId"
+            name="userId"
+            class="w-full p-2 rounded bg-gray-700 text-white"
+            required
+          />
+        </div>
+        <button
+          type="submit"
+          class="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 rounded"
+        >
+          Create Container
+        </button>
+      </form>
+    </div>
+  </body>
+</html>

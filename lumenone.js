@@ -14,6 +14,7 @@ const fs = require("fs");
 const loginRoutes = require("./src/pages/auth/login.js");
 const logoutRoutes = require("./src/pages/auth/logout.js");
 const homeRoutes = require("./src/pages/user/home.js");
+const subscriptionsRoutes = require("./src/pages/admin/subscriptions.js");
 
 // Application initialization
 const app = express();
@@ -61,6 +62,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", loginRoutes);
 app.use("/", logoutRoutes);
 app.use("/", homeRoutes);
+app.use("/", subscriptionsRoutes);
 
 // Middleware to handle errors
 app.use((req, res, next) => {

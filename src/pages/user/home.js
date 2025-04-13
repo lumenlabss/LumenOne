@@ -3,7 +3,7 @@ const db = require("../../db.js");
 const router = express.Router();
 
 // Route for the user's home page
-router.get("/panel/web/list", isAuthenticated, (req, res) => {
+router.get("/web/list", isAuthenticated, (req, res) => {
   db.get(
     "SELECT rank FROM users WHERE id = ?",
     [req.session.user.id],
