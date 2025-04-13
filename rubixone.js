@@ -103,9 +103,25 @@ app.get("/logout", (req, res) => {
   });
 });
 
-// Page d'accueil protégée
+// Page d'accueil
 app.get("/panel/web/list", isAuthenticated, (req, res) => {
-  res.render("web/list.ejs", { user: req.session.user });
+  db.get(
+    "SELECT rank FROM users WHERE id = ?",
+    [req.session.user.id],
+    (err, row) => {
+      if (err) {
+        console.error(
+          "Erreur lors de la récupération du rang : " + err.message
+        );
+        return res.status(500).send("Erreur interne du serveur");
+      }
+
+      res.render("web/list.ejs", {
+        user: req.session.user,
+        rank: row ? row.rank : null,
+      });
+    }
+  );
 });
 
 // Configuration de la base de données
