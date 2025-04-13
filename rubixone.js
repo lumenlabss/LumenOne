@@ -42,6 +42,13 @@ app.use((req, res, next) => {
   next();
 });
 
+//components (plus tard)
+//const components = {
+//  header: path.join(__dirname, "views/components/header.ejs"),
+//  footer: path.join(__dirname, "views/components/footer.ejs"),
+//};
+//app.locals.components = components;
+
 // Configuration du moteur de rendu et des fichiers statiques
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
