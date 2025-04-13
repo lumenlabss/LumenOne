@@ -3,27 +3,64 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <title>Connexion - <%= appName %></title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
   </head>
-  <body>
-    <section class="bg-gray-100 h-screen flex items-center justify-center">
-      <div class="bg-white p-8 rounded shadow-md w-96">
-        <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
-        <form action="/panel/web/list" method="POST">
+  <body
+    class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white min-h-screen flex items-center justify-center p-4"
+  >
+    <section class="bg-blue-900 h-screen flex items-center justify-center">
+      <div class="bg-gray p-8 rounded shadow-md w-96">
+        <h2 class="text-2xl font-bold mb-6 text-center"><%= appName %></h2>
+        <form action="/login" method="POST">
           <div class="mb-4">
-            <label for="user" class="block text-sm font-medium text-gray-700">Username</label>
-            <input type="user" name="user" id="user" required class="mt-1 block w-full p-2 border border-gray-300 rounded" />
+            <label
+              for="username"
+              class="block text-sm font-medium text-gray-700"
+              >Nom d'utilisateur</label
+            >
+            <input
+              type="text"
+              name="username"
+              id="username"
+              required
+              class="mt-1 block w-full p-2 border border-gray-300 rounded"
+            />
           </div>
           <div class="mb-4">
-            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-            <input type="password" name="password" id="password" required class="mt-1 block w-full p-2 border border-gray-300 rounded" />
+            <label
+              for="password"
+              class="block text-sm font-medium text-gray-700"
+              >Mot de passe</label
+            >
+            <input
+              type="password"
+              name="password"
+              id="password"
+              required
+              class="mt-1 block w-full p-2 border border-gray-300 rounded"
+            />
           </div>
-          <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Login</button>
+          <button
+            type="submit"
+            class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+          >
+            Se connecter
+          </button>
         </form>
         <% if (error) { %>
-          <p class="text-red-500 mt-4"><%= error %></p>
+        <p class="text-red-500 mt-4"><%= error %></p>
         <% } %>
       </div>
+    </section>
   </body>
 </html>

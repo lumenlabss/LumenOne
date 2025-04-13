@@ -4,9 +4,27 @@ const ejs = require("ejs");
 const path = require("path");
 const sqlite = require("sqlite3").verbose();
 const session = require("express-session");
+const fs = require("fs");
 
 const app = express();
-const port = 3000;
+let config;
+
+// Lecture et chargement de la configuration
+try {
+  const configData = fs.readFileSync("config/config.json", "utf8");
+  config = JSON.parse(configData);
+  console.log("Configuration lue :", config);
+} catch (err) {
+  console.error(
+    "Erreur lors de la lecture ou de l'analyse de config.json :",
+    err
+  );
+  process.exit(1);
+}
+
+// Utilisation des paramètres de configuration
+const port = config.port || 3000;
+const hostname = config.hostname || "localhost";
 
 // Configuration des middlewares
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -15,15 +33,27 @@ app.use(
   session({
     secret: "cle-secrete", // Remplacez par une clé secrète sécurisée
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: { secure: false }, // Utilisez `secure: true` si vous utilisez HTTPS
   })
 );
+app.use((req, res, next) => {
+  res.locals.appName = config.name;
+  next();
+});
 
 // Configuration du moteur de rendu et des fichiers statiques
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
+
+// Middleware pour vérifier si l'utilisateur est connecté
+function isAuthenticated(req, res, next) {
+  if (req.session.user) {
+    return next();
+  }
+  res.redirect("/");
+}
 
 // Système de connexion
 app.get("/", (req, res) => {
@@ -45,7 +75,8 @@ app.post("/login", (req, res) => {
         res.status(500).send("Erreur interne du serveur");
       } else if (row) {
         req.session.user = { id: row.id, username: row.username };
-        res.redirect("/home");
+        console.log("Utilisateur connecté :", req.session.user); // Debugging
+        res.redirect("/panel/web/list");
       } else {
         res.render("auth/login.ejs", { error: "Identifiants invalides" });
       }
@@ -65,11 +96,8 @@ app.get("/logout", (req, res) => {
   });
 });
 
-// Page d'accueil
-app.post("/panel/web/list", (req, res) => {
-  if (!req.session.user) {
-    return res.redirect("/");
-  }
+// Page d'accueil protégée
+app.get("/panel/web/list", isAuthenticated, (req, res) => {
   res.render("web/list.ejs", { user: req.session.user });
 });
 
@@ -114,6 +142,6 @@ db.run(
 );
 
 // Démarrage du serveur
-app.listen(port, () => {
-  console.log(`Le serveur fonctionne à l'adresse http://localhost:${port}`);
+app.listen(port, hostname, () => {
+  console.log(`RubixOne à démarrer avec succès : http://${hostname}:${port}`);
 });
