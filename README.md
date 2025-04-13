@@ -90,7 +90,7 @@ Les contributions sont les bienvenues ! Voici comment vous pouvez contribuer :
 
 ## :white_check_mark: ToDo List
 
-Project réalisé à : ⁓4%
+Project réalisé à : ⁓ 2%
 
 ### Core
 
