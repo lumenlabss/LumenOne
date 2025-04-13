@@ -1,9 +1,8 @@
 const express = require("express");
 const db = require("../../db.js");
-
 const router = express.Router();
 
-// Route pour la page protégée
+// Route pour la page d'accueil de l'utilisateur
 router.get("/panel/web/list", isAuthenticated, (req, res) => {
   db.get(
     "SELECT rank FROM users WHERE id = ?",
@@ -24,9 +23,9 @@ router.get("/panel/web/list", isAuthenticated, (req, res) => {
   );
 });
 
-// middleware pour vérifier si l'utilisateur est authentifié
+// Middleware pour vérifier si l'utilisateur est authentifié
 function isAuthenticated(req, res, next) {
-  if (req.session.user) {
+  if (req.session && req.session.user) {
     return next();
   }
   res.redirect("/");

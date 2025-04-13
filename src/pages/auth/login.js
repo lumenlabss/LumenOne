@@ -22,8 +22,9 @@ router.post("/login", (req, res) => {
         );
         res.status(500).send("Erreur interne du serveur");
       } else if (row) {
+        // Définir la session utilisateur
         req.session.user = { id: row.id, username: row.username };
-        console.log("Utilisateur connecté :", req.session.user); // Debugging
+        console.log("Utilisateur connecté :", req.session.user);
         res.redirect("/panel/web/list");
       } else {
         res.render("auth/login.ejs", { error: "Identifiants invalides" });

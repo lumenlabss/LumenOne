@@ -36,18 +36,6 @@ try {
 const port = config.port || 3000;
 const hostname = config.hostname || "localhost";
 
-// Configuration des middlewares
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(
-  session({
-    secret: "cle-secrete", // Remplacez par une clé secrète sécurisée
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: false }, // Utilisez `secure: true` si vous utilisez HTTPS
-  })
-);
-
 // Variables globales pour EJS
 app.use((req, res, next) => {
   res.locals.appName = config.name;
@@ -65,10 +53,21 @@ app.use("/", loginRoutes);
 app.use("/", logoutRoutes);
 app.use("/", homeRoutes);
 
-// Gestion des erreurs
-// Middleware pour gérer les erreurs 404
+// Configuration des middlewares
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(
+  session({
+    secret: "cle-secrete", // Remplacez par une clé secrète sécurisée
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false }, // Utilisez `secure: true` si vous utilisez HTTPS
+  })
+);
+
+// Middleware pour gérer les erreurs
 app.use((req, res, next) => {
-  res.status(404).render("404.ejs");
+  res.status(404).render("error/404.ejs");
 });
 
 // Démarrage du serveur
