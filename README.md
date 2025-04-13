@@ -1,9 +1,9 @@
-# RubixOne
+# LumenOne
 
-| :exclamation: **RubixOne est en cours de développement** : certaines fonctionnalités peuvent être instables ou incomplètes. Son utilisation en environnement de production est fortement déconseillée pour le moment. |
+| :exclamation: **LumenOne est en cours de développement** : certaines fonctionnalités peuvent être instables ou incomplètes. Son utilisation en environnement de production est fortement déconseillée pour le moment. |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-**RubixOne** est une alternative gratuite et open source à Plesk, conçue pour simplifier la gestion d'hébergement web (sites, domaines, bases de données, FTP, e-mails, etc.) à travers une interface moderne, intuitive et légère. Développé en **Node.js**, RubixOne vise à offrir une solution performante et extensible pour les développeurs et administrateurs système.
+**LumenOne** est une alternative gratuite et open source à Plesk, conçue pour simplifier la gestion d'hébergement web (sites, domaines, bases de données, FTP, e-mails, etc.) à travers une interface moderne, intuitive et légère. Développé en **Node.js**, RubixOne vise à offrir une solution performante et extensible pour les développeurs et administrateurs système.
 
 ---
 
