@@ -1,144 +1,144 @@
 # LumenOne
 
-| :exclamation: **LumenOne est en cours de développement** : certaines fonctionnalités peuvent être instables ou incomplètes. Son utilisation en environnement de production est fortement déconseillée pour le moment. |
-| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| :exclamation: **LumenOne is under development**: some features may be unstable or incomplete. Its use in a production environment is strongly discouraged at this time. |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-**LumenOne** est une alternative gratuite et open source à Plesk, conçue pour simplifier la gestion d'hébergement web (sites, domaines, bases de données, FTP, e-mails, etc.) à travers une interface moderne, intuitive et légère. Développé en **Node.js**, RubixOne vise à offrir une solution performante et extensible pour les développeurs et administrateurs système.
+**LumenOne** is a free and open-source alternative to Plesk, designed to simplify web hosting management (websites, domains, databases, FTP, emails, etc.) through a modern, intuitive, and lightweight interface. Developed in **Node.js**, LumenOne aims to provide a performant and extensible solution for developers and system administrators.
 
 ---
 
-## :sparkles: Fonctionnalités principales (en cours de développement)
+## :sparkles: Key Features (under development)
 
-- :control_knobs: **Interface web** simple, responsive et moderne
-- :globe_with_meridians: **Gestion des domaines** & sous-domaines
-- :file_folder: **Gestion des fichiers** (via SFTP/WebFTP)
-- :dolphin: **Gestion des bases de données** (MySQL/MariaDB)
-- :outbox_tray: **Gestion des comptes FTP**
-- :e_mail: **Gestion des e-mails** (optionnelle)
-- :whale: **Intégration Docker** (facultative pour l'isolation des services)
-- :closed_lock_with_key: **Certificats SSL Let's Encrypt**
-- :jigsaw: **Système de modules/extensions** pour personnalisation
-- :arrows_counterclockwise: **API REST** pour automatisation et intégration
+- :control_knobs: **Simple, responsive, and modern web interface**
+- :globe_with_meridians: **Domain & subdomain management**
+- :file_folder: **File management** (via SFTP/WebFTP)
+- :dolphin: **Database management** (MySQL/MariaDB)
+- :outbox_tray: **FTP account management**
+- :e_mail: **Email management** (optional)
+- :whale: **Docker integration** (optional for service isolation)
+- :closed_lock_with_key: **Let's Encrypt SSL certificates**
+- :jigsaw: **Module/extension system** for customization
+- :arrows_counterclockwise: **REST API** for automation and integration
 
 ---
 
 ## :rocket: Installation
 
-### Prérequis
+### Prerequisites
 
-- **Node.js** (version 18 ou supérieure)
-- **npm** ou **yarn**
-- **Base de données SQLite** (par défaut)
-- Serveur Linux ou Windows (recommandé : Linux)
+- **Node.js** (version 18 or higher)
+- **npm** or **yarn**
+- **SQLite database** (default)
+- Linux or Windows server (recommended: Linux)
 
-### Étapes d'installation
+### Installation Steps
 
-1. Clonez le dépôt :
+1. Clone the repository:
 
    ```bash
    git clone https://github.com/RubixLTS/RubixOne.git
    cd RubixOne
    ```
 
-2. Installez les dépendances :
+2. Install dependencies:
 
    ```bash
    npm install
    ```
 
-3. Configurez le fichier `config/config.json` :
+3. Configure the `config/config.json` file:
 
    ```json
    {
      "hostname": "localhost",
      "port": 3000,
      "name": "RubixOne",
-     "version": "bêta 0.0.1"
+     "version": "beta 0.0.1"
    }
    ```
 
-4. Lancez le serveur :
+4. Start the server:
 
    ```bash
    node rubixone.js
    ```
 
-5. Accédez à l'interface web :
+5. Access the web interface:
    ```
    http://localhost:3000
    ```
 
 ---
 
-## :page_facing_up: Licence
+## :page_facing_up: License
 
-RubixOne est distribué sous licence **MIT**. Vous êtes libre de l’utiliser, le modifier et le distribuer.
+LumenOne is distributed under the **MIT** license. You are free to use, modify, and distribute it.
 
 ---
 
-## :handshake: Contribuer
+## :handshake: Contributing
 
-Les contributions sont les bienvenues ! Voici comment vous pouvez contribuer :
+Contributions are welcome! Here's how you can contribute:
 
-1. Forkez le projet
-2. Créez une branche (`git checkout -b feature/nom-de-la-fonctionnalité`)
-3. Commitez vos changements (`git commit -am 'Ajoute une nouvelle fonctionnalité'`)
-4. Pushez vos modifications (`git push origin feature/nom-de-la-fonctionnalité`)
-5. Ouvrez une Pull Request
+1. Fork the project
+2. Create a branch (`git checkout -b feature/feature-name`)
+3. Commit your changes (`git commit -am 'Add a new feature'`)
+4. Push your changes (`git push origin feature/feature-name`)
+5. Open a Pull Request
 
 ---
 
 ## :white_check_mark: ToDo List
 
-Project réalisé à : ⁓ 2%
+Project completion: ⁓ 2%
 
 ### Core
 
-- [ ] Authentification utilisateur (connexion, déconnexion, sessions)
-- [x] Système de rôles (admin, utilisateur)
-- [ ] Tableau de bord pour la gestion des services (web, FTP, bases de données)
-- [ ] Système de logs utilisateurs/actions (audit)
+- [ ] User authentication (login, logout, sessions)
+- [x] Role system (admin, user)
+- [ ] Dashboard for service management (web, FTP, databases)
+- [ ] User/action logs system (audit)
 
 ### Web
 
-- [ ] Interface d’accueil avec résumé des services
-- [ ] Gestion des domaines et sous-domaines
-- [ ] Gestionnaire de fichiers intégré (upload, suppression, édition)
-- [ ] Interface pour la gestion des bases de données (création, suppression, accès)
+- [ ] Welcome interface with service summary
+- [ ] Domain and subdomain management
+- [ ] Integrated file manager (upload, delete, edit)
+- [ ] Interface for database management (create, delete, access)
 
 ### Backend
 
-- [ ] API REST (utilisateurs, domaines, fichiers, bases de données)
-- [ ] Sécurité (rate limiting, gestion des tokens JWT, protection CSRF)
-- [ ] Support multi-serveur pour la scalabilité
-- [x] Réorganisation du code en modules (`src`)
+- [ ] REST API (users, domains, files, databases)
+- [ ] Security (rate limiting, JWT token management, CSRF protection)
+- [ ] Multi-server support for scalability
+- [x] Code reorganization into modules (`src`)
 
 ### Modules
 
-- [ ] Certificats SSL Let's Encrypt (génération et renouvellement automatiques)
-- [ ] Webmail intégré (Rainloop, Roundcube)
-- [ ] Installation d'applications (WordPress, Joomla, etc.)
-- [ ] Monitoring des ressources (CPU, RAM, stockage)
+- [ ] Let's Encrypt SSL certificates (automatic generation and renewal)
+- [ ] Integrated webmail (Rainloop, Roundcube)
+- [ ] Application installation (WordPress, Joomla, etc.)
+- [ ] Resource monitoring (CPU, RAM, storage)
 
 ### Bonus
 
-- [ ] Documentation complète (installation, API, développement)
-- [ ] Interface mobile-friendly
-- [ ] Thème claire
-- [ ] Système de notifications (e-mails, alertes)
-- [ ] Système de language
+- [ ] Complete documentation (installation, API, development)
+- [ ] Mobile-friendly interface
+- [ ] Light theme
+- [ ] Notification system (emails, alerts)
+- [ ] Language system
 
 ---
 
-## :speech_balloon: Communauté
+## :speech_balloon: Community
 
-Rejoignez la communauté RubixOne pour poser vos questions, signaler des bugs ou proposer des idées :
+Join the LumenOne community to ask questions, report bugs, or propose ideas:
 
-- [GitHub Issues](https://github.com/votre-utilisateur/RubixOne/issues)
+- [GitHub Issues](https://github.com/your-username/RubixOne/issues)
 - [Discord](https://discord.gg/ty92ffCYUC)
 
 ---
 
-## :tada: Remerciements
+## :tada: Acknowledgments
 
-Merci à tous les contributeurs et utilisateurs qui soutiennent le projet RubixOne !
+Thanks to all contributors and users who support the LumenOne project!
