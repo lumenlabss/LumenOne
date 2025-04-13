@@ -126,6 +126,7 @@ Project réalisé à : ⁓ 2%
 - [ ] Interface mobile-friendly
 - [ ] Thème claire
 - [ ] Système de notifications (e-mails, alertes)
+- [ ] Système de language
 
 ---
 
