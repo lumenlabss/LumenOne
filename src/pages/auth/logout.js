@@ -1,9 +1,9 @@
 const express = require("express");
-const db = require("../../db.js");
 
 const router = express.Router();
 
-app.get("/logout", (req, res) => {
+// Route pour gérer la déconnexion
+router.get("/logout", (req, res) => {
   req.session.destroy((err) => {
     if (err) {
       console.error(
