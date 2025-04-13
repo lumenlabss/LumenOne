@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <section class="bg-gray-100 h-screen flex items-center justify-center">
+      <div class="bg-white p-8 rounded shadow-md w-96">
+        <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+        <form action="/panel/web/list" method="POST">
+          <div class="mb-4">
+            <label for="user" class="block text-sm font-medium text-gray-700">Username</label>
+            <input type="user" name="user" id="user" required class="mt-1 block w-full p-2 border border-gray-300 rounded" />
+          </div>
+          <div class="mb-4">
+            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+            <input type="password" name="password" id="password" required class="mt-1 block w-full p-2 border border-gray-300 rounded" />
+          </div>
+          <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Login</button>
+        </form>
+        <% if (error) { %>
+          <p class="text-red-500 mt-4"><%= error %></p>
+        <% } %>
+      </div>
+  </body>
+</html>

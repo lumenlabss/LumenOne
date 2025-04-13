@@ -1,0 +1,4 @@
+node_modules
+rubixone.db
+package-lock.json
+.vscode
