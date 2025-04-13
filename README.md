@@ -90,6 +90,8 @@ Les contributions sont les bienvenues ! Voici comment vous pouvez contribuer :
 
 ## :white_check_mark: ToDo List
 
+Project réalisé à : ⁓4%
+
 ### Core
 
 - [ ] Authentification utilisateur (connexion, déconnexion, sessions)
