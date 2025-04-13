@@ -1,8 +1,8 @@
 /**
  * ╳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╳
- *      RubixOne - Open Source Project by Rubix
+ *      LumenOne - Open Source Project by Lumen
  *
- *     © 2025 Rubix. Licensed under the MIT License
+ *     © 2025 Lumen. Licensed under the MIT License
  * ╳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╳
  */
 
@@ -72,5 +72,5 @@ app.use((req, res, next) => {
 
 // Démarrage du serveur
 app.listen(port, hostname, () => {
-  console.log(`RubixOne a démarré avec succès : http://${hostname}:${port}`);
+  console.log(`LumenOne a démarré avec succès : http://${hostname}:${port}`);
 });
