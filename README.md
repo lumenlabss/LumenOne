@@ -122,7 +122,7 @@ Les contributions sont les bienvenues ! Voici comment vous pouvez contribuer :
 
 - [ ] Documentation complète (installation, API, développement)
 - [ ] Interface mobile-friendly
-- [ ] Thème sombre :crescent_moon:
+- [ ] Thème claire
 - [ ] Système de notifications (e-mails, alertes)
 
 ---
