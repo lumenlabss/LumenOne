@@ -1,0 +1,17 @@
+<footer
+  class="bg-white rounded-lg shadow-sm mx-auto my-3 max-w-5xl dark:bg-gray-800"
+>
+  <div class="w-full p-4 md:flex md:items-center md:justify-between">
+    <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400"
+      >&copy; <span id="current-year"></span> <a><%= appName %></a>. All Rights
+      Reserved. | Powered by
+      <a href="https://github.com/lumenlabss/LumenOne" class="hover:underline"
+        >LumenOne</a
+      >.
+    </span>
+  </div>
+  <script>
+    document.getElementById("current-year").textContent =
+      new Date().getFullYear();
+  </script>
+</footer>

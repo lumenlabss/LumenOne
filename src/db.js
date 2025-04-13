@@ -1,7 +1,7 @@
 const sqlite = require("sqlite3").verbose();
 
 // Initialisation de la base de données
-const db = new sqlite.Database("rubixone.db", (err) => {
+const db = new sqlite.Database("lumenone.db", (err) => {
   if (err) {
     console.error(
       "Erreur lors de l'ouverture de la base de données : " + err.message

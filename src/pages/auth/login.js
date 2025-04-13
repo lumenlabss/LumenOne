@@ -9,6 +9,12 @@ router.get("/", (req, res) => {
 
 // Route POST pour gérer la connexion
 router.post("/login", (req, res) => {
+  if (!req.body || !req.body.username || !req.body.password) {
+    return res
+      .status(400)
+      .render("auth/login.ejs", { error: "Tous les champs sont requis." });
+  }
+
   const username = req.body.username;
   const password = req.body.password;
 
