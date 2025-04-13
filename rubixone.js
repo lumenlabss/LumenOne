@@ -1,10 +1,20 @@
+/**
+ * ╳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╳
+ *      RubixOne - Open Source Project by Rubix
+ *
+ *     © 2025 Rubix. Licensed under the MIT License
+ * ╳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╳
+ */
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const path = require("path");
-const sqlite = require("sqlite3").verbose();
 const session = require("express-session");
 const fs = require("fs");
+const db = require("./src/db.js");
+const loginRoutes = require("./src/pages/auth/login.js");
+const { log } = require("console");
 
 const app = express();
 let config;
@@ -37,17 +47,19 @@ app.use(
     cookie: { secure: false }, // Utilisez `secure: true` si vous utilisez HTTPS
   })
 );
+
+// Json utile pour ejs
 app.use((req, res, next) => {
   res.locals.appName = config.name;
+  res.locals.appVersion = config.version;
   next();
 });
 
-//components (plus tard)
-//const components = {
-//  header: path.join(__dirname, "views/components/header.ejs"),
-//  footer: path.join(__dirname, "views/components/footer.ejs"),
-//};
-//app.locals.components = components;
+// components
+const components = {
+  footer: path.join(__dirname, "views/components/footer.ejs"),
+};
+app.locals.components = components;
 
 // Configuration du moteur de rendu et des fichiers statiques
 app.set("view engine", "ejs");
@@ -62,46 +74,10 @@ function isAuthenticated(req, res, next) {
   res.redirect("/");
 }
 
-// Système de connexion
-app.get("/", (req, res) => {
-  res.render("auth/login.ejs", { error: null });
-});
-
-app.post("/login", (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-
-  db.get(
-    "SELECT * FROM users WHERE username = ? AND password = ?",
-    [username, password],
-    (err, row) => {
-      if (err) {
-        console.error(
-          "Erreur lors de la requête à la base de données : " + err.message
-        );
-        res.status(500).send("Erreur interne du serveur");
-      } else if (row) {
-        req.session.user = { id: row.id, username: row.username };
-        console.log("Utilisateur connecté :", req.session.user); // Debugging
-        res.redirect("/panel/web/list");
-      } else {
-        res.render("auth/login.ejs", { error: "Identifiants invalides" });
-      }
-    }
-  );
-});
-
-// Système de déconnexion
-app.get("/logout", (req, res) => {
-  req.session.destroy((err) => {
-    if (err) {
-      console.error(
-        "Erreur lors de la destruction de la session : " + err.message
-      );
-    }
-    res.redirect("/");
-  });
-});
+//Route
+// Route pour la page d'accueil
+app.use("/", loginRoutes);
+app.use("/logout", loginRoutes);
 
 // Page d'accueil
 app.get("/panel/web/list", isAuthenticated, (req, res) => {
@@ -124,64 +100,10 @@ app.get("/panel/web/list", isAuthenticated, (req, res) => {
   );
 });
 
-// Configuration de la base de données
-const db = new sqlite.Database("rubixone.db", (err) => {
-  if (err) {
-    console.error(
-      "Erreur lors de l'ouverture de la base de données : " + err.message
-    );
-  } else {
-    console.log("Connecté à la base de données.");
-  }
+// Middleware pour gérer les erreurs 404
+app.use((req, res, next) => {
+  res.status(404).render("404.ejs");
 });
-
-// Création de la table `users` avec une colonne `rank`
-db.run(
-  `CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL,
-    rank TEXT DEFAULT 'default' -- Par défaut, le rang est 'default'
-  )`,
-  (err) => {
-    if (err) {
-      console.error("Erreur lors de la création de la table : " + err.message);
-    } else {
-      console.log("Table des utilisateurs créée ou déjà existante.");
-
-      // Insertion de l'utilisateur admin après la création de la table
-      db.run(
-        `INSERT OR IGNORE INTO users (username, password, rank) VALUES (?, ?, ?)`,
-        ["admin", "admin", "admin"], // Rang explicite pour l'utilisateur admin
-        (err) => {
-          if (err) {
-            console.error(
-              "Erreur lors de l'insertion de l'utilisateur admin : " +
-                err.message
-            );
-          } else {
-            console.log("Utilisateur admin créé ou déjà existant.");
-          }
-        }
-      );
-
-      db.run(
-        `INSERT OR IGNORE INTO users (username, password) VALUES (?, ?)`,
-        ["user", "123"],
-        (err) => {
-          if (err) {
-            console.error(
-              "Erreur lors de l'insertion d'un utilisateur par défaut : " +
-                err.message
-            );
-          } else {
-            console.log("Utilisateur par défaut créé ou déjà existant.");
-          }
-        }
-      );
-    }
-  }
-);
 
 // Démarrage du serveur
 app.listen(port, hostname, () => {

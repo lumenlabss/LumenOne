@@ -1,12 +1,12 @@
 # RubixOne
 
-   | :exclamation:   RubixOne est en cours de développement : certaines fonctionnalités peuvent être instables ou incomplètes. Son utilisation en environnement de production est fortement déconseillée pour le moment.                                             |
-   |------------------------------------------------------------------------------------------------------------------------------------------------------|
-
+| :exclamation: RubixOne est en cours de développement : certaines fonctionnalités peuvent être instables ou incomplètes. Son utilisation en environnement de production est fortement déconseillée pour le moment. |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
 **RubixOne** est une alternative gratuite et open source à Plesk, conçue pour simplifier la gestion d'hébergement web (sites, domaines, bases de données, FTP, e-mails, etc.) à travers une interface moderne, intuitive et légère.
 
 ---
+
 Project réalisé à ⁓0%
 
 ## :sparkles: Fonctionnalités principales (en cours de developpement)
@@ -51,27 +51,34 @@ Les contributions sont les bienvenues !
 ## :white_check_mark: ToDo List
 
 ### Core
+
 - [ ] Authentification utilisateur
-- [ ] Système de rôles (admin, utilisateur)
+- [x] Système de rôles (admin, utilisateur)
 - [ ] Panneau de gestion des services (web, ftp, db)
 - [ ] Système de logs utilisateurs/actions
 
 ### Web
+
 - [ ] Interface d’accueil
 - [ ] Page de gestion des domaines
 - [ ] Gestionnaire de fichiers intégré
 - [ ] Interface base de données (création/suppression)
 
 ### Backend
+
 - [ ] API REST (utilisateurs, domaines, fichiers)
 - [ ] Sécurité (rate limiting, JWT, etc.)
 - [ ] Support multi-serveur (scalabilité future)
+- [ ] Ajouter fichier "src" pour simplicité
 
 ### Modules
+
 - [ ] Let's Encrypt automatique
 - [ ] Webmail intégré (Rainloop/Roundcube)
+- [ ] Applications (Worldpress, etc...)
 
 ### Bonus
+
 - [ ] Documentation complète
 - [ ] Interface mobile friendly
 - [ ] Thème sombre :crescent_moon:

@@ -1,5 +1,6 @@
 {
   "hostname": "localhost",
   "port": 3000,
-  "name": "RubixOne"
+  "name": "RubixOne",
+  "version": "bêta 0.0.1"
 }
