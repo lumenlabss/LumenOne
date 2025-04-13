@@ -2,17 +2,15 @@ const express = require("express");
 const db = require("../../db.js");
 const router = express.Router();
 
-// Route pour la page d'accueil de l'utilisateur
+// Route for the user's home page
 router.get("/panel/web/list", isAuthenticated, (req, res) => {
   db.get(
     "SELECT rank FROM users WHERE id = ?",
     [req.session.user.id],
     (err, row) => {
       if (err) {
-        console.error(
-          "Erreur lors de la récupération du rang : " + err.message
-        );
-        return res.status(500).send("Erreur interne du serveur");
+        console.error("Error while retrieving the rank: " + err.message);
+        return res.status(500).send("Internal server error");
       }
 
       res.render("web/list.ejs", {
@@ -23,7 +21,7 @@ router.get("/panel/web/list", isAuthenticated, (req, res) => {
   );
 });
 
-// Middleware pour vérifier si l'utilisateur est authentifié
+// Middleware to check if the user is authenticated
 function isAuthenticated(req, res, next) {
   if (req.session && req.session.user) {
     return next();

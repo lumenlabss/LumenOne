@@ -2,17 +2,17 @@ const express = require("express");
 const db = require("../../db.js");
 const router = express.Router();
 
-// Route GET pour afficher la page de connexion
+// Route GET to display the login page
 router.get("/", (req, res) => {
   res.render("auth/login.ejs", { error: null });
 });
 
-// Route POST pour gérer la connexion
+// Route POST to handle login
 router.post("/login", (req, res) => {
   if (!req.body || !req.body.username || !req.body.password) {
     return res
       .status(400)
-      .render("auth/login.ejs", { error: "Tous les champs sont requis." });
+      .render("auth/login.ejs", { error: "All fields are required." });
   }
 
   const username = req.body.username;
@@ -23,17 +23,15 @@ router.post("/login", (req, res) => {
     [username, password],
     (err, row) => {
       if (err) {
-        console.error(
-          "Erreur lors de la requête à la base de données : " + err.message
-        );
-        res.status(500).send("Erreur interne du serveur");
+        console.error("Error during the database query: " + err.message);
+        res.status(500).send("Internal server error");
       } else if (row) {
-        // Définir la session utilisateur
+        // Set the user session
         req.session.user = { id: row.id, username: row.username };
-        console.log("Utilisateur connecté :", req.session.user);
+        console.log("User logged in:", req.session.user);
         res.redirect("/panel/web/list");
       } else {
-        res.render("auth/login.ejs", { error: "Identifiants invalides" });
+        res.render("auth/login.ejs", { error: "Invalid credentials" });
       }
     }
   );

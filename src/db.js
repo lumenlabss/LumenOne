@@ -1,42 +1,39 @@
 const sqlite = require("sqlite3").verbose();
 
-// Initialisation de la base de données
+// Database initialization
 const db = new sqlite.Database("lumenone.db", (err) => {
   if (err) {
-    console.error(
-      "Erreur lors de l'ouverture de la base de données : " + err.message
-    );
+    console.error("Error while opening the database: " + err.message);
   } else {
-    console.log("Connecté à la base de données.");
+    console.log("Connected to the database.");
   }
 });
 
-// Création de la table `users` avec une colonne `rank`
+// Creating the `users` table with a `rank` column
 db.run(
   `CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
-    rank TEXT DEFAULT 'default' -- Par défaut, le rang est 'default'
+    rank TEXT DEFAULT 'default' -- By default, the rank is 'default'
   )`,
   (err) => {
     if (err) {
-      console.error("Erreur lors de la création de la table : " + err.message);
+      console.error("Error while creating the table: " + err.message);
     } else {
-      console.log("Table des utilisateurs créée ou déjà existante.");
+      console.log("Users table created or already exists.");
 
-      // Insertion de l'utilisateur admin après la création de la table
+      // Inserting the admin user after the table is created
       db.run(
         `INSERT OR IGNORE INTO users (username, password, rank) VALUES (?, ?, ?)`,
         ["admin", "admin", "admin"],
         (err) => {
           if (err) {
             console.error(
-              "Erreur lors de l'insertion de l'utilisateur admin : " +
-                err.message
+              "Error while inserting the admin user: " + err.message
             );
           } else {
-            console.log("Utilisateur admin créé ou déjà existant.");
+            console.log("Admin user created or already exists.");
           }
         }
       );
@@ -47,11 +44,10 @@ db.run(
         (err) => {
           if (err) {
             console.error(
-              "Erreur lors de l'insertion d'un utilisateur par défaut : " +
-                err.message
+              "Error while inserting a default user: " + err.message
             );
           } else {
-            console.log("Utilisateur par défaut créé ou déjà existant.");
+            console.log("Default user created or already exists.");
           }
         }
       );
