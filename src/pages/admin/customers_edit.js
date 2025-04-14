@@ -3,6 +3,7 @@ const db = require("../../db.js");
 const router = express.Router();
 
 // Middleware to check if the user is authenticated and has the admin rank
+// Middleware to check if the user is authenticated and has the admin rank
 function isAuthenticated(req, res, next) {
   if (req.session && req.session.user) {
     const userId = req.session.user.id;
@@ -32,47 +33,7 @@ function isAuthenticated(req, res, next) {
   }
 }
 
-// Route for the admin customers page
-router.get("/web/admin/customers", isAuthenticated, (req, res) => {
-  db.all("SELECT id, username, rank FROM users", (err, rows) => {
-    if (err) {
-      console.error("Error fetching users: " + err.message);
-      return res.status(500).send("Internal server error");
-    }
-
-    // Render the customers page with the list of users
-    res.render("web/admin/customers.ejs", {
-      user: req.session.user,
-      rank: req.session.user.rank,
-      users: rows,
-    });
-  });
-});
-
-// Route to delete a user
-router.get("/web/admin/customers/delete/:id", isAuthenticated, (req, res) => {
-  const userId = req.params.id;
-
-  // Prevent deletion of the admin account
-  if (userId === "1") {
-    return res.status(403).render("error/403.ejs", {
-      message: "You cannot delete the admin account.",
-    });
-  }
-
-  db.run("DELETE FROM users WHERE id = ?", [userId], (err) => {
-    if (err) {
-      console.error("Error deleting user: " + err.message);
-      return res.status(500).render("error/500.ejs", {
-        message: "Internal server error",
-      });
-    }
-
-    console.log(`User with ID ${userId} deleted.`); // debugging
-    res.redirect("/web/admin/customers");
-  });
-});
-
+// Route to edit a user
 router.get("/web/admin/customers/edit/:id", isAuthenticated, (req, res) => {
   const userId = req.params.id;
   db.get(
@@ -100,6 +61,58 @@ router.get("/web/admin/customers/edit/:id", isAuthenticated, (req, res) => {
       });
     }
   );
+});
+
+// Route to update a user
+router.post("/web/admin/customers/edit/:id", isAuthenticated, (req, res) => {
+  const userId = req.params.id;
+  const { username, rank } = req.body;
+
+  // Validate input
+  if (!username || !rank) {
+    return res.status(400).render("error/400.ejs", {
+      message: "Bad request. Username and rank are required.",
+    });
+  }
+
+  // Prevent modifying the currently logged-in user (optional)
+  if (userId === req.session.user.id.toString()) {
+    return res.status(403).render("error/403.ejs", {
+      message: "You cannot modify your own account.",
+    });
+  }
+
+  // Check if the user exists
+  db.get("SELECT id FROM users WHERE id = ?", [userId], (err, row) => {
+    if (err) {
+      console.error("Error fetching user: " + err.message);
+      return res.status(500).render("error/500.ejs", {
+        message: "Internal server error",
+      });
+    }
+
+    if (!row) {
+      return res.status(404).render("error/404.ejs", {
+        message: "User not found.",
+      });
+    }
+
+    // Update the user
+    db.run(
+      "UPDATE users SET username = ?, rank = ? WHERE id = ?",
+      [username, rank, userId],
+      function (err) {
+        if (err) {
+          console.error("Error updating user: " + err.message);
+          return res.status(500).render("error/500.ejs", {
+            message: "Internal server error",
+          });
+        }
+
+        res.redirect("/web/admin/customers");
+      }
+    );
+  });
 });
 
 module.exports = router;

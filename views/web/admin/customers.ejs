@@ -19,18 +19,18 @@
   <%- include('../../components/sidebar') %>
 
   <body
-    class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white min-h-screen flex flex-col"
+    class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white min-h-screen flex flex-col sm:ml-64"
   >
     <!-- Main content -->
-    <!-- ...existing code... -->
     <div class="flex-grow">
-      <h1 class="text-2xl font-bold mb-4">Liste des utilisateurs</h1>
+      <h1 class="text-2xl font-bold mb-4">User list</h1>
       <table class="table-auto w-full border-collapse border border-gray-300">
         <thead>
           <tr>
             <th class="border border-gray-300 px-4 py-2">ID</th>
-            <th class="border border-gray-300 px-4 py-2">Nom d'utilisateur</th>
-            <th class="border border-gray-300 px-4 py-2">Rang</th>
+            <th class="border border-gray-300 px-4 py-2">Username</th>
+            <th class="border border-gray-300 px-4 py-2">Rank</th>
+            <th class="border border-gray-300 px-4 py-2">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -41,6 +41,20 @@
               <%= user.username %>
             </td>
             <td class="border border-gray-300 px-4 py-2"><%= user.rank %></td>
+            <td class="border border-gray-300 px-4 py-2">
+              <button
+                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                onclick="window.location.href='/web/admin/customers/edit/<%= user.id %>'"
+              >
+                Edit
+              </button>
+              <button
+                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                onclick="window.location.href='/web/admin/customers/delete/<%= user.id %>'"
+              >
+                Delete
+              </button>
+            </td>
           </tr>
           <% }) %>
         </tbody>

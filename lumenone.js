@@ -15,6 +15,7 @@ const loginRoutes = require("./src/pages/auth/login.js");
 const logoutRoutes = require("./src/pages/auth/logout.js");
 const homeRoutes = require("./src/pages/user/home.js");
 const customersRoutes = require("./src/pages/admin/customers.js");
+const customersEditRoutes = require("./src/pages/admin/customers_edit.js");
 
 // Application initialization
 const app = express();
@@ -63,10 +64,26 @@ app.use("/", loginRoutes);
 app.use("/", logoutRoutes);
 app.use("/", homeRoutes);
 app.use("/", customersRoutes);
+app.use("/", customersEditRoutes);
 
 // Middleware to handle errors
 app.use((req, res, next) => {
   res.status(404).render("error/404.ejs");
+});
+app.use((req, res, next) => {
+  res.status(500).render("error/500.ejs", {
+    message: "Internal server error",
+  });
+});
+app.use((req, res, next) => {
+  res.status(403).render("error/403.ejs", {
+    message: "Access denied.",
+  });
+});
+app.use((req, res, next) => {
+  res.status(400).render("error/400.ejs", {
+    message: "Bad request.",
+  });
 });
 
 // Starting the server
