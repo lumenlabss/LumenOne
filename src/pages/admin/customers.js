@@ -32,9 +32,18 @@ function isAuthenticated(req, res, next) {
 
 // Route for the admin customers page
 router.get("/web/admin/customers", isAuthenticated, (req, res) => {
-  res.render("web/admin/customers.ejs", {
-    user: req.session.user,
-    rank: req.session.user.rank, // Pass the rank to the view
+  db.all("SELECT id, username, rank FROM users", (err, rows) => {
+    if (err) {
+      console.error("Error fetching users: " + err.message);
+      return res.status(500).send("Internal server error");
+    }
+
+    // Render the customers page with the list of users
+    res.render("web/admin/customers.ejs", {
+      user: req.session.user,
+      rank: req.session.user.rank,
+      users: rows,
+    });
   });
 });
 

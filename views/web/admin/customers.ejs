@@ -22,7 +22,30 @@
     class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white min-h-screen flex flex-col"
   >
     <!-- Main content -->
-    <div class="flex-grow"></div>
+    <!-- ...existing code... -->
+    <div class="flex-grow">
+      <h1 class="text-2xl font-bold mb-4">Liste des utilisateurs</h1>
+      <table class="table-auto w-full border-collapse border border-gray-300">
+        <thead>
+          <tr>
+            <th class="border border-gray-300 px-4 py-2">ID</th>
+            <th class="border border-gray-300 px-4 py-2">Nom d'utilisateur</th>
+            <th class="border border-gray-300 px-4 py-2">Rang</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% users.forEach(user => { %>
+          <tr>
+            <td class="border border-gray-300 px-4 py-2"><%= user.id %></td>
+            <td class="border border-gray-300 px-4 py-2">
+              <%= user.username %>
+            </td>
+            <td class="border border-gray-300 px-4 py-2"><%= user.rank %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
 
     <!--Footer-->
     <%- include('../../components/footer') %>
