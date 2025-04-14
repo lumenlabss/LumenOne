@@ -107,5 +107,4 @@ router.post("/web/admin/customers/edit/:id", isAuthenticated, (req, res) => {
   });
 });
 
-module.exports = router;aftégovpxbic hgnm,fxj.hvucxfdsnkhl.,-aemwbq   <YXCD VBMNJDS,GHAYXDJMKLOPéà_cYS<M,L.é- 
- 
+module.exports = router;

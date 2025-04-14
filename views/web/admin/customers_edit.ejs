@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Customers - <%= appName %></title>
+    <title>Modifier un utilisateur - <%= appName %></title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
@@ -15,54 +15,65 @@
       }
     </style>
   </head>
-  <!--Navigations-->
+
+  <!-- Sidebar -->
   <%- include('../../components/sidebar') %>
 
   <body
-    class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray min-h-screen flex flex-col sm:ml-64"
+    class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-100 min-h-screen flex flex-col sm:ml-64"
   >
     <!-- Main content -->
-    <div class="flex-grow">
-      <h1 class="text-2xl font-bold mb-4">Edit User</h1>
-      <form action="/web/admin/customers/edit/<%= user.id %>" method="POST">
+    <div class="flex-grow p-6">
+      <h1 class="text-2xl font-bold mb-6">Modifier l'utilisateur</h1>
+
+      <form
+        action="/web/admin/customers/edit/<%= userToEdit.id %>"
+        method="POST"
+      >
         <div class="mb-4">
           <label for="username" class="block text-sm font-medium mb-2"
-            >Username</label
+            >Nom d'utilisateur</label
           >
           <input
             type="text"
             id="username"
             name="username"
-            value="<%= user.username %>"
-            class="border border-gray-300 rounded px-3 py-2 w-full"
+            value="<%= userToEdit.username %>"
+            class="border border-gray-300 text-black rounded px-3 py-2 w-full"
+            required
           />
         </div>
+
         <div class="mb-4">
-          <label for="rank" class="block text-sm font-medium mb-2">Rank</label>
+          <label for="rank" class="block text-sm font-medium mb-2">Rang</label>
           <input
             type="text"
             id="rank"
             name="rank"
-            value="<%= user.rank %>"
-            class="border border-gray-300 rounded px-3 py-2 w-full"
+            value="<%= userToEdit.rank %>"
+            class="border border-gray-300 text-black rounded px-3 py-2 w-full"
+            required
           />
         </div>
+
         <button
           type="submit"
           class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
-          Save Changes
+          Sauvegarder les modifications
+        </button>
+
+        <button
+          type="button"
+          class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
+          onclick="window.location.href='/web/admin/customers'"
+        >
+          Annuler
         </button>
       </form>
-      <button
-        class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4"
-        onclick="window.location.href='/web/admin/customers'"
-      >
-        Cancel
-      </button>
     </div>
 
-    <!--Footer-->
+    <!-- Footer -->
     <%- include('../../components/footer') %>
     <script src="/js/sidebar.js"></script>
   </body>
