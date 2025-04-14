@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Modifier un utilisateur - <%= appName %></title>
+    <title>Edit user - <%= appName %></title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
@@ -24,7 +24,7 @@
   >
     <!-- Main content -->
     <div class="flex-grow p-6">
-      <h1 class="text-2xl font-bold mb-6">Modifier l'utilisateur</h1>
+      <h1 class="text-2xl font-bold mb-6">Edit user</h1>
 
       <form
         action="/web/admin/customers/edit/<%= userToEdit.id %>"
@@ -32,7 +32,7 @@
       >
         <div class="mb-4">
           <label for="username" class="block text-sm font-medium mb-2"
-            >Nom d'utilisateur</label
+            >Username</label
           >
           <input
             type="text"
@@ -45,7 +45,7 @@
         </div>
 
         <div class="mb-4">
-          <label for="rank" class="block text-sm font-medium mb-2">Rang</label>
+          <label for="rank" class="block text-sm font-medium mb-2">Rank</label>
           <input
             type="text"
             id="rank"
@@ -60,7 +60,7 @@
           type="submit"
           class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
-          Sauvegarder les modifications
+          Save
         </button>
 
         <button
@@ -68,7 +68,7 @@
           class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
           onclick="window.location.href='/web/admin/customers'"
         >
-          Annuler
+          Cancel
         </button>
       </form>
     </div>
