@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= appName %> - Subscriptions</title>
+  </head>
+  <body>
+    <h1>Welcome to <%= appName %></h1>
+    <p>Total Websites: <%= totalListWebsite %></p>
+
+    <h2>Your Websites</h2>
+    <ul>
+      <% userWebsites.forEach(website => { %>
+      <li>
+        <strong><%= website.name %></strong> - Port: <%= website.port %> - Disk
+        Limit: <%= website.disk_limit %>MB
+      </li>
+      <% }) %>
+    </ul>
+  </body>
+</html>

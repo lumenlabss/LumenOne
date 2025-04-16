@@ -17,6 +17,7 @@ const homeRoutes = require("./src/pages/user/home.js");
 const customersRoutes = require("./src/pages/admin/customers.js");
 const customersEditRoutes = require("./src/pages/admin/customers_edit.js");
 const subscriptions_createRoute = require("./src/pages/admin/subscriptions/create.js");
+const subscriptionsRoute = require("./src/pages/admin/subscriptions.js");
 
 // Application initialization
 const app = express();
@@ -67,6 +68,7 @@ app.use("/", homeRoutes);
 app.use("/", customersRoutes);
 app.use("/", customersEditRoutes);
 app.use("/", subscriptions_createRoute);
+app.use("/", subscriptionsRoute);
 
 // Middleware to handle errors
 app.use((req, res, next) => {
