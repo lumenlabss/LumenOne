@@ -154,23 +154,4 @@ function createSiteFolder(sitePath, diskLimit) {
   }
 }
 
-// Fonction pour démarrer le site via website-launcher.js
-function startWebsiteLauncher(siteId, port) {
-  const websiteLauncher = spawn("node", [
-    path.join(__dirname, "../../../handler/website-laucher.js"),
-  ]);
-
-  websiteLauncher.stdout.on("data", (data) => {
-    console.log(`stdout: ${data}`);
-  });
-
-  websiteLauncher.stderr.on("data", (data) => {
-    console.error(`stderr: ${data}`);
-  });
-
-  websiteLauncher.on("close", (code) => {
-    console.log(`Le processus s'est terminé avec le code ${code}`);
-  });
-}
-
 module.exports = router;
