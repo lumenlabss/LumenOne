@@ -3,7 +3,7 @@ const express = require("express");
 const db = require("../../../db.js");
 const path = require("path");
 const fs = require("fs");
-const net = require("net"); // Importer net pour vérifier les ports
+const net = require("net");
 const router = express.Router();
 const { v4: uuidv4 } = require("uuid");
 
