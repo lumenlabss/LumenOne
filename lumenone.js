@@ -16,6 +16,7 @@ const logoutRoutes = require("./src/pages/auth/logout.js");
 const homeRoutes = require("./src/pages/user/home.js");
 const customersRoutes = require("./src/pages/admin/customers.js");
 const customersEditRoutes = require("./src/pages/admin/customers_edit.js");
+const subscriptions_createRoute = require("./src/pages/admin/subscriptions/create.js");
 
 // Application initialization
 const app = express();
@@ -65,6 +66,7 @@ app.use("/", logoutRoutes);
 app.use("/", homeRoutes);
 app.use("/", customersRoutes);
 app.use("/", customersEditRoutes);
+app.use("/", subscriptions_createRoute);
 
 // Middleware to handle errors
 app.use((req, res, next) => {

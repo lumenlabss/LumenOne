@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Edit user - <%= appName %></title>
+    <title>Create Site - <%= appName %></title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
@@ -17,53 +17,51 @@
   </head>
 
   <!-- Sidebar -->
-  <%- include('../../components/sidebar') %>
+  <%- include('../../../components/sidebar') %>
 
   <body
     class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-100 min-h-screen flex flex-col sm:ml-64"
   >
     <!-- Main content -->
     <div class="flex-grow p-6">
-      <h1 class="text-2xl font-bold mb-6">Edit user</h1>
+      <h1 class="text-2xl font-bold mb-6">Create Site</h1>
 
-      <form
-        action="/web/admin/customers/edit/<%= userToEdit.id %>"
-        method="POST"
-      >
+      <form action="/web/admin/subscriptions/create" method="POST">
         <div class="mb-4">
-          <label for="username" class="block text-sm font-medium mb-2"
-            >Username</label
+          <label for="userId" class="block text-sm font-medium mb-2"
+            >User</label
+          >
+          <select
+            id="userId"
+            name="userId"
+            class="border border-gray-300 text-black rounded px-3 py-2 w-full"
+            required
+          >
+            <% users.forEach((user) => { %>
+            <option value="<%= user.id %>"><%= user.username %></option>
+            <% }); %>
+          </select>
+        </div>
+
+        <div class="mb-4">
+          <label for="diskLimit" class="block text-sm font-medium mb-2"
+            >Disk Limit (MB)</label
           >
           <input
-            type="text"
-            id="username"
-            name="username"
-            value="<%= userToEdit.username %>"
+            type="number"
+            id="diskLimit"
+            name="diskLimit"
             class="border border-gray-300 text-black rounded px-3 py-2 w-full"
             required
           />
         </div>
 
         <div class="mb-4">
-          <label for="password" class="block text-sm font-medium mb-2"
-            >New password</label
-          >
+          <label for="port" class="block text-sm font-medium mb-2">Port</label>
           <input
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Leave blank to not modify"
-            class="border border-gray-300 rounded px-3 py-2 w-full"
-          />
-        </div>
-
-        <div class="mb-4">
-          <label for="rank" class="block text-sm font-medium mb-2">Rank</label>
-          <input
-            type="text"
-            id="rank"
-            name="rank"
-            value="<%= userToEdit.rank %>"
+            type="number"
+            id="port"
+            name="port"
             class="border border-gray-300 text-black rounded px-3 py-2 w-full"
             required
           />
@@ -73,13 +71,13 @@
           type="submit"
           class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
-          Save
+          Create
         </button>
 
         <button
           type="button"
           class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-2"
-          onclick="window.location.href='/web/admin/customers'"
+          onclick="window.location.href='/web/admin/subscriptions'"
         >
           Cancel
         </button>
@@ -87,7 +85,7 @@
     </div>
 
     <!-- Footer -->
-    <%- include('../../components/footer') %>
+    <%- include('../../../components/footer') %>
     <script src="/js/sidebar.js"></script>
   </body>
 </html>
