@@ -2,25 +2,6 @@ const express = require("express");
 const db = require("../../db.js");
 const router = express.Router();
 
-// Route for the user's home page
-router.get("/web/list", isAuthenticated, (req, res) => {
-  db.get(
-    "SELECT rank FROM users WHERE id = ?",
-    [req.session.user.id],
-    (err, row) => {
-      if (err) {
-        console.error("Error while retrieving the rank: " + err.message);
-        return res.status(500).send("Internal server error");
-      }
-
-      res.render("web/list.ejs", {
-        user: req.session.user,
-        rank: row ? row.rank : null,
-      });
-    }
-  );
-});
-
 // Middleware to check if the user is authenticated
 function isAuthenticated(req, res, next) {
   if (req.session && req.session.user) {
@@ -28,5 +9,34 @@ function isAuthenticated(req, res, next) {
   }
   res.redirect("/");
 }
+
+// Route for the user's website list
+router.get("/web/list", isAuthenticated, (req, res) => {
+  const userId = req.session.user.id;
+
+  db.all(
+    "SELECT name, port, disk_limit FROM websites WHERE user_id = ?",
+    [userId],
+    (err, websites) => {
+      if (err) {
+        console.error("Error retrieving websites:", err.message);
+        return res.status(500).send("Internal server error");
+      }
+
+      db.get("SELECT rank FROM users WHERE id = ?", [userId], (err, row) => {
+        if (err) {
+          console.error("Error while retrieving the rank: " + err.message);
+          return res.status(500).send("Internal server error");
+        }
+
+        res.render("web/list.ejs", {
+          user: req.session.user,
+          websites, // <-- on passe bien un tableau de sites
+          rank: row ? row.rank : null,
+        });
+      });
+    }
+  );
+});
 
 module.exports = router;
