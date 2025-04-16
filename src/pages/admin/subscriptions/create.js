@@ -2,6 +2,7 @@ const path = require("path");
 const fs = require("fs");
 const crypto = require("crypto");
 const express = require("express");
+const http = require("http"); // Ajout du module HTTP
 const router = express.Router();
 const db = require("../../../db");
 
@@ -82,10 +83,94 @@ router.post("/web/admin/subscriptions/create", isAuthenticated, (req, res) => {
         return res.status(500).send("Erreur création du dossier.");
       }
 
-      console.log(`Site créé: UUID=${uuid}, Port=${port}, Disk=${diskLimit}MB`); // Debug
+      // Vérifier si index.html existe
+      const filePath = path.join(folderPath, "index.html");
+
+      fs.exists(filePath, (exists) => {
+        if (exists) {
+          // Création d'un serveur HTTP pour écouter sur le port spécifié
+          const server = http.createServer((req, res) => {
+            fs.readFile(filePath, "utf8", (err, data) => {
+              if (err) {
+                res.statusCode = 500;
+                res.end("Erreur lors de la lecture du fichier");
+              } else {
+                res.setHeader("Content-Type", "text/html");
+                res.end(data); // Envoie le contenu de index.html
+              }
+            });
+          });
+
+          // Démarre le serveur sur le port spécifié
+          server.listen(port, () => {
+            console.log(
+              `Serveur en cours d'exécution sur http://localhost:${port}`
+            );
+          });
+
+          console.log(
+            `Site créé: UUID=${uuid}, Port=${port}, Disk=${diskLimit}MB`
+          ); // Debug
+        } else {
+          console.log(
+            `Fichier index.html manquant pour le site UUID=${uuid}, Port=${port}. Serveur non démarré.`
+          );
+        }
+      });
+
       return res.redirect("/web/admin/subscriptions");
     });
   });
 });
+
+// Fonction pour relancer tous les serveurs actifs au démarrage
+function startAllActiveServers() {
+  db.all("SELECT * FROM websites", (err, rows) => {
+    if (err) {
+      console.error("Erreur récupération sites:", err.message);
+      return;
+    }
+
+    rows.forEach((row) => {
+      const folderPath = path.join(
+        __dirname,
+        "../../../../storage/volumes",
+        row.uuid
+      );
+      const filePath = path.join(folderPath, "index.html");
+
+      fs.exists(filePath, (exists) => {
+        if (exists) {
+          // Création d'un serveur HTTP pour écouter sur le port spécifié
+          const server = http.createServer((req, res) => {
+            fs.readFile(filePath, "utf8", (err, data) => {
+              if (err) {
+                res.statusCode = 500;
+                res.end("Erreur lors de la lecture du fichier");
+              } else {
+                res.setHeader("Content-Type", "text/html");
+                res.end(data); // Envoie le contenu de index.html
+              }
+            });
+          });
+
+          // Démarre le serveur sur le port spécifié
+          server.listen(row.port, () => {
+            console.log(
+              `Serveur pour UUID=${row.uuid} démarré sur http://localhost:${row.port}`
+            );
+          });
+        } else {
+          console.log(
+            `Fichier index.html manquant pour le site UUID=${row.uuid}, Port=${row.port}. Serveur non démarré.`
+          );
+        }
+      });
+    });
+  });
+}
+
+// Relancer tous les serveurs actifs au démarrage de l'app
+startAllActiveServers();
 
 module.exports = router;
