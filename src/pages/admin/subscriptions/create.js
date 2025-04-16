@@ -1,9 +1,12 @@
 const express = require("express");
 const db = require("../../../db.js");
-const fs = require("fs");
 const path = require("path");
 const router = express.Router();
 const { v4: uuidv4 } = require("uuid");
+const {
+  configureSitePort,
+  createSiteFolder,
+} = require("../../../handler/website.js");
 
 // Middleware to check if the user is an admin
 function isAdmin(req, res, next) {
@@ -58,7 +61,7 @@ router.post("/web/admin/subscriptions/create", isAdmin, (req, res) => {
   }
 
   const siteId = uuidv4(); // Generate a unique UUID for the site
-  const sitePath = path.join(__dirname, "../../../storage/volumes", siteId);
+  const sitePath = path.join(__dirname, "../../../../storage/volumes", siteId);
 
   // Check if the port is already in use
   db.get("SELECT * FROM containers WHERE ports = ?", [port], (err, row) => {
@@ -75,10 +78,7 @@ router.post("/web/admin/subscriptions/create", isAdmin, (req, res) => {
     }
 
     // Create the folder for the site
-    fs.mkdirSync(sitePath, { recursive: true });
-
-    // Add a disk space limit (simulated via a quota file)
-    fs.writeFileSync(path.join(sitePath, ".disk_limit"), diskLimit);
+    createSiteFolder(sitePath);
 
     // Save the information in the database
     db.run(
@@ -91,6 +91,10 @@ router.post("/web/admin/subscriptions/create", isAdmin, (req, res) => {
             .status(500)
             .render("error/500", { message: "Database error." });
         }
+
+        // Configure the site to be accessible on the selected port
+        configureSitePort(sitePath, port);
+
         res.redirect("/web/admin/subscriptions");
       }
     );
