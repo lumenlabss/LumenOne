@@ -29,37 +29,28 @@ function isAuthenticated(req, res, next) {
   }
 }
 
-// GET route to show the user's websites
+// GET route to show all websites (admin view)
 router.get("/web/admin/subscriptions", isAuthenticated, (req, res) => {
-  const userId = req.session.user.id;
+  // Jointure pour récupérer les infos de l'utilisateur lié à chaque site
+  const sql = `
+    SELECT websites.*, users.username 
+    FROM websites 
+    JOIN users ON websites.user_id = users.id
+  `;
 
-  // Retrieve all websites of the logged-in user
-  db.all(
-    "SELECT * FROM websites WHERE user_id = ?",
-    [userId],
-    (err, userWebsites) => {
-      if (err) {
-        console.error("Error retrieving user websites:", err.message);
-        return res.status(500).send("Server error");
-      }
-
-      // Calculate the total number of websites in the database (or filter as needed)
-      db.all("SELECT * FROM websites", (err, totalWebsites) => {
-        if (err) {
-          console.error("Error retrieving total websites:", err.message);
-          return res.status(500).send("Server error");
-        }
-
-        // Passing data to the view
-        res.render("web/admin/subscriptions.ejs", {
-          userWebsites, // The websites for the logged-in user
-          totalListWebsite: totalWebsites.length, // Total websites in the system
-          user: req.session?.user,
-          rank: req.session?.user?.rank,
-        });
-      });
+  db.all(sql, (err, allWebsites) => {
+    if (err) {
+      console.error("Error retrieving websites:", err.message);
+      return res.status(500).send("Server error");
     }
-  );
+
+    res.render("web/admin/subscriptions.ejs", {
+      totalListWebsite: allWebsites.length,
+      websites: allWebsites,
+      user: req.session?.user,
+      rank: req.session?.user?.rank,
+    });
+  });
 });
 
 module.exports = router;

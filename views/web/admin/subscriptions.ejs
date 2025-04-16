@@ -3,20 +3,76 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= appName %> - Subscriptions</title>
+    <title>Manage subscriptions - <%= appName %></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
   </head>
-  <body>
-    <h1>Welcome to <%= appName %></h1>
-    <p>Total Websites: <%= totalListWebsite %></p>
 
-    <h2>Your Websites</h2>
-    <ul>
-      <% userWebsites.forEach(website => { %>
-      <li>
-        <strong><%= website.name %></strong> - Port: <%= website.port %> - Disk
-        Limit: <%= website.disk_limit %>MB
-      </li>
-      <% }) %>
-    </ul>
+  <!-- Sidebar -->
+  <%- include('../../components/sidebar') %>
+
+  <body
+    class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-gray-100 min-h-screen flex flex-col sm:ml-64"
+  >
+    <!-- Main content -->
+    <div class="flex-grow p-6">
+      <h1 class="text-2xl font-bold mb-6">Subscriptions</h1>
+      <div class="mb-4">
+        <p class="text-lg font-medium">
+          Total websites in system:
+          <span class="text-blue-400 font-bold"><%= totalListWebsite %></span>
+        </p>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full table-auto bg-gray-800 rounded-lg overflow-hidden">
+          <thead class="bg-gray-700">
+            <tr>
+              <th class="px-4 py-3 text-left text-sm font-semibold">
+                Username
+              </th>
+              <th class="px-4 py-3 text-left text-sm font-semibold">UUID</th>
+              <th class="px-4 py-3 text-left text-sm font-semibold">
+                Site Name
+              </th>
+              <th class="px-4 py-3 text-left text-sm font-semibold">Port</th>
+              <th class="px-4 py-3 text-left text-sm font-semibold">
+                Disk Limit (MB)
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <% websites.forEach(site => { %>
+            <tr class="border-b border-gray-700 hover:bg-gray-700 transition">
+              <td class="px-4 py-3"><%= site.username %></td>
+              <td class="px-4 py-3"><%= site.uuid %></td>
+              <td class="px-4 py-3"><%= site.name %></td>
+              <td class="px-4 py-3"><%= site.port %></td>
+              <td class="px-4 py-3"><%= site.disk_limit %></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <button
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      onclick="window.location.href='/web/admin/subscriptions/create'"
+    >
+      Add site
+    </button>
+
+    <!-- Footer -->
+    <%- include('../../components/footer') %>
+    <script src="/js/sidebar.js"></script>
   </body>
 </html>
