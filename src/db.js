@@ -56,20 +56,21 @@ db.run(
 );
 
 db.run(
-  `CREATE TABLE IF NOT EXISTS containers (
+  `CREATE TABLE IF NOT EXISTS websites (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
-    container_name TEXT NOT NULL,
-    image TEXT NOT NULL,
-    ports TEXT NOT NULL,
+    uuid TEXT NOT NULL,
+    name TEXT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    port INTEGER NOT NULL,
+    disk_limit INTEGER NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id)
   )`,
   (err) => {
     if (err) {
-      console.error("Error creating containers table:", err.message);
+      console.error("Error creating websites table:", err.message);
     } else {
-      console.log("Containers table created or already exists.");
+      console.log("Websites table created or already exists.");
     }
   }
 );
