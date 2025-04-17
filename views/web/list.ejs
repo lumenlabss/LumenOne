@@ -6,12 +6,40 @@
     <title>Websites & Domains - <%= appName %></title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
       body {
         font-family: "Inter", sans-serif;
+      }
+      .glass-card {
+        background: rgba(31, 41, 55, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+      }
+      .glass-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(59, 130, 246, 0.5);
+        box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
+      }
+      .gradient-bg {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      }
+      .gradient-text {
+        background: linear-gradient(135deg, #60a5fa, #3b82f6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .stat-badge {
+        background: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        transition: all 0.3s ease;
+      }
+      .stat-badge:hover {
+        background: rgba(59, 130, 246, 0.2);
+        border-color: rgba(59, 130, 246, 0.3);
       }
     </style>
   </head>
@@ -19,35 +47,99 @@
   <!-- Sidebar -->
   <%- include('../components/sidebar') %>
 
-  <body
-    class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white min-h-screen flex flex-col sm:ml-64"
-  >
+  <body class="gradient-bg text-white min-h-screen flex flex-col sm:ml-64">
     <!-- Main content -->
-    <div class="flex-grow p-6">
-      <h1 class="text-2xl font-bold mb-6">My Websites</h1>
+    <div class="flex-grow p-8">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex items-center justify-between mb-8">
+          <h1 class="text-3xl font-bold gradient-text">My Websites</h1>
+        </div>
 
-      <% if (websites.length === 0) { %>
-      <p class="text-gray-300">You don’t have any website yet.</p>
-      <% } else { %>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <% websites.forEach(site => { %>
-        <div
-          class="bg-gray-800 rounded-xl shadow p-4 hover:bg-gray-700 transition"
-        >
-          <h2 class="text-xl font-semibold mb-2"><%= site.name %></h2>
-          <p class="text-sm text-gray-400 mb-1">
-            Port: <span class="text-white font-medium"><%= site.port %></span>
-          </p>
-          <p class="text-sm text-gray-400">
-            Disk limit:
-            <span class="text-white font-medium"
-              ><%= site.disk_limit %> MB</span
+        <% if (websites.length === 0) { %>
+        <div class="glass-card rounded-xl p-8 text-center">
+          <div class="mb-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-16 w-16 mx-auto text-gray-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+              />
+            </svg>
+          </div>
+          <h2 class="text-xl font-semibold mb-2">No Websites Yet</h2>
+          <p class="text-gray-400 mb-6">
+            Start by creating your first website to begin building your online
+            presence.
           </p>
         </div>
-        <% }) %>
+        <% } else { %>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <% websites.forEach(site => { %>
+          <div class="glass-card rounded-xl p-6">
+            <div class="flex items-start justify-between mb-4">
+              <h2 class="text-xl font-semibold"><%= site.name %></h2>
+              <button class="text-gray-400 hover:text-white transition-colors">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div class="space-y-3">
+              <div
+                class="stat-badge rounded-lg px-3 py-2 flex items-center justify-between"
+              >
+                <span class="text-sm text-gray-300">Port</span>
+                <span class="font-medium"><%= site.port %></span>
+              </div>
+              <div
+                class="stat-badge rounded-lg px-3 py-2 flex items-center justify-between"
+              >
+                <span class="text-sm text-gray-300">Disk Limit</span>
+                <span class="font-medium"><%= site.disk_limit %> MB</span>
+              </div>
+            </div>
+            <div class="mt-6 flex space-x-3">
+              <button
+                class="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors duration-200"
+              >
+                Manage
+              </button>
+              <button
+                class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors duration-200"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+        <% } %>
       </div>
-      <% } %>
     </div>
 
     <!-- Footer -->
