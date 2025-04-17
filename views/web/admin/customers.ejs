@@ -6,59 +6,187 @@
     <title>Customers - <%= appName %></title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <style>
       body {
         font-family: "Inter", sans-serif;
       }
+      .glass-card {
+        background: rgba(31, 41, 55, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .gradient-bg {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      }
+      .gradient-text {
+        background: linear-gradient(135deg, #60a5fa, #3b82f6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .table-row-hover:hover {
+        background: rgba(59, 130, 246, 0.1);
+        transition: all 0.2s ease;
+      }
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-track {
+        background: rgba(31, 41, 55, 0.2);
+        border-radius: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: rgba(59, 130, 246, 0.3);
+        border-radius: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: rgba(59, 130, 246, 0.5);
+      }
     </style>
   </head>
-  <!--Navigations-->
+
+  <!--Navigation-->
   <%- include('../../components/sidebar') %>
 
-  <body
-    class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white min-h-screen flex flex-col sm:ml-64"
-  >
+  <body class="gradient-bg text-white min-h-screen flex flex-col sm:ml-64">
     <!-- Main content -->
-    <div class="flex-grow">
-      <h1 class="text-2xl font-bold mb-4">User list</h1>
-      <table class="table-auto w-full border-collapse border border-gray-300">
-        <thead>
-          <tr>
-            <th class="border border-gray-300 px-4 py-2">ID</th>
-            <th class="border border-gray-300 px-4 py-2">Username</th>
-            <th class="border border-gray-300 px-4 py-2">Rank</th>
-            <th class="border border-gray-300 px-4 py-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% users.forEach(user => { %>
-          <tr>
-            <td class="border border-gray-300 px-4 py-2"><%= user.id %></td>
-            <td class="border border-gray-300 px-4 py-2">
-              <%= user.username %>
-            </td>
-            <td class="border border-gray-300 px-4 py-2"><%= user.rank %></td>
-            <td class="border border-gray-300 px-4 py-2">
-              <button
-                class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                onclick="window.location.href='/web/admin/customers/edit/<%= user.id %>'"
-              >
-                Edit
-              </button>
-              <button
-                class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                onclick="window.location.href='/web/admin/customers/delete/<%= user.id %>'"
-              >
-                Delete
-              </button>
-            </td>
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
+    <div class="flex-grow p-8">
+      <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h1 class="text-3xl font-bold gradient-text mb-2">
+              User Management
+            </h1>
+            <p class="text-gray-400">Manage and monitor user accounts</p>
+          </div>
+          <button
+            class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors duration-200 flex items-center space-x-2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                clip-rule="evenodd"
+              />
+            </svg>
+            <span>Add New User</span>
+          </button>
+        </div>
+
+        <!-- Table Container -->
+        <div class="glass-card rounded-xl overflow-hidden">
+          <div class="overflow-x-auto custom-scrollbar">
+            <table class="w-full">
+              <thead>
+                <tr class="bg-gray-800/50">
+                  <th
+                    class="px-6 py-4 text-left text-sm font-semibold text-gray-300"
+                  >
+                    ID
+                  </th>
+                  <th
+                    class="px-6 py-4 text-left text-sm font-semibold text-gray-300"
+                  >
+                    Username
+                  </th>
+                  <th
+                    class="px-6 py-4 text-left text-sm font-semibold text-gray-300"
+                  >
+                    Rank
+                  </th>
+                  <th
+                    class="px-6 py-4 text-right text-sm font-semibold text-gray-300"
+                  >
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-700/30">
+                <% users.forEach(user => { %>
+                <tr class="table-row-hover">
+                  <td class="px-6 py-4 text-sm text-gray-300">
+                    <%= user.id %>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center">
+                      <div
+                        class="h-8 w-8 rounded-full bg-blue-600/20 flex items-center justify-center mr-3"
+                      >
+                        <span class="text-sm font-medium text-blue-400">
+                          <%= user.username.charAt(0).toUpperCase() %>
+                        </span>
+                      </div>
+                      <span class="text-sm font-medium"
+                        ><%= user.username %></span
+                      >
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <span
+                      class="px-3 py-1 rounded-full text-xs font-medium <% if (user.rank === 'admin') { %> bg-purple-500/20 text-purple-400 <% } else if (user.rank === 'moderator') { %> bg-blue-500/20 text-blue-400 <% } else { %> bg-gray-500/20 text-gray-400 <% } %>"
+                    >
+                      <%= user.rank %>
+                    </span>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center justify-end space-x-3">
+                      <button
+                        onclick="window.location.href='/web/admin/customers/edit/<%= user.id %>'"
+                        class="px-3 py-1.5 bg-blue-600/20 text-blue-400 hover:bg-blue-600/30 rounded-lg transition-colors duration-200 flex items-center"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-4 w-4 mr-1"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
+                          />
+                          <path
+                            fill-rule="evenodd"
+                            d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                        Edit
+                      </button>
+                      <button
+                        onclick="window.location.href='/web/admin/customers/delete/<%= user.id %>'"
+                        class="px-3 py-1.5 bg-red-600/20 text-red-400 hover:bg-red-600/30 rounded-lg transition-colors duration-200 flex items-center"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-4 w-4 mr-1"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!--Footer-->
