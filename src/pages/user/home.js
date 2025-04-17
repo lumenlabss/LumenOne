@@ -15,7 +15,7 @@ router.get("/web/list", isAuthenticated, (req, res) => {
   const userId = req.session.user.id;
 
   db.all(
-    "SELECT name, port, disk_limit FROM websites WHERE user_id = ?",
+    "SELECT name, port, disk_limit, uuid FROM websites WHERE user_id = ?",
     [userId],
     (err, websites) => {
       if (err) {
@@ -31,7 +31,7 @@ router.get("/web/list", isAuthenticated, (req, res) => {
 
         res.render("web/list.ejs", {
           user: req.session.user,
-          websites, // <-- on passe bien un tableau de sites
+          websites,
           rank: row ? row.rank : null,
         });
       });

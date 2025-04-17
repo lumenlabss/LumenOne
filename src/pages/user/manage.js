@@ -1,6 +1,8 @@
 const express = require("express");
 const db = require("../../db.js");
 const router = express.Router();
+const fs = require("fs");
+const path = require("path");
 
 // Middleware authentification
 function isAuthenticated(req, res, next) {
@@ -19,21 +21,47 @@ router.get("/web/manage/:id", isAuthenticated, (req, res) => {
     (err, website) => {
       if (err) {
         console.error("Erreur DB:", err.message);
-        return res.status(500).render("error/500.ejs", {
-          message: "Internal server error",
-        });
+        return res.status(500).render("error/500.ejs");
       }
       if (!website) {
-        return res.status(404).require("error/404.ejs", {
-          message: "Not found",
-        });
+        return res.status(404).render("error/404.ejs");
       }
 
-      res.render("web/manage.ejs", {
-        user: req.session.user,
-        website,
-        rank: req.session.user.rank,
-        websiteUuid,
+      db.get("SELECT rank FROM users WHERE id = ?", [userId], (err, row) => {
+        if (err) {
+          console.error("Erreur récupération rank:", err.message);
+          return res.status(500).render("error/500.ejs");
+        }
+
+        const filesPath = path.join(
+          __dirname,
+          "../../../storage/volumes",
+          websiteUuid
+        );
+
+        fs.readdir(filesPath, (err, fileList) => {
+          if (err) {
+            console.error("Erreur lecture dossier:", err.message);
+            return res.status(500).render("error/500.ejs");
+          }
+
+          const files = fileList.map((fileName) => {
+            const fileFullPath = path.join(filesPath, fileName);
+            const stats = fs.statSync(fileFullPath);
+            return {
+              name: fileName,
+              size: (stats.size / 1024 / 1024).toFixed(2),
+            };
+          });
+
+          res.render("web/manage.ejs", {
+            user: req.session.user,
+            website,
+            rank: row ? row.rank : null,
+            websiteUuid,
+            files,
+          });
+        });
       });
     }
   );
