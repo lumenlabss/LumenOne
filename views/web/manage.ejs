@@ -14,8 +14,8 @@
         font-family: "Inter", sans-serif;
       }
       .glass-card {
-        background: rgba(31, 41, 55, 0.7);
-        backdrop-filter: blur(12px);
+        background: rgba(17, 25, 40, 0.75);
+        backdrop-filter: blur(16px);
         border: 1px solid rgba(255, 255, 255, 0.1);
         transition: all 0.3s ease;
       }
@@ -25,21 +25,55 @@
         box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
       }
       .gradient-bg {
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
       }
       .gradient-text {
         background: linear-gradient(135deg, #60a5fa, #3b82f6);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
-      .stat-badge {
+      .stat-card {
         background: rgba(59, 130, 246, 0.1);
         border: 1px solid rgba(59, 130, 246, 0.2);
+        backdrop-filter: blur(12px);
         transition: all 0.3s ease;
       }
-      .stat-badge:hover {
-        background: rgba(59, 130, 246, 0.2);
+      .stat-card:hover {
+        background: rgba(59, 130, 246, 0.15);
         border-color: rgba(59, 130, 246, 0.3);
+      }
+      .table-container {
+        background: rgba(17, 25, 40, 0.75);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+      }
+      .table-header {
+        background: rgba(59, 130, 246, 0.1);
+        border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+      }
+      .table-row-hover:hover {
+        background: rgba(59, 130, 246, 0.1);
+      }
+      .btn-primary {
+        background: rgba(59, 130, 246, 0.2);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        transition: all 0.3s ease;
+      }
+      .btn-primary:hover {
+        background: rgba(59, 130, 246, 0.3);
+        border-color: rgba(59, 130, 246, 0.4);
+        transform: translateY(-1px);
+      }
+      .btn-danger {
+        background: rgba(239, 68, 68, 0.2);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        transition: all 0.3s ease;
+      }
+      .btn-danger:hover {
+        background: rgba(239, 68, 68, 0.3);
+        border-color: rgba(239, 68, 68, 0.4);
+        transform: translateY(-1px);
       }
     </style>
   </head>
@@ -50,84 +84,69 @@
   <body class="gradient-bg text-white min-h-screen flex flex-col sm:ml-64">
     <!-- Main content -->
     <div class="flex-grow p-8">
-      <h1 class="text-3xl font-bold gradient-text">Manage</h1>
+      <div class="max-w-7xl mx-auto">
+        <h1 class="text-4xl font-bold gradient-text mb-8">Website Manager</h1>
 
-      <p>Port: <%= website.port %></p>
-      <p>Disk Limit: <%= website.disk_limit %> MB</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div class="stat-card rounded-xl p-6">
+            <div class="text-sm text-blue-400 mb-2">Port</div>
+            <div class="text-2xl font-semibold"><%= website.port %></div>
+          </div>
+          <div class="stat-card rounded-xl p-6">
+            <div class="text-sm text-blue-400 mb-2">Disk Limit</div>
+            <div class="text-2xl font-semibold">
+              <%= website.disk_limit %> MB
+            </div>
+          </div>
+        </div>
 
-      <!--Files manager table-->
-      <div class="overflow-x-auto">
-        <table class="w-full table-auto bg-gray-800 rounded-lg overflow-hidden">
-          <thead class="bg-gray-700">
-            <tr>
-              <th class="px-4 py-3 text-left text-sm font-semibold">
-                Files Name
-              </th>
-              <th class="px-4 py-3 text-left text-sm font-semibold">
-                Action
-              </th>
-              <th class="px-4 py-3 text-left text-sm font-semibold">
-                Size (MB)
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <% files.forEach(file => { %>
-              <tr class="border-b border-gray-700 hover:bg-gray-700 transition">
-                <td class="px-4 py-3"><%= file.name %></td>
-                <td class="px-4 py-3 flex gap-2">
-                  <button
-                  onclick="window.location.href='/web/manage/:id/edit/:file'"
-                    class="px-3 py-1.5 bg-blue-600/20 text-blue-400 hover:bg-blue-600/30 rounded-lg transition-colors duration-200 flex items-center"
-                  >
-                    <!-- Icon -->
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-4 w-4 mr-1"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
-                      />
-                      <path
-                        fill-rule="evenodd"
-                        d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                    Edit
-                  </button>
-          
-                  <button
-                  onclick="window.location.href='/web/manage/:id/delete/:file'"
-                  class="px-3 py-1.5 bg-red-600/20 text-red-400 hover:bg-red-600/30 rounded-lg transition-colors duration-200 flex items-center"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="h-4 w-4 mr-1"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                        clip-rule="evenodd"
-                      />
-                    </svg>
-                    Delete
-                  </button>
-                </td>
-                <td class="px-4 py-3"><%= file.size %> MB</td>
-              </tr>
-            <% }) %>
-          </tbody>
-          
-        </table>
+        <div class="table-container p-6">
+          <h2 class="text-xl font-semibold mb-6">Files Manager</h2>
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead class="table-header">
+                <tr>
+                  <th class="px-6 py-4 text-left text-sm font-semibold">
+                    File Name
+                  </th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold">
+                    Actions
+                  </th>
+                  <th class="px-6 py-4 text-left text-sm font-semibold">
+                    Size (MB)
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <% files.forEach(file => { %>
+                <tr class="table-row-hover border-b border-gray-700/50">
+                  <td class="px-6 py-4"><%= file.name %></td>
+                  <td class="px-6 py-4">
+                    <div class="flex gap-3">
+                      <button
+                        onclick="window.location.href='/web/manage/:id/edit/:file'"
+                        class="btn-primary px-4 py-2 rounded-lg text-blue-400 text-sm font-medium flex items-center"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        onclick="window.location.href='/web/manage/:id/delete/:file'"
+                        class="btn-danger px-4 py-2 rounded-lg text-red-400 text-sm font-medium flex items-center"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 text-gray-300"><%= file.size %> MB</td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-      </div>
-      <!--end-->
     </div>
+
     <!-- Footer -->
     <%- include('../components/footer') %>
     <script src="/js/sidebar.js"></script>
