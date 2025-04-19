@@ -102,6 +102,27 @@
 
         <div class="table-container p-6">
           <h2 class="text-xl font-semibold mb-6">Files Manager</h2>
+
+          <!-- Formulaire de création de fichier -->
+          <form
+            action="/web/manage/<%= websiteUuid %>/create-file"
+            method="POST"
+            class="mb-6 flex gap-4 items-center"
+          >
+            <input
+              type="text"
+              name="filename"
+              placeholder="Ex: index.html"
+              required
+              class="px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full max-w-xs"
+            />
+            <button
+              type="submit"
+              class="btn-primary px-4 py-2 rounded-lg text-blue-400 text-sm font-medium flex items-center"
+            >
+              + Create File
+            </button>
+          </form>
           <div class="overflow-x-auto">
             <table class="w-full">
               <thead class="table-header">
