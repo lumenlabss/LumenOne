@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit File - <%= appName %></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .glass-card {
+        background: rgba(17, 25, 40, 0.75);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+      }
+      .glass-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(59, 130, 246, 0.5);
+        box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
+      }
+      .gradient-bg {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      }
+      .gradient-text {
+        background: linear-gradient(135deg, #60a5fa, #3b82f6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .stat-card {
+        background: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        backdrop-filter: blur(12px);
+        transition: all 0.3s ease;
+      }
+      .stat-card:hover {
+        background: rgba(59, 130, 246, 0.15);
+        border-color: rgba(59, 130, 246, 0.3);
+      }
+      .table-container {
+        background: rgba(17, 25, 40, 0.75);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+      }
+      .table-header {
+        background: rgba(59, 130, 246, 0.1);
+        border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+      }
+      .table-row-hover:hover {
+        background: rgba(59, 130, 246, 0.1);
+      }
+      .btn-primary {
+        background: rgba(59, 130, 246, 0.2);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        transition: all 0.3s ease;
+      }
+      .btn-primary:hover {
+        background: rgba(59, 130, 246, 0.3);
+        border-color: rgba(59, 130, 246, 0.4);
+        transform: translateY(-1px);
+      }
+    </style>
+  </head>
+
+  <!-- Sidebar -->
+  <%- include('../components/sidebar') %>
+
+  <body class="gradient-bg text-white min-h-screen flex flex-col sm:ml-64">
+    <!-- Main content -->
+    <div class="flex-grow p-8">
+      <div class="max-w-7xl mx-auto">
+        <h1 class="text-4xl font-bold gradient-text mb-8">Edit File</h1>
+
+        <!-- Form to edit file content -->
+        <div class="glass-card rounded-xl p-6 mb-6">
+          <form
+            action="/web/manage/<%= websiteUuid %>/edit/<%= fileName %>"
+            method="POST"
+          >
+            <div class="mb-4">
+              <label
+                for="filename"
+                class="block text-sm font-semibold text-blue-400"
+                >File Name</label
+              >
+              <input
+                type="text"
+                id="filename"
+                name="filename"
+                value="<%= fileName %>"
+                class="w-full px-4 py-2 mt-2 rounded-lg bg-transparent border-2 border-gray-700/50 text-white"
+                disabled
+              />
+            </div>
+
+            <div class="mb-4">
+              <label
+                for="content"
+                class="block text-sm font-semibold text-blue-400"
+                >File Content</label
+              >
+              <textarea
+                id="content"
+                name="content"
+                rows="10"
+                class="w-full px-4 py-2 mt-2 rounded-lg bg-transparent border-2 border-gray-700/50 text-white"
+                placeholder="Edit the content of the file..."
+              >
+<%= fileContent %></textarea
+              >
+            </div>
+
+            <button
+              type="submit"
+              class="btn-primary px-6 py-3 rounded-lg text-white font-semibold"
+            >
+              Save Changes
+            </button>
+          </form>
+        </div>
+
+        <a
+          href="/web/manage/<%= websiteUuid %>"
+          class="btn-primary px-6 py-3 rounded-lg text-white font-semibold"
+        >
+          Back to File Manager
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <%- include('../components/footer') %>
+    <script src="/js/sidebar.js"></script>
+  </body>
+</html>
