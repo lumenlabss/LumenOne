@@ -145,8 +145,7 @@
                   <td class="px-6 py-4">
                     <div class="flex gap-3">
                       <button
-                        onclick="window.location.href='/web/manage/:id/edit/:file'"
-                        class="btn-primary px-4 py-2 rounded-lg text-blue-400 text-sm font-medium flex items-center"
+                        onclick="window.location.href='/web/manage/<%= websiteUuid %>/edit/<%= file.name %>'"
                       >
                         Edit
                       </button>
