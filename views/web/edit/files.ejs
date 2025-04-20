@@ -9,9 +9,6 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
-    <!-- CodeMirror CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/theme/dracula.min.css">
     <style>
       body {
         font-family: "Inter", sans-serif;
@@ -68,311 +65,77 @@
         border-color: rgba(59, 130, 246, 0.4);
         transform: translateY(-1px);
       }
-      /* CodeMirror customization */
-      .CodeMirror {
-        height: auto;
-        min-height: 400px;
-        border-radius: 0.5rem;
-        font-family: 'Fira Code', monospace;
-        font-size: 14px;
-        line-height: 1.5;
-      }
-      .editor-toolbar {
-        display: flex;
-        gap: 0.5rem;
-        background: rgba(17, 25, 40, 0.75);
-        padding: 0.5rem;
-        border-top-left-radius: 0.5rem;
-        border-top-right-radius: 0.5rem;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-bottom: none;
-      }
-      .editor-toolbar button {
-        background: rgba(59, 130, 246, 0.2);
-        border: 1px solid rgba(59, 130, 246, 0.3);
-        border-radius: 0.25rem;
-        padding: 0.25rem 0.5rem;
-        color: white;
-        font-size: 0.8rem;
-        cursor: pointer;
-        transition: all 0.2s ease;
-      }
-      .editor-toolbar button:hover {
-        background: rgba(59, 130, 246, 0.3);
-      }
-      .file-info {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        margin-bottom: 1rem;
-      }
-      .file-type-icon {
-        width: 2rem;
-        height: 2rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(59, 130, 246, 0.2);
-        border-radius: 0.25rem;
-        font-weight: bold;
-      }
     </style>
   </head>
 
-  <body class="gradient-bg text-white min-h-screen flex flex-col sm:ml-64">
-    <!-- Sidebar -->
-    <%- include('../components/sidebar') %>
+  <!-- Sidebar -->
+  <%-  %>
 
+  <body class="gradient-bg text-white min-h-screen flex flex-col sm:ml-64">
     <!-- Main content -->
     <div class="flex-grow p-8">
       <div class="max-w-7xl mx-auto">
-        <div class="flex justify-between items-center mb-8">
-          <h1 class="text-4xl font-bold gradient-text">Edit File</h1>
-          <div class="flex gap-4">
-            <a
-              href="/web/manage/<%= websiteUuid %>"
-              class="btn-primary px-4 py-2 rounded-lg text-white font-semibold flex items-center"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 17l-5-5m0 0l5-5m-5 5h12" />
-              </svg>
-              Back to Files
-            </a>
-          </div>
-        </div>
-
-        <!-- File info -->
-        <div class="file-info glass-card rounded-xl p-4 mb-6">
-          <div class="file-type-icon">
-            <% 
-            let extension = fileName.split('.').pop().toLowerCase();
-            let icon = 'F';
-            
-            if (['html', 'htm'].includes(extension)) icon = 'H';
-            else if (['js', 'jsx', 'ts', 'tsx'].includes(extension)) icon = 'JS';
-            else if (['css', 'scss', 'sass'].includes(extension)) icon = 'CSS';
-            else if (['json'].includes(extension)) icon = '{ }';
-            else if (['md'].includes(extension)) icon = 'MD';
-            else if (['jpg', 'jpeg', 'png', 'gif', 'svg'].includes(extension)) icon = 'IMG';
-            %>
-            <%= icon %>
-          </div>
-          <div>
-            <div class="text-lg font-semibold"><%= fileName %></div>
-            <div class="text-sm text-gray-400">
-              <% 
-              let fileType = 'Plain Text';
-              
-              if (['html', 'htm'].includes(extension)) fileType = 'HTML';
-              else if (['js', 'jsx'].includes(extension)) fileType = 'JavaScript';
-              else if (['ts', 'tsx'].includes(extension)) fileType = 'TypeScript';
-              else if (['css'].includes(extension)) fileType = 'CSS';
-              else if (['scss'].includes(extension)) fileType = 'SCSS';
-              else if (['json'].includes(extension)) fileType = 'JSON';
-              else if (['md'].includes(extension)) fileType = 'Markdown';
-              %>
-              <%= fileType %> File
-            </div>
-          </div>
-        </div>
+        <h1 class="text-4xl font-bold gradient-text mb-8">Edit File</h1>
 
         <!-- Form to edit file content -->
         <div class="glass-card rounded-xl p-6 mb-6">
           <form
             action="/web/manage/<%= websiteUuid %>/edit/<%= fileName %>"
             method="POST"
-            id="editForm"
           >
-            <div class="editor-toolbar">
-              <button type="button" id="indentCode" title="Format Code">Format</button>
-              <button type="button" id="searchToggle" title="Search">Search</button>
-              <button type="button" id="toggleFullscreen" title="Fullscreen">Fullscreen</button>
-              <div class="ml-auto text-sm text-gray-400">
-                <span id="cursor-position">Line: 1, Column: 1</span>
-              </div>
+            <div class="mb-4">
+              <label
+                for="filename"
+                class="block text-sm font-semibold text-blue-400"
+                >File Name</label
+              >
+              <input
+                type="text"
+                id="filename"
+                name="filename"
+                value="<%= fileName %>"
+                class="w-full px-4 py-2 mt-2 rounded-lg bg-transparent border-2 border-gray-700/50 text-white"
+                disabled
+              />
             </div>
-            
-            <textarea
-              id="code-editor"
-              name="content"
-              style="display: none;"
-            ><%= fileContent %></textarea>
-            
-            <input type="hidden" id="hidden-content" name="content" value="<%= fileContent %>">
 
-            <div class="flex justify-between mt-6">
-              <button
-                type="submit"
-                class="btn-primary px-6 py-3 rounded-lg text-white font-semibold flex items-center"
+            <div class="mb-4">
+              <label
+                for="content"
+                class="block text-sm font-semibold text-blue-400"
+                >File Content</label
               >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
-                </svg>
-                Save Changes
-              </button>
-              
-              <button
-                type="button"
-                id="preview-button"
-                class="btn-primary px-6 py-3 rounded-lg text-white font-semibold flex items-center"
+              <textarea
+                id="content"
+                name="content"
+                rows="10"
+                class="w-full px-4 py-2 mt-2 rounded-lg bg-transparent border-2 border-gray-700/50 text-white"
+                placeholder="Edit the content of the file..."
               >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                </svg>
-                Preview
-              </button>
+<%= fileContent %></textarea
+              >
             </div>
+
+            <button
+              type="submit"
+              class="btn-primary px-6 py-3 rounded-lg text-white font-semibold"
+            >
+              Save Changes
+            </button>
           </form>
         </div>
+
+        <a
+          href="/web/manage/<%= websiteUuid %>"
+          class="btn-primary px-6 py-3 rounded-lg text-white font-semibold"
+        >
+          Back to File Manager
+        </a>
       </div>
     </div>
 
     <!-- Footer -->
-    <%- include('../components/footer') %>
-
-    <!-- CodeMirror JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/codemirror.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/edit/matchbrackets.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/search/search.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/search/searchcursor.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/dialog/dialog.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/comment/comment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/edit/closebrackets.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/foldcode.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/foldgutter.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/brace-fold.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/fold/xml-fold.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/addon/hint/show-hint.min.js"></script>
-    
-    <!-- Language modes -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/javascript/javascript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/css/css.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/htmlmixed/htmlmixed.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/xml/xml.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.5/mode/markdown/markdown.min.js"></script>
-    
+    <%- include('../../components/footer') %>
     <script src="/js/sidebar.js"></script>
-    
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // Get file extension to determine code mode
-        const fileName = '<%= fileName %>';
-        const extension = fileName.split('.').pop().toLowerCase();
-        
-        // Map file extensions to CodeMirror modes
-        const modeMap = {
-          'js': 'javascript',
-          'jsx': 'javascript',
-          'ts': 'javascript',
-          'tsx': 'javascript',
-          'html': 'htmlmixed',
-          'htm': 'htmlmixed',
-          'css': 'css',
-          'scss': 'css',
-          'sass': 'css',
-          'md': 'markdown',
-          'json': {name: 'javascript', json: true}
-        };
-        
-        // Get the editor mode based on file extension
-        const mode = modeMap[extension] || 'text/plain';
-        
-        // Initialize CodeMirror
-        const editor = CodeMirror.fromTextArea(document.getElementById('code-editor'), {
-          mode: mode,
-          theme: 'dracula',
-          lineNumbers: true,
-          lineWrapping: false,
-          matchBrackets: true,
-          autoCloseBrackets: true,
-          indentUnit: 2,
-          tabSize: 2,
-          indentWithTabs: false,
-          extraKeys: {
-            "Ctrl-Space": "autocomplete",
-            "Ctrl-/": "toggleComment",
-            "Ctrl-Q": function(cm) {
-              cm.foldCode(cm.getCursor());
-            }
-          }
-        });
-        
-        // Update cursor position display
-        editor.on('cursorActivity', function() {
-          const cursor = editor.getCursor();
-          document.getElementById('cursor-position').textContent = `Line: ${cursor.line + 1}, Column: ${cursor.ch + 1}`;
-        });
-        
-        // Update hidden input with editor content when form is submitted
-        document.getElementById('editForm').addEventListener('submit', function() {
-          document.getElementById('hidden-content').value = editor.getValue();
-        });
-        
-        // Indent/format code
-        document.getElementById('indentCode').addEventListener('click', function() {
-          const totalLines = editor.lineCount();
-          editor.autoFormatRange({line:0, ch:0}, {line:totalLines});
-        });
-        
-        // Toggle search
-        document.getElementById('searchToggle').addEventListener('click', function() {
-          CodeMirror.commands.find(editor);
-        });
-        
-        // Toggle fullscreen
-        document.getElementById('toggleFullscreen').addEventListener('click', function() {
-          const editorElement = editor.getWrapperElement();
-          if (!document.fullscreenElement) {
-            editorElement.requestFullscreen().catch(err => {
-              console.error(`Error attempting to enable fullscreen: ${err.message}`);
-            });
-          } else {
-            document.exitFullscreen();
-          }
-        });
-        
-        // Preview button (for HTML files)
-        document.getElementById('preview-button').addEventListener('click', function() {
-          if (['html', 'htm'].includes(extension)) {
-            const content = editor.getValue();
-            const previewWindow = window.open('', '_blank');
-            previewWindow.document.write(content);
-            previewWindow.document.close();
-          } else {
-            alert('Preview is only available for HTML files.');
-          }
-        });
-        
-        // Extend CodeMirror with auto format functionality
-        CodeMirror.defineExtension("autoFormatRange", function (from, to) {
-          const cm = this;
-          const mode = cm.getMode();
-          const text = cm.getRange(from, to).split("\n");
-          const state = CodeMirror.copyState(mode, cm.getTokenAt(from).state);
-          const tabSize = cm.getOption("tabSize");
-          
-          let out = "";
-          let lines = 0;
-          
-          function newline() {
-            out += "\n";
-            lines++;
-            return "";
-          }
-          
-          // Simple auto indent
-          for (let i = 0; i < text.length; i++) {
-            const line = text[i];
-            const indentation = cm.getOption("indentUnit") * (line.match(/^\s*/)[0].length / tabSize);
-            out += " ".repeat(indentation) + line.trim() + newline();
-          }
-          
-          cm.operation(function () {
-            cm.replaceRange(out, from, to);
-          });
-        });
-      });
-    </script>
   </body>
 </html>
