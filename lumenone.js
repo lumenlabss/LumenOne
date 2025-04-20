@@ -19,6 +19,7 @@ const customersEditRoutes = require("./src/pages/admin/customers_edit.js");
 const subscriptions_createRoute = require("./src/pages/admin/subscriptions/create.js");
 const subscriptionsRoute = require("./src/pages/admin/subscriptions.js");
 const manageRoute = require("./src/pages/user/manage.js");
+const filesRoutes = require('./src/pages/user/edit/files.js');
 
 // Application initialization
 const app = express();
@@ -71,6 +72,7 @@ app.use("/", customersEditRoutes);
 app.use("/", subscriptions_createRoute);
 app.use("/", subscriptionsRoute);
 app.use("/", manageRoute);
+app.use("/", filesRoutes);
 
 // Middleware to handle errors
 app.use((req, res, next) => {
