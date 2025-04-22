@@ -19,7 +19,7 @@ const customersEditRoutes = require("./src/pages/admin/customers_edit.js");
 const subscriptions_createRoute = require("./src/pages/admin/subscriptions/create.js");
 const subscriptionsRoute = require("./src/pages/admin/subscriptions.js");
 const manageRoute = require("./src/pages/user/manage.js");
-const filesRoutes = require('./src/pages/user/edit/files.js');
+const filesRoutes = require("./src/pages/user/edit/files.js");
 
 // Application initialization
 const app = express();
@@ -45,6 +45,8 @@ app.use((req, res, next) => {
   res.locals.appVersion = config.version;
   next();
 });
+
+app.use(require("./src/start-webserver.js"));
 
 // Middleware configuration
 app.use(bodyParser.urlencoded({ extended: true }));
