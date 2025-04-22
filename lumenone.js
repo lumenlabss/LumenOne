@@ -24,6 +24,8 @@ const filesRoutes = require("./src/pages/user/edit/files.js");
 // Application initialization
 const app = express();
 let config;
+app.use(require("./src/start-webserver.js"));
+
 
 // Loading configuration
 try {
@@ -46,7 +48,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(require("./src/start-webserver.js"));
+
 
 // Middleware configuration
 app.use(bodyParser.urlencoded({ extended: true }));
