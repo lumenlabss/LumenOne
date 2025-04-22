@@ -7,7 +7,7 @@ const router = express.Router();
 const createWS = require("./pages/admin/subscriptions/create.js");
 // Le router est importé normalement
 let activeServers = createWS.activeServers || {};
-console.log("start-webserver.js succesfully loaded i guess")
+console.log("start-webserver.js succesfully loaded i guess");
 router.post("/web/restart/:uuid", (req, res) => {
   const uuid = req.params.uuid;
   activeServers = createWS.activeServers;
@@ -17,12 +17,14 @@ router.post("/web/restart/:uuid", (req, res) => {
     }
 
     const folderPath = path.join(__dirname, "../storage/volumes", uuid);
-    console.log("[DEBUG]: Path searched for restarting: "+folderPath);
+    console.log("[DEBUG]: Path searched for restarting: " + folderPath);
     const filePath = path.join(folderPath, "index.html");
 
     fs.exists(filePath, (exists) => {
       if (!exists) {
-        return res.status(404).json({ error: "index.html not found." + "path searched:" + filePath });
+        return res.status(404).json({
+          error: "index.html not found." + "path searched:" + filePath,
+        });
       }
 
       activeServers = createWS.activeServers;
@@ -32,8 +34,7 @@ router.post("/web/restart/:uuid", (req, res) => {
         });
       } else {
         console.log(`No active server found for ${uuid}, creating new one.`);
-      };
-      
+      }
 
       const server = http.createServer((req, res) => {
         fs.readFile(filePath, "utf8", (err, data) => {
@@ -55,6 +56,5 @@ router.post("/web/restart/:uuid", (req, res) => {
     });
   });
 });
-
 
 module.exports = router;
