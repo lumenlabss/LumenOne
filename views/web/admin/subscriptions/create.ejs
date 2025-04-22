@@ -13,44 +13,59 @@
       body {
         font-family: "Inter", sans-serif;
       }
+
       .glass-card {
-        background: rgba(17, 25, 40, 0.75);
-        backdrop-filter: blur(16px);
+        background: rgba(31, 41, 55, 0.75);
+        backdrop-filter: blur(12px);
         border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
         transition: all 0.3s ease;
       }
+
       .glass-card:hover {
         transform: translateY(-4px);
         border-color: rgba(59, 130, 246, 0.5);
         box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
       }
+
       .gradient-bg {
         background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
       }
+
       .gradient-text {
         background: linear-gradient(135deg, #60a5fa, #3b82f6);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
+
       .btn-primary {
         background: rgba(59, 130, 246, 0.2);
         border: 1px solid rgba(59, 130, 246, 0.3);
+        border-radius: 0.5rem;
         transition: all 0.3s ease;
       }
+
       .btn-primary:hover {
         background: rgba(59, 130, 246, 0.3);
         border-color: rgba(59, 130, 246, 0.4);
         transform: translateY(-1px);
       }
+
       .btn-danger {
         background: rgba(239, 68, 68, 0.2);
         border: 1px solid rgba(239, 68, 68, 0.3);
+        border-radius: 0.5rem;
         transition: all 0.3s ease;
       }
+
       .btn-danger:hover {
         background: rgba(239, 68, 68, 0.3);
         border-color: rgba(239, 68, 68, 0.4);
         transform: translateY(-1px);
+      }
+
+      .text-muted {
+        color: rgba(255, 255, 255, 0.6);
       }
     </style>
   </head>
