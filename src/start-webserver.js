@@ -5,46 +5,66 @@ const path = require("path");
 const db = require("./db.js");
 const router = express.Router();
 const createWS = require("./pages/admin/subscriptions/create.js");
-// Le router est importé normalement
+
 let activeServers = createWS.activeServers || {};
-console.log("start-webserver.js succesfully loaded i guess");
+console.log("start-webserver.js successfully loaded"); //debug
+
 router.post("/web/restart/:uuid", (req, res) => {
   const uuid = req.params.uuid;
   activeServers = createWS.activeServers;
+
   db.get("SELECT * FROM websites WHERE uuid = ?", [uuid], (err, row) => {
     if (err || !row) {
       return res.status(404).json({ error: "Site not found." });
     }
 
     const folderPath = path.join(__dirname, "../storage/volumes", uuid);
-    console.log("[DEBUG]: Path searched for restarting: " + folderPath);
+    console.log("[DEBUG]: Path searched for restarting: " + folderPath); // debug
+
     const filePath = path.join(folderPath, "index.html");
 
-    fs.exists(filePath, (exists) => {
-      if (!exists) {
+    fs.access(filePath, fs.constants.F_OK, (err) => {
+      if (err) {
         return res.status(404).json({
-          error: "index.html not found." + "path searched:" + filePath,
+          error: "index.html not found. Path searched: " + filePath, //debug
         });
       }
 
-      activeServers = createWS.activeServers;
       if (activeServers[uuid]) {
         activeServers[uuid].close(() => {
-          console.log(`Old server for ${uuid} stopped.`);
+          console.log(`Old server for ${uuid} stopped.`); // debug
         });
       } else {
-        console.log(`No active server found for ${uuid}, creating new one.`);
+        console.log(`No active server found for ${uuid}, creating new one.`); //debug
       }
 
       const server = http.createServer((req, res) => {
-        fs.readFile(filePath, "utf8", (err, data) => {
+        console.log("Server being used");
+        // Extrait le fichier demandé dans l'URL, ou utilise 'index.html' par défaut
+        const requestedFile = req.url === "/" ? "index.html" : req.url.slice(1); // Slice pour enlever le '/' initial
+        const requestedFilePath = path.join(folderPath, requestedFile);
+
+        console.log(`[DEBUG]: Requested file: ${requestedFile}`); // debug + NE VIENS JAMAIS CAR C DROLE
+
+        // Vérifie si le fichier existe
+        fs.access(requestedFilePath, fs.constants.F_OK, (err) => {
           if (err) {
-            res.statusCode = 500;
-            res.end("Error reading file");
-          } else {
-            res.setHeader("Content-Type", "text/html");
-            res.end(data);
+            console.log(`[DEBUG]: File not found: ${requestedFilePath}`); // debug
+            return res.status(404).json({
+              error: `${requestedFile} not found in the website directory.`,
+            });
           }
+
+          // Lit le fichier et le retourne en réponse
+          fs.readFile(requestedFilePath, "utf8", (err, data) => {
+            if (err) {
+              res.statusCode = 500;
+              res.end("Error reading file");
+            } else {
+              res.setHeader("Content-Type", "text/html");
+              res.end(data);
+            }
+          });
         });
       });
 
