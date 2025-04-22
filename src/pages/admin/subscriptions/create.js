@@ -6,6 +6,7 @@ const http = require("http"); // Added the HTTP module
 const router = express.Router();
 const db = require("../../../db");
 
+let activeServers = {};
 // Middleware to check if the user is authenticated and has admin rank
 function isAuthenticated(req, res, next) {
   if (req.session && req.session.user) {
@@ -100,7 +101,7 @@ router.post("/web/admin/subscriptions/create", isAuthenticated, (req, res) => {
               }
             });
           });
-
+          activeServers[uuid] = server;
           // Start the server on the specified port
           server.listen(port, () => {
             console.log(`Server running on http://localhost:${port}`);
@@ -136,7 +137,7 @@ function startAllActiveServers() {
         row.uuid
       );
       const filePath = path.join(folderPath, "index.html");
-
+      
       fs.exists(filePath, (exists) => {
         if (exists) {
           // Create an HTTP server to listen on the specified port
@@ -150,13 +151,20 @@ function startAllActiveServers() {
                 res.end(data);
               }
             });
-          });
 
+          });
+          activeServers[row.uuid] = server;
+          console.log("DEBUG: Added active server "+ row.uuid+" to the list.")
+          console.log("Here is the current state of the list: " )
+          for (uuid in activeServers){
+            console.log(uuid);
+          } 
           // Start the server on the specified port
           server.listen(row.port, () => {
             console.log(
               `Server for UUID=${row.uuid} started on http://localhost:${row.port}`
             );
+            
           });
         } else {
           console.log(
@@ -172,3 +180,4 @@ function startAllActiveServers() {
 startAllActiveServers();
 
 module.exports = router;
+module.exports.activeServers = activeServers;
