@@ -1,6 +1,5 @@
 ![image](https://github.com/user-attachments/assets/5222bd49-29c6-4346-8a37-296a2ecb6e8c)
 
-
 # LumenOne
 
 | :exclamation: **LumenOne is under development**: some features may be unstable or incomplete. Its use in a production environment is strongly discouraged at this time. |
@@ -130,6 +129,7 @@ Project completion: ⁓ 2%
 - [ ] Light theme
 - [ ] Notification system (emails, alerts)
 - [ ] Language system
+- [ ] Docker integration (optional for service isolation)
 
 ---
 
