@@ -88,14 +88,47 @@
         <h1 class="text-4xl font-bold gradient-text mb-8">Website Manager</h1>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <!-- Port Stat Card -->
           <div class="stat-card rounded-xl p-6">
             <div class="text-sm text-blue-400 mb-2">Port</div>
-            <div class="text-2xl font-semibold"><%= website.port %></div>
+            <div class="text-2xl font-semibold flex items-center space-x-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="currentColor"
+                class="bi bi-ethernet"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M14 13.5v-7a.5.5 0 0 0-.5-.5H12V4.5a.5.5 0 0 0-.5-.5h-1v-.5A.5.5 0 0 0 10 3H6a.5.5 0 0 0-.5.5V4h-1a.5.5 0 0 0-.5.5V6H2.5a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5M3.75 11h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25m2 0h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25m1.75.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25zM9.75 11h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25m1.75.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25z"
+                />
+                <path
+                  d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 2a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z"
+                />
+              </svg>
+
+              &nbsp;<%= website.port %>
+            </div>
           </div>
+
+          <!-- Disk Limit Stat Card -->
           <div class="stat-card rounded-xl p-6">
             <div class="text-sm text-blue-400 mb-2">Disk Limit</div>
-            <div class="text-2xl font-semibold">
-              <%= website.disk_limit %> MB
+            <div class="text-2xl font-semibold flex items-center space-x-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="currentColor"
+                class="bi bi-hdd-fill"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M0 10a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m2 0a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1M.91 7.204A3 3 0 0 1 2 7h12c.384 0 .752.072 1.09.204l-1.867-3.422A1.5 1.5 0 0 0 11.906 3H4.094a1.5 1.5 0 0 0-1.317.782z"
+                />
+              </svg>
+              &nbsp;<%= website.disk_limit %> MB
             </div>
           </div>
         </div>
