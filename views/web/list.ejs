@@ -87,7 +87,7 @@
               <h2 class="text-xl font-semibold"><%= site.name %></h2>
               <div class="relative inline-block text-left">
                 <button
-                  onclick="toggleMenu()"
+                  onclick="toggleMenu('<%= site.uuid %>')"
                   class="text-gray-400 hover:text-white transition-colors"
                 >
                   <svg
@@ -103,7 +103,7 @@
                 </button>
 
                 <div
-                  id="dropdownMenu"
+                  id="dropdownMenu-<%= site.uuid %>"
                   class="hidden absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-md shadow-lg z-50"
                 >
                   <ul class="py-1 text-sm text-white">

@@ -1,15 +1,14 @@
-function toggleMenu() {
-  const menu = document.getElementById("dropdownMenu");
-  menu.classList.toggle("hidden");
-}
-
-document.addEventListener("click", function (event) {
-  const menu = document.getElementById("dropdownMenu");
-  const button = event.target.closest("button");
-  if (!event.target.closest(".relative") && !button) {
+function toggleMenu(uuid) {
+  const menu = document.getElementById(`dropdownMenu-${uuid}`);
+  if (menu.classList.contains("hidden")) {
+    document.querySelectorAll('[id^="dropdownMenu-"]').forEach((el) => {
+      el.classList.add("hidden");
+    });
+    menu.classList.remove("hidden");
+  } else {
     menu.classList.add("hidden");
   }
-});
+}
 
 function restartServer(uuid) {
   fetch(`/web/restart/${uuid}`, {
