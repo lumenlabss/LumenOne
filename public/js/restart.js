@@ -23,7 +23,7 @@ function restartServer(uuid) {
       }
     })
     .catch((err) => {
-      alert("Erreur de communication avec le serveur.");
+      alert("Server communication error.");
       console.error(err);
     });
 }
