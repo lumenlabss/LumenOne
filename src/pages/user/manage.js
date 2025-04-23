@@ -1,17 +1,16 @@
-//Manage.js
 const express = require("express");
 const db = require("../../db.js");
 const router = express.Router();
 const fs = require("fs");
 const path = require("path");
 
-// Middleware authentification
+// Authentication middleware
 function isAuthenticated(req, res, next) {
   if (req.session?.user) return next();
   res.redirect("/");
 }
 
-// Route gestion page website
+// Website management page route
 router.get("/web/manage/:id", isAuthenticated, (req, res) => {
   const userId = req.session.user.id;
   const websiteUuid = req.params.id;
@@ -21,7 +20,7 @@ router.get("/web/manage/:id", isAuthenticated, (req, res) => {
     [websiteUuid, userId],
     (err, website) => {
       if (err) {
-        console.error("Erreur DB:", err.message);
+        console.error("DB error:", err.message);
         return res.status(500).render("error/500.ejs");
       }
       if (!website) {
@@ -30,7 +29,7 @@ router.get("/web/manage/:id", isAuthenticated, (req, res) => {
 
       db.get("SELECT rank FROM users WHERE id = ?", [userId], (err, row) => {
         if (err) {
-          console.error("Erreur récupération rank:", err.message);
+          console.error("Error retrieving rank:", err.message);
           return res.status(500).render("error/500.ejs");
         }
 
@@ -42,7 +41,7 @@ router.get("/web/manage/:id", isAuthenticated, (req, res) => {
 
         fs.readdir(filesPath, (err, fileList) => {
           if (err) {
-            console.error("Erreur lecture dossier:", err.message);
+            console.error("Error reading directory:", err.message);
             return res.status(500).render("error/500.ejs");
           }
 
@@ -68,20 +67,20 @@ router.get("/web/manage/:id", isAuthenticated, (req, res) => {
   );
 });
 
-// Route création de fichier
+// Create file route
 router.post("/web/manage/:id/create-file", isAuthenticated, (req, res) => {
   const userId = req.session.user.id;
   const websiteUuid = req.params.id;
   const filename = req.body.filename;
 
-  // Sécurité de base
+  // Basic security check
   if (
     !filename ||
     filename.includes("..") ||
     filename.includes("/") ||
     filename.length > 100
   ) {
-    return res.status(400).send("Nom de fichier invalide.");
+    return res.status(400).send("Invalid file name.");
   }
 
   db.get(
@@ -89,7 +88,7 @@ router.post("/web/manage/:id/create-file", isAuthenticated, (req, res) => {
     [websiteUuid, userId],
     (err, website) => {
       if (err) {
-        console.error("Erreur DB:", err.message);
+        console.error("DB error:", err.message);
         return res.status(500).render("error/500.ejs");
       }
       if (!website) {
@@ -105,7 +104,53 @@ router.post("/web/manage/:id/create-file", isAuthenticated, (req, res) => {
 
       fs.writeFile(filePath, "", (err) => {
         if (err) {
-          console.error("Erreur création fichier:", err.message);
+          console.error("File creation error:", err.message);
+          return res.status(500).render("error/500.ejs");
+        }
+
+        res.redirect(`/web/manage/${websiteUuid}`);
+      });
+    }
+  );
+});
+
+// File deletion route
+router.get("/web/manage/:id/delete/:file", isAuthenticated, (req, res) => {
+  const userId = req.session.user.id;
+  const websiteUuid = req.params.id;
+  const fileToDelete = req.params.file;
+
+  // Basic security check
+  if (
+    !fileToDelete ||
+    fileToDelete.includes("..") ||
+    fileToDelete.includes("/")
+  ) {
+    return res.status(400).send("Invalid file name.");
+  }
+
+  db.get(
+    "SELECT * FROM websites WHERE uuid = ? AND user_id = ?",
+    [websiteUuid, userId],
+    (err, website) => {
+      if (err) {
+        console.error("Database error:", err.message);
+        return res.status(500).render("error/500.ejs");
+      }
+      if (!website) {
+        return res.status(404).render("error/404.ejs");
+      }
+
+      const filePath = path.join(
+        __dirname,
+        "../../../storage/volumes",
+        websiteUuid,
+        fileToDelete
+      );
+
+      fs.unlink(filePath, (err) => {
+        if (err) {
+          console.error("File deletion error:", err.message);
           return res.status(500).render("error/500.ejs");
         }
 

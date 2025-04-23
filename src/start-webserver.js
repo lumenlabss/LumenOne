@@ -96,7 +96,7 @@ router.post("/web/restart/:uuid", (req, res) => {
   });
 });
 
-// startAllActiveServers() fonction inchangée
+// startAllActiveServers()
 function startAllActiveServers() {
   db.all("SELECT * FROM websites", (err, rows) => {
     if (err) return console.error("Error retrieving sites:", err.message);
