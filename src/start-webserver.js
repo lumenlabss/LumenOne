@@ -7,7 +7,7 @@ const router = express.Router();
 const createWS = require("./pages/admin/subscriptions/create.js");
 
 let activeServers = createWS.activeServers || {};
-console.log("start-webserver.js successfully loaded"); // debug
+console.log("start-webserver.js successfully loaded");
 
 function getContentType(filename) {
   const ext = path.extname(filename).toLowerCase();
@@ -39,56 +39,50 @@ router.post("/web/restart/:uuid", (req, res) => {
   activeServers = createWS.activeServers;
 
   db.get("SELECT * FROM websites WHERE uuid = ?", [uuid], (err, row) => {
-    if (err || !row) {
-      return res.status(404).json({ error: "Site not found." });
-    }
+    if (err || !row) return res.status(404).json({ error: "Site not found." });
 
     const folderPath = path.join(__dirname, "../storage/volumes", uuid);
-    console.log("[DEBUG]: Path searched for restarting: " + folderPath); // debug
+    const indexPath = path.join(folderPath, "index.html");
 
-    const filePath = path.join(folderPath, "index.html");
-
-    fs.access(filePath, fs.constants.F_OK, (err) => {
+    fs.access(indexPath, fs.constants.F_OK, (err) => {
       if (err) {
         return res.status(404).json({
-          error: "index.html not found. Path searched: " + filePath, // debug
+          error: "index.html not found. Path searched: " + indexPath,
         });
       }
 
       if (activeServers[uuid]) {
         activeServers[uuid].close(() => {
-          console.log(`Old server for ${uuid} stopped.`); // debug
+          console.log(`Old server for ${uuid} stopped.`);
         });
-      } else {
-        console.log(`No active server found for ${uuid}, creating new one.`); // debug
       }
 
       const server = http.createServer((req2, res2) => {
-        console.log("Server being used");
         const requestedFile =
-          req2.url === "/" ? "index.html" : req2.url.slice(1);
+          req2.url === "/"
+            ? "index.html"
+            : decodeURIComponent(req2.url.slice(1));
         const requestedFilePath = path.join(folderPath, requestedFile);
-
-        console.log(`[DEBUG]: Requested file: ${requestedFile}`); // debug
 
         fs.access(requestedFilePath, fs.constants.F_OK, (err) => {
           if (err) {
-            console.log(`[DEBUG]: File not found: ${requestedFilePath}`); // debug
             res2.statusCode = 404;
             res2.setHeader("Content-Type", "text/plain");
-            res2.end(`${requestedFile} not found in the website directory.`);
+            res2.end(`File ${requestedFile} not found.`);
             return;
           }
 
-          fs.readFile(requestedFilePath, "utf8", (err, data) => {
+          fs.readFile(requestedFilePath, (err, data) => {
             if (err) {
               res2.statusCode = 500;
               res2.setHeader("Content-Type", "text/plain");
-              res2.end("Error reading file");
-            } else {
-              res2.setHeader("Content-Type", getContentType(requestedFile));
-              res2.end(data);
+              res2.end("Internal server error.");
+              return;
             }
+
+            res2.statusCode = 200;
+            res2.setHeader("Content-Type", getContentType(requestedFile));
+            res2.end(data);
           });
         });
       });
@@ -102,13 +96,10 @@ router.post("/web/restart/:uuid", (req, res) => {
   });
 });
 
-// Function to restart all active servers on startup
+// startAllActiveServers() fonction inchangée
 function startAllActiveServers() {
   db.all("SELECT * FROM websites", (err, rows) => {
-    if (err) {
-      console.error("Error retrieving sites:", err.message);
-      return;
-    }
+    if (err) return console.error("Error retrieving sites:", err.message);
 
     rows.forEach((row) => {
       const folderPath = path.join(__dirname, "../storage/volumes", row.uuid);
@@ -117,24 +108,35 @@ function startAllActiveServers() {
       fs.exists(filePath, (exists) => {
         if (exists) {
           const server = http.createServer((req, res) => {
-            fs.readFile(filePath, "utf8", (err, data) => {
+            const requestedFile =
+              req.url === "/"
+                ? "index.html"
+                : decodeURIComponent(req.url.slice(1));
+            const requestedFilePath = path.join(folderPath, requestedFile);
+
+            fs.access(requestedFilePath, fs.constants.F_OK, (err) => {
               if (err) {
-                res.statusCode = 500;
-                res.end("Error reading the file");
-              } else {
-                res.setHeader("Content-Type", "text/html");
-                res.end(data);
+                res.statusCode = 404;
+                res.setHeader("Content-Type", "text/plain");
+                res.end(`File ${requestedFile} not found.`);
+                return;
               }
+
+              fs.readFile(requestedFilePath, (err, data) => {
+                if (err) {
+                  res.statusCode = 500;
+                  res.setHeader("Content-Type", "text/plain");
+                  res.end("Error reading file.");
+                } else {
+                  res.statusCode = 200;
+                  res.setHeader("Content-Type", getContentType(requestedFile));
+                  res.end(data);
+                }
+              });
             });
           });
+
           activeServers[row.uuid] = server;
-          console.log(
-            "DEBUG: Added active server " + row.uuid + " to the list."
-          );
-          console.log("Here is the current state of the list: ");
-          for (uuid in activeServers) {
-            console.log(uuid);
-          }
           server.listen(row.port, () => {
             console.log(
               `Server for UUID=${row.uuid} started on http://localhost:${row.port}`
@@ -142,7 +144,7 @@ function startAllActiveServers() {
           });
         } else {
           console.log(
-            `index.html file missing for site UUID=${row.uuid}, Port=${row.port}. Server not started.`
+            `index.html missing for UUID=${row.uuid}, not starting server.`
           );
         }
       });
