@@ -26,7 +26,6 @@ const app = express();
 let config;
 app.use(require("./src/start-webserver.js"));
 
-
 // Loading configuration
 try {
   const configData = fs.readFileSync("config/config.json", "utf8");
@@ -47,8 +46,6 @@ app.use((req, res, next) => {
   res.locals.appVersion = config.version;
   next();
 });
-
-
 
 // Middleware configuration
 app.use(bodyParser.urlencoded({ extended: true }));
