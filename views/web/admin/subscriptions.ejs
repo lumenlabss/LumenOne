@@ -74,6 +74,19 @@
       .text-muted {
         color: rgba(255, 255, 255, 0.6);
       }
+
+      .btn-danger {
+        background: rgba(239, 68, 68, 0.2);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .btn-danger:hover {
+        background: rgba(239, 68, 68, 0.3);
+        border-color: rgba(239, 68, 68, 0.4);
+        transform: translateY(-1px);
+      }
     </style>
   </head>
 
@@ -112,6 +125,9 @@
                 <th class="px-4 py-3 text-left text-sm font-semibold">
                   Disk Limit (MB)
                 </th>
+                <th class="px-4 py-3 text-left text-sm font-semibold">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -124,6 +140,15 @@
                 <td class="px-4 py-3"><%= site.name %></td>
                 <td class="px-4 py-3"><%= site.port %></td>
                 <td class="px-4 py-3"><%= site.disk_limit %></td>
+                <td class="px-4 py-3">
+                  <a
+                    href="/web/admin/subscriptions/delete/<%= site.uuid %>"
+                    class="btn-danger text-sm text-red-400 px-4 py-2 inline-block text-center"
+                    onclick="return confirm('Are you sure you want to delete this site?');"
+                  >
+                    Delete
+                  </a>
+                </td>
               </tr>
               <% }) %>
             </tbody>

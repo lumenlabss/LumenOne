@@ -85,7 +85,6 @@ router.get("/web/manage/:id/edit/:file", isAuthenticated, (req, res) => {
                     fileName,
                     fileContent: "",
                     website,
-                    appName: process.env.APP_NAME || "Web File Manager",
                   });
                 });
               } else {
@@ -112,7 +111,6 @@ router.get("/web/manage/:id/edit/:file", isAuthenticated, (req, res) => {
                 fileName,
                 fileContent,
                 website,
-                appName: process.env.APP_NAME || "LumenOne",
               });
             });
           });
