@@ -92,11 +92,11 @@ Contributions are welcome! Here's how you can contribute:
 
 ## :white_check_mark: ToDo List
 
-Project completion: ⁓ 2%
+Project completion: ⁓ 10%
 
 ### Core
 
-- [ ] User authentication (login, logout, sessions)
+- [x] User authentication (login, logout, sessions)
 - [x] Role system (admin, user)
 - [ ] Dashboard for service management (web, FTP, databases)
 - [ ] User/action logs system (audit)
@@ -105,7 +105,7 @@ Project completion: ⁓ 2%
 
 - [ ] Welcome interface with service summary
 - [ ] Domain and subdomain management
-- [ ] Integrated file manager (upload, delete, edit)
+- [x] Integrated file manager (upload, delete, edit)
 - [ ] Interface for database management (create, delete, access)
 
 ### Backend
