@@ -103,7 +103,7 @@ Project completion: ⁓ 10%
 
 ### Web
 
-- [ ] Welcome interface with service summary
+- [x] Welcome interface with service summary
 - [ ] Domain and subdomain management
 - [x] Integrated file manager (upload, delete, edit)
 - [ ] Interface for database management (create, delete, access)
