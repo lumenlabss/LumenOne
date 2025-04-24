@@ -31,7 +31,7 @@
 - **Node.js** (version 18 or higher)
 - **npm** or **yarn**
 - **SQLite database** (default)
-- Linux or Windows server (recommended: Linux)
+- Linux or Windows (recommended: Linux)
 
 ### Installation Steps
 
