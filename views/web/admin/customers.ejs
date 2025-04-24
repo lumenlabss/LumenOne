@@ -30,20 +30,18 @@
         background: rgba(59, 130, 246, 0.1);
         transition: all 0.2s ease;
       }
-      .custom-scrollbar::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
+
+      .btn-primary {
+        background: rgba(59, 130, 246, 0.2);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
       }
-      .custom-scrollbar::-webkit-scrollbar-track {
-        background: rgba(31, 41, 55, 0.2);
-        border-radius: 4px;
-      }
-      .custom-scrollbar::-webkit-scrollbar-thumb {
+
+      .btn-primary:hover {
         background: rgba(59, 130, 246, 0.3);
-        border-radius: 4px;
-      }
-      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: rgba(59, 130, 246, 0.5);
+        border-color: rgba(59, 130, 246, 0.4);
+        transform: translateY(-1px);
       }
     </style>
   </head>
@@ -64,21 +62,10 @@
             <p class="text-gray-400">Manage and monitor user accounts</p>
           </div>
           <button
-            class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors duration-200 flex items-center space-x-2"
+            class="btn-primary px-6 py-3 rounded-lg text-blue-300 text-sm font-medium"
+            onclick="window.location.href='/web/admin/customer/create'"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                clip-rule="evenodd"
-              />
-            </svg>
-            <span>Add New User</span>
+            + Create User
           </button>
         </div>
 
