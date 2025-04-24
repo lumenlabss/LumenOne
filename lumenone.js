@@ -20,6 +20,7 @@ const subscriptions_createRoute = require("./src/pages/admin/subscriptions/creat
 const subscriptionsRoute = require("./src/pages/admin/subscriptions.js");
 const manageRoute = require("./src/pages/user/manage.js");
 const filesRoutes = require("./src/pages/user/edit/files.js");
+const registerAccRoutes = require("./src/pages/auth/register.js")
 
 // Application initialization
 const app = express();
@@ -74,7 +75,7 @@ app.use("/", subscriptions_createRoute);
 app.use("/", subscriptionsRoute);
 app.use("/", manageRoute);
 app.use("/", filesRoutes);
-
+app.use("/", registerAccRoutes);
 // Middleware to handle errors
 app.use((req, res, next) => {
   res.status(404).render("error/404.ejs");
