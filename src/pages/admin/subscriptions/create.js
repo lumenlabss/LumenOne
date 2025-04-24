@@ -7,6 +7,7 @@ const router = express.Router();
 const db = require("../../../db");
 
 let activeServers = {};
+
 // Middleware to check if the user is authenticated and has admin rank
 function isAuthenticated(req, res, next) {
   if (req.session && req.session.user) {
@@ -43,7 +44,6 @@ router.get("/web/admin/subscriptions/create", isAuthenticated, (req, res) => {
     }
 
     res.render("web/admin/subscriptions/create", {
-      appName: "Echo-Host",
       users: rows,
       user: req.session?.user,
       rank: req.session?.user?.rank,
@@ -53,9 +53,9 @@ router.get("/web/admin/subscriptions/create", isAuthenticated, (req, res) => {
 
 // POST route to create a website
 router.post("/web/admin/subscriptions/create", isAuthenticated, (req, res) => {
-  const { userId, diskLimit, port } = req.body;
+  const { userId, diskLimit, port, name } = req.body;
 
-  if (!userId || !diskLimit || !port) {
+  if (!userId || !diskLimit || !port || !name) {
     return res.status(400).send("Missing fields!");
   }
 
@@ -66,7 +66,7 @@ router.post("/web/admin/subscriptions/create", isAuthenticated, (req, res) => {
     VALUES (?, ?, ?, ?, ?)
   `;
 
-  db.run(sql, [userId, uuid, "Site", port, diskLimit], function (err) {
+  db.run(sql, [userId, uuid, name, port, diskLimit], function (err) {
     if (err) {
       console.error("Database error:", err.message);
       return res.status(500).send("Database error.");
@@ -108,11 +108,11 @@ router.post("/web/admin/subscriptions/create", isAuthenticated, (req, res) => {
           });
 
           console.log(
-            `Site created: UUID=${uuid}, Port=${port}, Disk=${diskLimit}MB`
+            `Site created: UUID=${uuid}, Domain=${name}, Port=${port}, Disk=${diskLimit}MB`
           ); // Debug
         } else {
           console.log(
-            `index.html file missing for site UUID=${uuid}, Port=${port}. Server not started.`
+            `index.html file missing for site UUID=${uuid}, Domain=${name}, Port=${port}. Server not started.`
           );
         }
       });
