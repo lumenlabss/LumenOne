@@ -54,15 +54,15 @@
    {
      "hostname": "localhost",
      "port": 3000,
-     "name": "RubixOne",
-     "version": "beta 0.0.1"
+     "name": "LumenOne",
+     "version": "Pre-Alpha"
    }
    ```
 
 4. Start the server:
 
    ```bash
-   node rubixone.js
+   node lumenone.js
    ```
 
 5. Access the web interface:
