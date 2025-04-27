@@ -80,6 +80,11 @@ router.get(
           websiteUuid
         );
 
+        const nginxConfigPath = path.join(
+          "/etc/nginx/sites-available",
+          website.name // Assuming the config file is named after the website's name
+        );
+
         // Delete from DB
         db.run("DELETE FROM websites WHERE uuid = ?", [websiteUuid], (err) => {
           if (err) {
@@ -94,7 +99,27 @@ router.get(
               // still redirect even if file deletion failed
             }
 
-            res.redirect("/web/admin/subscriptions");
+            // Delete Nginx config file
+            fs.rm(nginxConfigPath, (err) => {
+              if (err) {
+                console.error("Error deleting Nginx config:", err.message);
+                // still redirect even if Nginx config deletion failed
+              } else {
+                console.log(`Deleted Nginx config for ${website.name}`);
+              }
+
+              // After deletion of config, restart Nginx
+              const { exec } = require("child_process");
+              exec("sudo systemctl restart nginx", (err, stdout, stderr) => {
+                if (err) {
+                  console.error(`Error restarting Nginx: ${stderr}`);
+                } else {
+                  console.log("Nginx restarted successfully");
+                }
+              });
+
+              res.redirect("/web/admin/subscriptions");
+            });
           });
         });
       }
