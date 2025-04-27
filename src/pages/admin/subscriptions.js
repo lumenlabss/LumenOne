@@ -82,13 +82,10 @@ router.get(
 
         // Corrected path for Nginx config file
         const nginxConfigPath = path.join(
-          __dirname, // Current directory
-          "../../../../..", // Go up to the root of the project
-          "var", // Go to /var
-          "www", // Go to /www
-          "LumenOne", // Go to /LumenOne
-          "nginx_configs", // Directory where Nginx configs are located
-          website.name + ".conf" // The Nginx config file for the website
+          "/etc", // Aller directement dans /etc
+          "nginx", // Aller dans /nginx
+          "sites-enabled", // Répertoire des configurations activées
+          website.name + ".conf" // Le fichier de configuration Nginx
         );
 
         // Delete from DB
