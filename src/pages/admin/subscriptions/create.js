@@ -5,7 +5,7 @@ const express = require("express");
 const http = require("http");
 const router = express.Router();
 const db = require("../../../db");
-const { addDomain } = require("../../../web/domain");
+const addDomain = require("../../../web/domain");
 
 let activeServers = {};
 
