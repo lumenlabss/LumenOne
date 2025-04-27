@@ -113,7 +113,7 @@ router.post("/web/admin/subscriptions/create", isAuthenticated, (req, res) => {
           console.log(
             `New website : UUID=${uuid}, Domaine=${name}, Port=${port}, Disk=${diskLimit}MB`
           ); // Debug
-          return res.redirect("/web/admin/subscriptions.ejs");
+          return res.redirect("/web/admin/subscriptions");
         });
       });
     });
