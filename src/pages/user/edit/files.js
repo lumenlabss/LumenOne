@@ -5,6 +5,10 @@ const path = require("path");
 const db = require("../../../db.js");
 const router = express.Router();
 const { checkSizeBeforeCreate } = require("../../../web/size-limit.js");
+const app = express();
+
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
 
 // Authentication middleware
 function isAuthenticated(req, res, next) {

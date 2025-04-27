@@ -73,6 +73,7 @@
       <div class="max-w-7xl mx-auto">
         <h1 class="text-4xl font-bold gradient-text mb-8">Edit File</h1>
 
+        <% if (error) { %>
         <div
           id="error-message"
           class="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-lg mb-6 text-sm"
@@ -94,6 +95,7 @@
             <span id="error-text"><%= error %></span>
           </div>
         </div>
+        <% } %>
 
         <!-- Form to edit file content -->
         <div class="glass-card rounded-xl p-6 mb-6">
