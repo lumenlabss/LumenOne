@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const db = require("../../../db.js");
 const router = express.Router();
-const { checkSizeBeforeCreate } = require("./size-limit.js"); // Assure-toi d'importer la fonction
+const { checkSizeBeforeCreate } = require("../../../web/size-limit.js");
 
 // Authentication middleware
 function isAuthenticated(req, res, next) {
@@ -12,7 +12,7 @@ function isAuthenticated(req, res, next) {
   res.redirect("/");
 }
 
-// Fonction pour calculer la taille totale d'un dossier
+// Function to calculate the total size of a folder
 function getFolderSize(folderPath, callback) {
   let totalSize = 0;
 
@@ -92,8 +92,8 @@ router.get("/web/manage/:id/edit/:file", isAuthenticated, (req, res) => {
               if (req.query.new === "true") {
                 console.log(`Creating new file: ${filePath}`);
 
-                // Calculer la taille du fichier à ajouter et vérifier la taille
-                const fileSize = 0; // Ce sera 0 si tu crées un fichier vide, sinon mets la taille du fichier
+                // Calculate file size to be added and check the size
+                const fileSize = 0; // This will be 0 if you're creating an empty file, otherwise set the file size
                 checkSizeBeforeCreate(websiteUuid, fileSize, (err) => {
                   if (err) {
                     console.error("Disk limit exceeded: ", err.message);
@@ -195,8 +195,8 @@ router.post("/web/manage/:id/edit/:file", isAuthenticated, (req, res) => {
 
         const filePath = path.join(websiteDir, fileName);
 
-        // Calculer la taille du fichier à ajouter et vérifier la taille
-        const fileSize = Buffer.byteLength(fileContent, "utf8"); // Calculer la taille du contenu en octets
+        // Calculate file size to be added and check the size
+        const fileSize = Buffer.byteLength(fileContent, "utf8"); // Calculate content size in bytes
         checkSizeBeforeCreate(websiteUuid, fileSize, (err) => {
           if (err) {
             console.error("Disk limit exceeded: ", err.message);

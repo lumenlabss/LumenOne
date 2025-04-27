@@ -2,7 +2,7 @@ const db = require("../db.js");
 const fs = require("fs");
 const path = require("path");
 
-// Fonction pour calculer la taille d'un dossier
+// Function to calculate the size of a folder
 function getFolderSize(folderPath) {
   let totalSize = 0;
   const files = fs.readdirSync(folderPath);
@@ -21,7 +21,7 @@ function getFolderSize(folderPath) {
   return totalSize;
 }
 
-// Vérifie si la création d'un fichier dépasse la limite du disque
+// Checks if creating a file will exceed the disk limit
 function checkSizeBeforeCreate(websiteUuid, fileSize, callback) {
   db.get(
     "SELECT disk_limit FROM websites WHERE uuid = ?",
@@ -43,20 +43,20 @@ function checkSizeBeforeCreate(websiteUuid, fileSize, callback) {
         websiteUuid
       );
 
-      // Vérifie si le dossier existe
+      // Check if the folder exists
       if (!fs.existsSync(folderPath)) {
         return callback(new Error("Directory not found"));
       }
 
-      // Calculer la taille utilisée actuelle du dossier
+      // Calculate the current used size of the folder
       const usedSize = getFolderSize(folderPath);
 
-      // Si l'ajout du fichier dépasse la limite
+      // If adding the file exceeds the limit
       if (usedSize + fileSize > diskLimitBytes) {
         return callback(new Error("Disk limit exceeded, cannot create file"));
       }
 
-      // Si on passe la vérification, on peut créer le fichier
+      // If passed the check, the file can be created
       callback(null);
     }
   );
