@@ -40,7 +40,8 @@ function getFolderSize(folderPath, callback) {
     .catch((err) => callback(err));
 }
 
-// Route GET to display the file editor
+// Route to display the file editor
+// Route GET pour afficher l'éditeur de fichier
 router.get("/web/manage/:id/edit/:file", isAuthenticated, (req, res) => {
   const userId = req.session.user.id;
   const websiteUuid = req.params.id;
@@ -92,14 +93,14 @@ router.get("/web/manage/:id/edit/:file", isAuthenticated, (req, res) => {
               if (req.query.new === "true") {
                 console.log(`Creating new file: ${filePath}`);
 
-                // Calculate file size to be added and check the size
-                const fileSize = 0; // This will be 0 if you're creating an empty file, otherwise set the file size
+                // Calcul de la taille du fichier et vérification de l'espace disque
+                const fileSize = 0; // Taille du fichier, ici 0 pour un fichier vide
                 checkSizeBeforeCreate(websiteUuid, fileSize, (err) => {
                   if (err) {
                     console.error("Disk limit exceeded: ", err.message);
                     return res.render("web/edit/files.ejs", {
                       user: req.session.user,
-                      error: err.message, // Pass error to the view
+                      error: err.message, // Envoie l'erreur à la vue
                       websiteUuid,
                       fileName,
                       fileContent: "",
