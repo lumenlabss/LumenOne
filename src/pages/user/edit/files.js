@@ -1,4 +1,4 @@
-console.log("files.js loaded"); // add this for all backend files
+console.log("files.js loaded"); // Add this for all backend files
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
@@ -97,8 +97,13 @@ router.get("/web/manage/:id/edit/:file", isAuthenticated, (req, res) => {
                 checkSizeBeforeCreate(websiteUuid, fileSize, (err) => {
                   if (err) {
                     console.error("Disk limit exceeded: ", err.message);
-                    return res.status(400).render("error/400.ejs", {
-                      message: err.message,
+                    return res.render("web/edit/files.ejs", {
+                      user: req.session.user,
+                      error: err.message, // Pass error to the view
+                      websiteUuid,
+                      fileName,
+                      fileContent: "",
+                      website,
                     });
                   }
 
@@ -201,7 +206,7 @@ router.post("/web/manage/:id/edit/:file", isAuthenticated, (req, res) => {
           if (err) {
             console.error("Disk limit exceeded: ", err.message);
 
-            // Add the error message to be rendered in the view
+            // Pass error to the view
             return res.render("web/edit/files.ejs", {
               user: req.session.user,
               error: err.message, // Send error message to view
