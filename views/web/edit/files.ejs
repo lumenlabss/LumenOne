@@ -73,10 +73,10 @@
       <div class="max-w-7xl mx-auto">
         <h1 class="text-4xl font-bold gradient-text mb-8">Edit File</h1>
 
+        <% if (error) { %>
         <div
           id="error-message"
           class="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-lg mb-6 text-sm"
-          style="<%= errorMessage ? '' : 'display: none;' %>"
         >
           <div class="flex items-center">
             <svg
@@ -92,11 +92,10 @@
                 d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <span id="error-text"
-              ><%= errorMessage || 'Unknown error occurred.' %></span
-            >
+            <span id="error-text"><%= error %></span>
           </div>
         </div>
+        <% } %>
 
         <!-- Form to edit file content -->
         <div class="glass-card rounded-xl p-6 mb-6">

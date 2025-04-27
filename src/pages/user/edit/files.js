@@ -93,13 +93,13 @@ router.get("/web/manage/:id/edit/:file", isAuthenticated, (req, res) => {
                 console.log(`Creating new file: ${filePath}`);
 
                 // Calculate file size and check disk space
-                const fileSize = 0; // size of the file, here 0 for an empty file
+                const fileSize = 0; // sitze of the file, here 0 for an empty file
                 checkSizeBeforeCreate(websiteUuid, fileSize, (err) => {
                   if (err) {
                     console.error("Disk limit exceeded: ", err.message);
                     return res.render("web/edit/files.ejs", {
                       user: req.session.user,
-                      errorMessage: err.message, // Sends error in a new variable
+                      error: err.message, // Sends error to view
                       websiteUuid,
                       fileName,
                       fileContent: "",
@@ -209,7 +209,7 @@ router.post("/web/manage/:id/edit/:file", isAuthenticated, (req, res) => {
             // Pass error to the view
             return res.render("web/edit/files.ejs", {
               user: req.session.user,
-              errorMessage: err.message, // Send error message to view
+              error: err.message, // Send error message to view
               websiteUuid,
               fileName,
               fileContent,
