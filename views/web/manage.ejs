@@ -87,6 +87,14 @@
       <div class="max-w-7xl mx-auto">
         <h1 class="text-4xl font-bold gradient-text mb-8">Website Manager</h1>
 
+        <% if (typeof error !== 'undefined') { %>
+        <div
+          class="mb-4 p-4 rounded-lg bg-red-500/20 border border-red-400 text-red-300"
+        >
+          <%= error %>
+        </div>
+        <% } %>
+
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <!-- Port Stat Card -->
           <div class="stat-card rounded-xl p-6">
