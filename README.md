@@ -9,18 +9,18 @@
 
 ---
 
-## :sparkles: Key Features (under development)
+## :sparkles: Key Features
 
-- :control_knobs: **Simple, responsive, and modern web interface**
+- :control_knobs: **Simple, responsive, and modern web interface** - under development
 - :globe_with_meridians: **Domain & subdomain management**
 - :file_folder: **File management** (via SFTP/WebFTP)
-- :dolphin: **Database management** (SQLite)
-- :outbox_tray: **FTP account management**
-- :e_mail: **Email management** (optional)
-- :whale: **Docker integration** (optional for service isolation)
+- :dolphin: **Database management** (SQLite) - under development
+- :outbox_tray: **FTP account management** - under development
+- :e_mail: **Email management** (optional) - under development
+- :whale: **Docker integration** (optional for service isolation) - under development
 - :closed_lock_with_key: **Let's Encrypt SSL certificates**
-- :jigsaw: **Module/extension system** for customization
-- :arrows_counterclockwise: **REST API** for automation and integration
+- :jigsaw: **Module/extension system** for customization - under development
+- :arrows_counterclockwise: **REST API** for automation and integration - under development
 
 ---
 
