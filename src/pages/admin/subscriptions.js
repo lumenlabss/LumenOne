@@ -80,9 +80,15 @@ router.get(
           websiteUuid
         );
 
+        // Corrected path for Nginx config file
         const nginxConfigPath = path.join(
-          "/etc/nginx/sites-available",
-          website.name + ".conf"
+          __dirname, // Current directory
+          "../../../../..", // Go up to the root of the project
+          "var", // Go to /var
+          "www", // Go to /www
+          "LumenOne", // Go to /LumenOne
+          "nginx_configs", // Directory where Nginx configs are located
+          website.name + ".conf" // The Nginx config file for the website
         );
 
         // Delete from DB
