@@ -90,8 +90,6 @@
    }
    ```
 
-```
-
 ---
 
 ## :page_facing_up: License
@@ -167,4 +165,7 @@ Join the LumenOne community to ask questions, report bugs, or propose ideas:
 ## :tada: Acknowledgments
 
 Thanks to all contributors and users who support the LumenOne project!
+
+```
+
 ```
