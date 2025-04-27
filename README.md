@@ -16,7 +16,7 @@
 - :file_folder: **File management** (via SFTP/WebFTP)
 - :dolphin: **Database management** (SQLite)
 - :outbox_tray: **FTP account management**
-- :mail: **Email management** (optional)
+- 📧 **Email management** (optional)
 - :whale: **Docker integration** (optional for service isolation)
 - :closed_lock_with_key: **Let's Encrypt SSL certificates**
 - :jigsaw: **Module/extension system** for customization
