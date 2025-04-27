@@ -38,8 +38,8 @@
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/RubixLTS/RubixOne.git
-   cd RubixOne
+   git clone https://github.com/lumenlabss/LumenOne.git
+   cd LumenOne
    ```
 
 2. Install dependencies:
