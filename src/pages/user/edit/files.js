@@ -200,8 +200,15 @@ router.post("/web/manage/:id/edit/:file", isAuthenticated, (req, res) => {
         checkSizeBeforeCreate(websiteUuid, fileSize, (err) => {
           if (err) {
             console.error("Disk limit exceeded: ", err.message);
-            return res.status(400).render("error/400.ejs", {
-              message: err.message,
+
+            // Add the error message to be rendered in the view
+            return res.render("web/edit/files.ejs", {
+              user: req.session.user,
+              error: err.message, // Send error message to view
+              websiteUuid,
+              fileName,
+              fileContent,
+              website,
             });
           }
 
