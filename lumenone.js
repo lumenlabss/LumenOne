@@ -35,7 +35,7 @@ app.use((req, res, next) => {
 
 // Middleware configuration
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "10mb" }));
 app.use(
   session({
     secret: config.session.secret, // Use of the config.json secret key
