@@ -20,25 +20,10 @@ const subscriptions_createRoute = require("./src/pages/admin/subscriptions/creat
 const subscriptionsRoute = require("./src/pages/admin/subscriptions.js");
 const manageRoute = require("./src/pages/user/manage.js");
 const filesRoutes = require("./src/pages/user/edit/files.js");
+const config = require("./src/config/config.js");
 
 // Application initialization
 const app = express();
-let config;
-app.use(require("./src/start-webserver.js"));
-
-// Loading configuration
-try {
-  const configData = fs.readFileSync("config/config.json", "utf8");
-  config = JSON.parse(configData);
-  console.log("Configuration loaded:", config);
-} catch (err) {
-  console.error("Error reading or parsing config.json:", err);
-  process.exit(1);
-}
-
-// Configuration parameters
-const port = config.port || 3000;
-const hostname = config.hostname || "localhost";
 
 // Global variables for EJS
 app.use((req, res, next) => {
@@ -52,10 +37,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(
   session({
-    secret: "secret-key", // Replace with a secure secret key
-    resave: false,
-    saveUninitialized: false,
-    cookie: { secure: false }, // Use `secure: true` if using HTTPS
+    secret: config.session.secret, // Use of the config.json secret key
+    resave: config.session.resave,
+    saveUninitialized: config.session.saveUninitialized,
+    cookie: config.session.cookie, // Setting cookies from config.json
   })
 );
 
@@ -96,6 +81,9 @@ app.use((req, res, next) => {
 });
 
 // Starting the server
+const port = config.port || 3000;
+const hostname = config.hostname || "localhost";
+
 app.listen(port, hostname, () => {
   console.log(`LumenOne successfully started: http://${hostname}:${port}`);
 });
