@@ -26,8 +26,8 @@ const createuserRoutes = require("./src/pages/admin/customers/create.js");
 // Application initialization
 const app = express();
 
-app.use(express.json({ limit: "10mb" }));
-app.use(express.urlencoded({ limit: "10mb", extended: true }));
+app.use(express.json({ limit: "80mb" }));
+app.use(express.urlencoded({ limit: "80mb", extended: true }));
 
 // Global variables for EJS
 app.use((req, res, next) => {
