@@ -1,11 +1,11 @@
 const fs = require("fs");
 const { exec } = require("child_process");
 
-function addDomain(domain, port, callback) {
+function addDomain(name, port, callback) {
   const nginxConfig = `
 server {
     listen 80;
-    server_name ${domain};
+    server_name ${name};
 
     location / {
         proxy_pass http://127.0.0.1:${port};
@@ -14,7 +14,7 @@ server {
     }
 }`;
 
-  const configPath = `/etc/nginx/sites-enabled/${domain}.conf`;
+  const configPath = `/etc/nginx/sites-enabled/${name}.conf`;
 
   fs.writeFile(configPath, nginxConfig, (err) => {
     if (err) {
