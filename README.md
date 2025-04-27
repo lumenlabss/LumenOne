@@ -66,9 +66,31 @@
    ```
 
 5. Access the web interface:
+
    ```
    http://localhost:3000
    ```
+
+6. Nginx Config:
+
+   ```
+   server {
+    listen 80;
+    server_name example.com;  # Replace with your domain
+
+    # Redirect all HTTP requests to your Node.js application
+        location / {
+        proxy_pass http://localhost:3000;  # Replace with the port on which your Node.js app is listening
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+   }
+   ```
+
+```
 
 ---
 
@@ -145,3 +167,4 @@ Join the LumenOne community to ask questions, report bugs, or propose ideas:
 ## :tada: Acknowledgments
 
 Thanks to all contributors and users who support the LumenOne project!
+```
