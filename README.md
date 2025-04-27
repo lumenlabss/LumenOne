@@ -32,8 +32,15 @@
 - **npm** or **yarn**
 - **SQLite database** (default)
 - Linux or Windows (recommended: Linux)
+- **Nginx**
 
 ### Installation Steps
+
+0. Go to :
+
+   ```bash
+   cd var/www/
+   ```
 
 1. Clone the repository:
 
