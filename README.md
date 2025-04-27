@@ -141,6 +141,7 @@ Project completion: ⁓ 20%
 - [ ] Security (rate limiting, JWT token management, CSRF protection)
 - [ ] Multi-server support for scalability
 - [x] Code reorganization into modules (`src`)
+- [ ] Create a Middlewares files (`src/middlewares/exemple.js`)
 
 ### Modules
 
