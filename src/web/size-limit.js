@@ -21,8 +21,8 @@ function getFolderSize(folderPath) {
   return totalSize;
 }
 
-// Fonction principale pour vérifier la limite
-function checkSizeLimit(websiteUuid, callback) {
+// Vérifie si la création d'un fichier dépasse la limite du disque
+function checkSizeBeforeCreate(websiteUuid, fileSize, callback) {
   db.get(
     "SELECT disk_limit FROM websites WHERE uuid = ?",
     [websiteUuid],
@@ -33,7 +33,7 @@ function checkSizeLimit(websiteUuid, callback) {
       }
 
       if (!row) {
-        return callback(new Error("Site non trouvé."));
+        return callback(new Error("Website not found"));
       }
 
       const diskLimitBytes = row.disk_limit * 1024 * 1024; // MB -> Bytes
@@ -43,23 +43,25 @@ function checkSizeLimit(websiteUuid, callback) {
         websiteUuid
       );
 
+      // Vérifie si le dossier existe
       if (!fs.existsSync(folderPath)) {
-        return callback(new Error("Files not found."));
+        return callback(new Error("Directory not found"));
       }
 
+      // Calculer la taille utilisée actuelle du dossier
       const usedSize = getFolderSize(folderPath);
-      const status = usedSize <= diskLimitBytes ? "OK" : "LIMIT_EXCEEDED";
 
-      callback(null, {
-        uuid: websiteUuid,
-        disk_limit_mb: row.disk_limit,
-        used_mb: (usedSize / 1024 / 1024).toFixed(2),
-        status: status,
-      });
+      // Si l'ajout du fichier dépasse la limite
+      if (usedSize + fileSize > diskLimitBytes) {
+        return callback(new Error("Disk limit exceeded, cannot create file"));
+      }
+
+      // Si on passe la vérification, on peut créer le fichier
+      callback(null);
     }
   );
 }
 
 module.exports = {
-  checkSizeLimit,
+  checkSizeBeforeCreate,
 };

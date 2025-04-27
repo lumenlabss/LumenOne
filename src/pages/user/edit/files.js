@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const db = require("../../../db.js");
 const router = express.Router();
+const { checkSizeBeforeCreate } = require("./size-limit.js"); // Assure-toi d'importer la fonction
 
 // Authentication middleware
 function isAuthenticated(req, res, next) {
@@ -11,7 +12,7 @@ function isAuthenticated(req, res, next) {
   res.redirect("/");
 }
 
-// Function to calculate the total size of a folder
+// Fonction pour calculer la taille totale d'un dossier
 function getFolderSize(folderPath, callback) {
   let totalSize = 0;
 
@@ -48,7 +49,6 @@ router.get("/web/manage/:id/edit/:file", isAuthenticated, (req, res) => {
   console.log(
     `DEBUG: Edit route accessed - website: ${websiteUuid}, file: ${fileName}`
   );
-  console.log(`[DEBUG] GET /web/manage/${websiteUuid}/edit/${fileName}`);
 
   db.get(
     "SELECT * FROM websites WHERE uuid = ? AND user_id = ?",
@@ -91,19 +91,34 @@ router.get("/web/manage/:id/edit/:file", isAuthenticated, (req, res) => {
 
               if (req.query.new === "true") {
                 console.log(`Creating new file: ${filePath}`);
-                fs.writeFile(filePath, "", "utf8", (err) => {
+
+                // Calculer la taille du fichier à ajouter et vérifier la taille
+                const fileSize = 0; // Ce sera 0 si tu crées un fichier vide, sinon mets la taille du fichier
+                checkSizeBeforeCreate(websiteUuid, fileSize, (err) => {
                   if (err) {
-                    console.error(`Error creating new file: ${filePath}`, err);
-                    return res.status(500).render("error/500.ejs");
+                    console.error("Disk limit exceeded: ", err.message);
+                    return res.status(400).render("error/400.ejs", {
+                      message: err.message,
+                    });
                   }
 
-                  return res.render("web/edit/files.ejs", {
-                    user: req.session.user,
-                    rank: row ? row.rank : null,
-                    websiteUuid,
-                    fileName,
-                    fileContent: "",
-                    website,
+                  fs.writeFile(filePath, "", "utf8", (err) => {
+                    if (err) {
+                      console.error(
+                        `Error creating new file: ${filePath}`,
+                        err
+                      );
+                      return res.status(500).render("error/500.ejs");
+                    }
+
+                    return res.render("web/edit/files.ejs", {
+                      user: req.session.user,
+                      rank: row ? row.rank : null,
+                      websiteUuid,
+                      fileName,
+                      fileContent: "",
+                      website,
+                    });
                   });
                 });
               } else {
@@ -180,14 +195,25 @@ router.post("/web/manage/:id/edit/:file", isAuthenticated, (req, res) => {
 
         const filePath = path.join(websiteDir, fileName);
 
-        fs.writeFile(filePath, fileContent, "utf8", (err) => {
+        // Calculer la taille du fichier à ajouter et vérifier la taille
+        const fileSize = Buffer.byteLength(fileContent, "utf8"); // Calculer la taille du contenu en octets
+        checkSizeBeforeCreate(websiteUuid, fileSize, (err) => {
           if (err) {
-            console.error(`Error writing file: ${filePath}`, err);
-            return res.status(500).render("error/500.ejs");
+            console.error("Disk limit exceeded: ", err.message);
+            return res.status(400).render("error/400.ejs", {
+              message: err.message,
+            });
           }
 
-          console.log(`File saved successfully: ${filePath}`);
-          res.redirect(`/web/manage/${websiteUuid}`);
+          fs.writeFile(filePath, fileContent, "utf8", (err) => {
+            if (err) {
+              console.error(`Error writing file: ${filePath}`, err);
+              return res.status(500).render("error/500.ejs");
+            }
+
+            console.log(`File saved successfully: ${filePath}`);
+            res.redirect(`/web/manage/${websiteUuid}`);
+          });
         });
       });
     }
