@@ -82,7 +82,7 @@ router.get(
 
         const nginxConfigPath = path.join(
           "/etc/nginx/sites-available",
-          website.name // Assuming the config file is named after the website's name
+          website.name + ".conf"
         );
 
         // Delete from DB

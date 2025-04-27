@@ -112,7 +112,7 @@ Contributions are welcome! Here's how you can contribute:
 
 ## :white_check_mark: ToDo List
 
-Project completion: ⁓ 16%
+Project completion: ⁓ 20%
 
 ### Core
 
@@ -124,7 +124,7 @@ Project completion: ⁓ 16%
 ### Web
 
 - [x] Welcome interface with service summary
-- [ ] Domain and subdomain management
+- [x] Domain and subdomain management
 - [x] Integrated file manager (upload, delete, edit)
 - [ ] Interface for database management (create, delete, access)
 
