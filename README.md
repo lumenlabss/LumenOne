@@ -14,7 +14,7 @@
 - :control_knobs: **Simple, responsive, and modern web interface**
 - :globe_with_meridians: **Domain & subdomain management**
 - :file_folder: **File management** (via SFTP/WebFTP)
-- :dolphin: **Database management** (MySQL/MariaDB)
+- :dolphin: **Database management** (SQLite)
 - :outbox_tray: **FTP account management**
 - :e_mail: **Email management** (optional)
 - :whale: **Docker integration** (optional for service isolation)
