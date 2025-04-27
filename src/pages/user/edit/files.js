@@ -40,7 +40,7 @@ function getFolderSize(folderPath, callback) {
     .catch((err) => callback(err));
 }
 
-// Route to display the file editor
+// Route GET to display the file editor
 router.get("/web/manage/:id/edit/:file", isAuthenticated, (req, res) => {
   const userId = req.session.user.id;
   const websiteUuid = req.params.id;
