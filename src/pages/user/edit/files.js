@@ -119,6 +119,7 @@ router.get("/web/manage/:id/edit/:file", isAuthenticated, (req, res) => {
                     return res.render("web/edit/files.ejs", {
                       user: req.session.user,
                       rank: row ? row.rank : null,
+                      error: null,
                       websiteUuid,
                       fileName,
                       fileContent: "",
@@ -143,6 +144,7 @@ router.get("/web/manage/:id/edit/:file", isAuthenticated, (req, res) => {
               res.render("web/edit/files.ejs", {
                 user: req.session.user,
                 rank: row ? row.rank : null,
+                error: null,
                 websiteUuid,
                 fileName,
                 fileContent,
