@@ -20,7 +20,6 @@ server {
     `Attempting to write Nginx config for ${name} on port ${port}...`
   );
 
-  // Vérification si le fichier existe
   fs.access(configPath, fs.constants.F_OK, (err) => {
     if (!err) {
       console.log(`The config file already exists at ${configPath}`);

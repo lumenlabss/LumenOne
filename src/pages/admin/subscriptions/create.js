@@ -36,11 +36,11 @@ function isAuthenticated(req, res, next) {
   }
 }
 
-// // Route GET to display the creation page
+// Route GET to display the creation page
 router.get("/web/admin/subscriptions/create", isAuthenticated, (req, res) => {
   db.all("SELECT id, username FROM users", (err, rows) => {
     if (err) {
-      console.error("Error loading users :", err.message);
+      console.error("Error loading users:", err.message);
       return res.status(500).send("Server error");
     }
 
@@ -58,7 +58,7 @@ router.post("/web/admin/subscriptions/create", isAuthenticated, (req, res) => {
 
   // Check that all required fields are present
   if (!userId || !diskLimit || !port || !name) {
-    return res.status(400).send("Missing fields !");
+    return res.status(400).send("Missing fields!");
   }
 
   const uuid = crypto.randomUUID();
@@ -70,7 +70,7 @@ router.post("/web/admin/subscriptions/create", isAuthenticated, (req, res) => {
 
   db.run(sql, [userId, uuid, name, port, diskLimit], function (err) {
     if (err) {
-      console.error("Database error :", err.message);
+      console.error("Database error:", err.message);
       return res.status(500).send("Database error.");
     }
 
@@ -82,52 +82,70 @@ router.post("/web/admin/subscriptions/create", isAuthenticated, (req, res) => {
 
     fs.mkdir(folderPath, { recursive: true }, (err) => {
       if (err) {
-        console.error("Folder creation error :", err.message);
+        console.error("Folder creation error:", err.message);
         return res.status(500).send("Folder creation error.");
       }
 
-      // Check if the index.html file exists
       const filePath = path.join(folderPath, "index.html");
 
       fs.exists(filePath, (exists) => {
-        if (exists) {
-          // Create an HTTP server to listen on the specified port
-          const server = http.createServer((req, res) => {
-            fs.readFile(filePath, "utf8", (err, data) => {
-              if (err) {
-                res.statusCode = 500;
-                res.end("File read error");
-              } else {
-                res.setHeader("Content-Type", "text/html");
-                res.end(data);
-              }
-            });
-          });
+        if (!exists) {
+          // Create a basic index.html file if it doesn't exist
+          const defaultHtml = `
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Welcome to ${name}</title>
+            </head>
+            <body>
+              <h1>Welcome to ${name}!</h1>
+              <p>This is the default page for your website.</p>
+            </body>
+            </html>
+          `;
 
-          activeServers[uuid] = server;
-          // Start the server on the specified port
-          server.listen(port, () => {
-            console.log(`Server running on http://localhost:${port}`);
-          });
-
-          // Add domain to Nginx configuration
-          addDomain(name, port, (err) => {
-            // 'name' used as domain
+          fs.writeFile(filePath, defaultHtml, (err) => {
             if (err) {
-              console.error(`Error adding domain for ${name} :`, err);
-              return res.status(500).send("Failed to add domain.");
+              console.error("Error creating index.html:", err.message);
+              return res.status(500).send("Error creating index.html.");
             }
-
-            console.log(
-              r`New website : UUID=${uuid}, Domaine=${name}, Port=${port}, Disk=${diskLimit}MB`
-            ); // Debug
-            return res.redirect("/web/admin/subscriptions");
+            console.log(`Created default index.html for ${name}`);
           });
-        } else {
-          console.log(
-            `Missing index.html file for the site UUID=${uuid}, Domaine=${name}, Port=${port}. Server not started.`
-          );
         }
+
+        // Create an HTTP server to listen on the specified port
+        const server = http.createServer((req, res) => {
+          fs.readFile(filePath, "utf8", (err, data) => {
+            if (err) {
+              res.statusCode = 500;
+              res.end("File read error");
+            } else {
+              res.setHeader("Content-Type", "text/html");
+              res.end(data);
+            }
+          });
+        });
+
+        activeServers[uuid] = server;
+        // Start the server on the specified port
+        server.listen(port, () => {
+          console.log(`Server running on http://localhost:${port}`);
+        });
+
+        // Add domain to Nginx configuration
+        addDomain(name, port, (err) => {
+          if (err) {
+            console.error(`Error adding domain for ${name}:`, err);
+            return res.status(500).send("Failed to add domain.");
+          }
+
+          console.log(
+            `New website : UUID=${uuid}, Domaine=${name}, Port=${port}, Disk=${diskLimit}MB`
+          );
+          return res.redirect("/web/admin/subscriptions");
+        });
       });
     });
   });
