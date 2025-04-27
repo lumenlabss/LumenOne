@@ -4,11 +4,11 @@ const { exec } = require("child_process");
 function addDomain(name, port, callback) {
   const nginxConfig = `
 server {
-    listen ${port};
+    listen 80;
     server_name ${name};
 
     location / {
-        proxy_pass http://127.0.0.1:${port};
+        proxy_pass http://127.0.0.1:${port};  # Reste inchangé
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
     }
