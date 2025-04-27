@@ -157,6 +157,7 @@ Project completion: ⁓ 20%
 - [ ] Notification system (emails, alerts)
 - [ ] Language system
 - [ ] Docker integration (optional for service isolation)
+- [ ] Add `console.log("exemple.js loaded");` for all backend files
 
 ---
 

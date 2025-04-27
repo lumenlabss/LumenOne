@@ -1,5 +1,4 @@
-//files.js
-console.log("files.js chargé !");
+console.log("files.js loaded"); // add this for all backend files
 const express = require("express");
 const fs = require("fs");
 const path = require("path");
@@ -21,7 +20,7 @@ router.get("/web/manage/:id/edit/:file", isAuthenticated, (req, res) => {
   console.log(
     `DEBUG: Edit route accessed - website: ${websiteUuid}, file: ${fileName}`
   );
-  console.log(`[DEBUG] GET /web/manage/${websiteUuid}/edit/${fileName}`); // Log de l'URL
+  console.log(`[DEBUG] GET /web/manage/${websiteUuid}/edit/${fileName}`); // Log url
 
   // Check if website exists and belongs to user
   db.get(
@@ -48,7 +47,7 @@ router.get("/web/manage/:id/edit/:file", isAuthenticated, (req, res) => {
       // Récupérer le rank de l'utilisateur AVANT de lire le fichier ou de le créer
       db.get("SELECT rank FROM users WHERE id = ?", [userId], (err, row) => {
         if (err) {
-          console.error("Erreur récupération rank:", err.message);
+          console.error("Error recovery rank:", err.message);
           return res.status(500).render("error/500.ejs");
         }
 
@@ -106,7 +105,7 @@ router.get("/web/manage/:id/edit/:file", isAuthenticated, (req, res) => {
               // Render the editor with file content, including user rank
               res.render("web/edit/files.ejs", {
                 user: req.session.user,
-                rank: row ? row.rank : null, // 'row' est maintenant accessible ici
+                rank: row ? row.rank : null,
                 websiteUuid,
                 fileName,
                 fileContent,
