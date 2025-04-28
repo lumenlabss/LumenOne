@@ -23,6 +23,7 @@ const filesRoutes = require("./src/pages/user/edit/files.js");
 const config = require("./src/config/config.js");
 const startWebServer = require("./src/start-webserver.js");
 const createuserRoutes = require("./src/pages/admin/customers/create.js");
+const informationRoutes = require("./src/pages/admin/information.js");
 // Application initialization
 const app = express();
 
@@ -65,6 +66,7 @@ app.use("/", manageRoute);
 app.use("/", filesRoutes);
 app.use("/", startWebServer);
 app.use("/", createuserRoutes);
+app.use("/", informationRoutes);
 
 // Middleware to handle errors
 app.use((req, res, next) => {

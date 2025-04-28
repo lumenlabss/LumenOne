@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>System Information</title>
+    <script src="https://unpkg.com/lucide@0.276.0/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        min-height: 100vh;
+        background-attachment: fixed;
+      }
+      .glass-card {
+        background: rgba(31, 41, 55, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+      }
+      .glass-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(59, 130, 246, 0.5);
+        box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
+      }
+      .gradient-text {
+        background: linear-gradient(135deg, #60a5fa, #3b82f6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .stat-badge {
+        background: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        transition: all 0.3s ease;
+      }
+      .stat-badge:hover {
+        background: rgba(59, 130, 246, 0.2);
+        border-color: rgba(59, 130, 246, 0.3);
+      }
+    </style>
+  </head>
+
+  <!-- Sidebar -->
+  <%- include('../../components/sidebar') %>
+
+  <body class="gradient-bg text-white min-h-screen flex flex-col sm:ml-64">
+    <div class="flex-grow p-8">
+      <div class="max-w-7xl mx-auto">
+        <h1 class="text-3xl font-bold gradient-text mb-8">
+          System Information
+        </h1>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <!-- Cards -->
+        <div class="glass-card rounded-xl p-6">
+          <div class="flex items-start gap-4">
+            <div class="stat-badge p-3 rounded-lg">
+              <i data-lucide="cpu" class="w-6 h-6 text-blue-400"></i>
+            </div>
+            <div>
+              <h3 class="text-sm text-gray-400 mb-1">Processor</h3>
+              <p class="text-lg font-semibold">
+                <%= CPUname %> <%= CPUfrequence %>
+              </p>
+              <p class="text-sm text-gray-400 mt-1">
+                <%= CPUCores %> Cores
+                <!-- %= CPUThreads %> Threads-->
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-xl p-6">
+          <div class="flex items-start gap-4">
+            <div class="stat-badge p-3 rounded-lg">
+              <i data-lucide="database" class="w-6 h-6 text-blue-400"></i>
+            </div>
+            <div>
+              <h3 class="text-sm text-gray-400 mb-1">Memory (RAM)</h3>
+              <p class="text-lg font-semibold"><%= RAMsize %> <%= RAMtype %></p>
+              <p class="text-sm text-gray-400 mt-1"><%= RAMspeed %></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-xl p-6">
+          <div class="flex items-start gap-4">
+            <div class="stat-badge p-3 rounded-lg">
+              <i data-lucide="hard-drive" class="w-6 h-6 text-blue-400"></i>
+            </div>
+            <div>
+              <h3 class="text-sm text-gray-400 mb-1">Storage</h3>
+              <p class="text-lg font-semibold">
+                <%= StorageSize %> <%= StorageType %>
+              </p>
+              <p class="text-sm text-gray-400 mt-1"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-xl p-6">
+          <div class="flex items-start gap-4">
+            <div class="stat-badge p-3 rounded-lg">
+              <i data-lucide="monitor" class="w-6 h-6 text-blue-400"></i>
+            </div>
+            <div>
+              <h3 class="text-sm text-gray-400 mb-1">Operating System</h3>
+              <p class="text-lg font-semibold"><%= OSname %></p>
+              <p class="text-sm text-gray-400 mt-1"><%= Osversion %></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-xl p-6">
+          <div class="flex items-start gap-4">
+            <div class="stat-badge p-3 rounded-lg">
+              <i data-lucide="network" class="w-6 h-6 text-blue-400"></i>
+            </div>
+            <div>
+              <h3 class="text-sm text-gray-400 mb-1">Network</h3>
+              <p class="text-lg font-semibold">IPv4: <%= NetworkIP %></p>
+              <p class="text-sm text-gray-400 mt-1"><%= NetworkSpeed %></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-xl p-6">
+          <div class="flex items-start gap-4">
+            <div class="stat-badge p-3 rounded-lg">
+              <i data-lucide="timer" class="w-6 h-6 text-blue-400"></i>
+            </div>
+            <div>
+              <h3 class="text-sm text-gray-400 mb-1">System Uptime</h3>
+              <p class="text-lg font-semibold"><%= SystemUptime %></p>
+              <p class="text-sm text-gray-400 mt-1"><%= LastBoot %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--SOON-->
+      <div class="glass-card rounded-xl p-8">
+        <h2 class="text-2xl font-bold mb-6 gradient-text">
+          Detailed System Overview
+        </h2>
+        <div class="space-y-4">
+          <div
+            class="flex items-center justify-between py-3 border-b border-gray-700"
+          >
+            <span class="text-gray-400">CPU Architecture</span>
+            <span class="font-medium">x86_64</span>
+          </div>
+          <div
+            class="flex items-center justify-between py-3 border-b border-gray-700"
+          >
+            <span class="text-gray-400">CPU Clock Speed</span>
+            <span class="font-medium">3.4 GHz (4.9 GHz Boost)</span>
+          </div>
+          <div
+            class="flex items-center justify-between py-3 border-b border-gray-700"
+          >
+            <span class="text-gray-400">Memory Type</span>
+            <span class="font-medium">DDR4 Dual Channel</span>
+          </div>
+          <div
+            class="flex items-center justify-between py-3 border-b border-gray-700"
+          >
+            <span class="text-gray-400">Storage Type</span>
+            <span class="font-medium">NVMe M.2 SSD</span>
+          </div>
+          <div class="flex items-center justify-between py-3">
+            <span class="text-gray-400">Kernel Version</span>
+            <span class="font-medium">5.15.0-91-generic</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Footer-->
+    <%- include('../../components/footer') %>
+
+    <script>
+      lucide.createIcons();
+    </script>
+  </body>
+</html>

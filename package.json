@@ -10,6 +10,7 @@
     "jsonfile": "^6.1.0",
     "path": "^0.12.7",
     "sqlite3": "^5.1.7",
+    "systeminformation": "^5.25.11",
     "tailwindcss": "^4.1.3"
   }
 }
