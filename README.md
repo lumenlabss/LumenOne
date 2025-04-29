@@ -155,7 +155,7 @@ Project completion: ⁓ 20%
 
 - [ ] Complete documentation (installation, API, development)
 - [ ] Mobile-friendly interface
-- [ ] Light theme
+- [ ] Multiple theme (Light theme, Plesk theme, and other)
 - [ ] Notification system (emails, alerts)
 - [ ] Language system
 - [ ] Docker integration (optional for service isolation)
