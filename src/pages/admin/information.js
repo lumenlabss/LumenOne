@@ -4,6 +4,7 @@ const router = express.Router();
 const db = require("../../db.js");
 const os = require("os");
 const si = require("systeminformation");
+const getLumenOneOverviewData = require("../../utils/version-checker");
 
 // Middleware d'authentification
 function isAuthenticated(req, res, next) {
@@ -33,16 +34,17 @@ function isAuthenticated(req, res, next) {
 }
 
 // Route to system information page
-// Route to system information page
 router.get("/web/admin/information", isAuthenticated, async (req, res) => {
   try {
     const cpuData = await si.cpu();
     const memData = await si.mem();
-    const memLayout = await si.memLayout(); // To get more detailed memory info
+    const memLayout = await si.memLayout();
     const diskData = await si.diskLayout();
     const osInfo = await si.osInfo();
     const netData = await si.networkInterfaces();
-    const uptime = os.uptime(); // in seconds
+    const uptime = os.uptime();
+    const { localVersion, latestVersion, updateAvailable } =
+      await getLumenOneOverviewData();
 
     const uptimeDays = Math.floor(uptime / 86400);
     const uptimeHours = Math.floor((uptime % 86400) / 3600);
@@ -50,25 +52,46 @@ router.get("/web/admin/information", isAuthenticated, async (req, res) => {
 
     const CPUfrequence = cpuData.speed + " GHz";
     const CPUname = `${cpuData.manufacturer} ${cpuData.brand}`;
-    const RAMtype = memLayout.length > 0 ? memLayout[0].type : "Unknown"; // Get the type from memLayout
+    const RAMtype = memLayout.length > 0 ? memLayout[0].type : "Unknown";
     const RAMspeed =
-      memLayout.length > 0 ? memLayout[0].speed + " MHz" : "Unknown"; // Get the speed from memLayout
+      memLayout.length > 0 ? memLayout[0].speed + " MHz" : "Unknown";
 
-    const cpuCores = cpuData.cores; // Physical cores
-    const cpuThreads = cpuData.logical; // Threads or vCores
+    const cpuCores = cpuData.cores;
+    const cpuThreads = cpuData.logical;
+
+    const sql = `
+      SELECT websites.*, users.username 
+      FROM websites 
+      JOIN users ON websites.user_id = users.id
+    `;
+
+    const allWebsites = await new Promise((resolve, reject) => {
+      db.all(sql, (err, rows) => {
+        if (err) return reject(err);
+        resolve(rows);
+      });
+    });
+
+    const totalListWebsite = allWebsites.length;
 
     res.render("web/admin/information.ejs", {
       user: req.session.user,
       rank: req.session.user.rank,
+      websites: allWebsites,
+      totalListWebsite: totalListWebsite,
+      appVersion: localVersion,
+      newVersion: latestVersion,
+      updateAvailable: updateAvailable
+        ? "Your version is out of date"
+        : "Your version is up-to-date",
 
-      // Adding all requested variables
       CPUname: CPUname,
       CPUarchitecture: os.arch(),
       CPUfrequence: CPUfrequence,
 
       RAMsize: Math.round(memData.total / 1024 / 1024 / 1024) + " GB",
-      RAMtype: RAMtype, // Actual RAM type
-      RAMspeed: RAMspeed, // Actual RAM speed
+      RAMtype: RAMtype,
+      RAMspeed: RAMspeed,
 
       StorageSize:
         diskData.length > 0
@@ -87,9 +110,8 @@ router.get("/web/admin/information", isAuthenticated, async (req, res) => {
       SystemUptime: `${uptimeDays} days, ${uptimeHours} hours`,
       LastBoot: bootTime.toLocaleString(),
 
-      // Corrected the thread and core count
-      CPUCores: cpuCores, // Cores (physiques)
-      CPUThreads: cpuThreads, // Threads (ou vCores)
+      CPUCores: cpuCores,
+      CPUThreads: cpuThreads,
     });
   } catch (err) {
     console.error("System info retrieval error : " + err.message);

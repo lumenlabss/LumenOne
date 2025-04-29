@@ -145,37 +145,31 @@
       </div>
       <!--SOON-->
       <div class="glass-card rounded-xl p-8">
-        <h2 class="text-2xl font-bold mb-6 gradient-text">
-          Detailed System Overview
-        </h2>
+        <h2 class="text-2xl font-bold mb-6 gradient-text">LumenOne Overview</h2>
         <div class="space-y-4">
           <div
             class="flex items-center justify-between py-3 border-b border-gray-700"
           >
-            <span class="text-gray-400">CPU Architecture</span>
-            <span class="font-medium">x86_64</span>
+            <span class="text-gray-400">LumenOne Version</span>
+            <span class="font-medium"><%= appVersion %></span>
           </div>
           <div
             class="flex items-center justify-between py-3 border-b border-gray-700"
           >
-            <span class="text-gray-400">CPU Clock Speed</span>
-            <span class="font-medium">3.4 GHz (4.9 GHz Boost)</span>
+            <span class="text-gray-400">Update Available</span>
+            <span class="font-medium"><%= updateAvailable %></span>
           </div>
           <div
             class="flex items-center justify-between py-3 border-b border-gray-700"
           >
-            <span class="text-gray-400">Memory Type</span>
-            <span class="font-medium">DDR4 Dual Channel</span>
+            <span class="text-gray-400">Total Users</span>
+            <span class="font-medium">r</span>
           </div>
           <div
             class="flex items-center justify-between py-3 border-b border-gray-700"
           >
-            <span class="text-gray-400">Storage Type</span>
-            <span class="font-medium">NVMe M.2 SSD</span>
-          </div>
-          <div class="flex items-center justify-between py-3">
-            <span class="text-gray-400">Kernel Version</span>
-            <span class="font-medium">5.15.0-91-generic</span>
+            <span class="text-gray-400">Total Websites</span>
+            <span class="font-medium"><%= totalListWebsite %></span>
           </div>
         </div>
       </div>

@@ -8,7 +8,6 @@ const router = express.Router();
 const createWS = require("./pages/admin/subscriptions/create.js");
 
 let activeServers = createWS.activeServers || {}; // that's a trash way to do it but hey i mean it works (David Goodenough ykyk)
-console.log("start-webserver.js successfully loaded");
 
 function getContentType(filename) {
   const ext = path.extname(filename).toLowerCase();
