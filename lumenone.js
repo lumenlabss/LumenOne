@@ -6,6 +6,7 @@
  * ╳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╳
  */
 
+console.log("lumenone.js loaded"); // To confirm that the page has been loaded correctly
 const express = require("express");
 const bodyParser = require("body-parser");
 const session = require("express-session");

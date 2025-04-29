@@ -1,3 +1,4 @@
+console.log("start-webserver.js loaded"); // To confirm that the page has been loaded correctly
 const express = require("express");
 const fs = require("fs");
 const http = require("http");

@@ -1,3 +1,4 @@
+console.log("information.js loaded"); // To confirm that the page has been loaded correctly
 const express = require("express");
 const router = express.Router();
 const db = require("../../db.js");

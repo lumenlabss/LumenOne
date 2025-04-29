@@ -1,3 +1,4 @@
+console.log("size-limit.js loaded"); // To confirm that the page has been loaded correctly
 const db = require("../db.js");
 const fs = require("fs");
 const path = require("path");

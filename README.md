@@ -127,6 +127,7 @@ Project completion: ⁓ 20%
 - [x] Role system (admin, user)
 - [ ] Dashboard for service management (web, FTP, databases)
 - [ ] User/action logs system (audit)
+- [ ] devloppement and production mode (production = no logs)
 
 ### Web
 
@@ -140,7 +141,7 @@ Project completion: ⁓ 20%
 - [ ] REST API (users, domains, files, databases)
 - [ ] Security (rate limiting, JWT token management, CSRF protection)
 - [ ] Multi-server support for scalability
-- [ ] Size limit system
+- [x] Size limit system (normally works)
 - [x] Code reorganization into modules (`src`)
 - [ ] Create a Middlewares files (`src/middlewares/exemple.js`)
 
@@ -159,7 +160,7 @@ Project completion: ⁓ 20%
 - [ ] Notification system (emails, alerts)
 - [ ] Language system
 - [ ] Docker integration (optional for service isolation)
-- [ ] Add `console.log("exemple.js loaded");` for all backend files
+- [x] Add `console.log("exemple.js loaded");` for all backend files
 
 ---
 
