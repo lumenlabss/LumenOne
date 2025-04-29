@@ -144,6 +144,7 @@ Project completion: ⁓ 20%
 - [x] Size limit system (normally works)
 - [x] Code reorganization into modules (`src`)
 - [ ] Create a Middlewares files (`src/middlewares/exemple.js`)
+- [ ] Optimize code (make it faster, more readable, more orderly, etc.)
 
 ### Modules
 
