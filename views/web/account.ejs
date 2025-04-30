@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Account - <%= appName %></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .glass-card {
+        background: rgba(31, 41, 55, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+      }
+      .glass-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(59, 130, 246, 0.5);
+        box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
+      }
+      .gradient-bg {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      }
+      .gradient-text {
+        background: linear-gradient(135deg, #60a5fa, #3b82f6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .settings-card {
+        background: rgba(30, 41, 59, 0.5);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(71, 85, 105, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .settings-card:hover {
+        border-color: rgba(96, 165, 250, 0.5);
+        box-shadow: 0 0 20px rgba(96, 165, 250, 0.1);
+      }
+      .btn-primary {
+        background: rgba(59, 130, 246, 0.2);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        padding: 0.5rem 1.5rem;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+      }
+      .btn-primary:hover {
+        background: rgba(59, 130, 246, 0.3);
+        border-color: rgba(59, 130, 246, 0.4);
+        transform: translateY(-1px);
+      }
+      .btn-secondary {
+        background: rgba(59, 130, 246, 0.15);
+        border: 1px solid rgba(59, 130, 246, 0.25);
+        padding: 0.5rem 1.5rem;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+      }
+      .btn-secondary:hover {
+        background: rgba(59, 130, 246, 0.25);
+        border-color: rgba(59, 130, 246, 0.35);
+      }
+      .btn-danger {
+        background: rgba(239, 68, 68, 0.2);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        padding: 0.5rem 1.5rem;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+      }
+      .btn-danger:hover {
+        background: rgba(239, 68, 68, 0.3);
+        border-color: rgba(239, 68, 68, 0.4);
+        transform: translateY(-1px);
+      }
+      .text-muted {
+        color: rgba(255, 255, 255, 0.6);
+      }
+      .verification-input {
+        width: 3rem;
+        height: 3rem;
+        font-size: 1.5rem;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <!-- Sidebar -->
+  <%- include('../components/sidebar') %>
+
+  <body class="gradient-bg text-white min-h-screen flex flex-col sm:ml-64">
+    <div class="flex-grow p-8">
+      <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold gradient-text mb-8">Settings</h1>
+
+        <div class="space-y-6">
+          <div class="glass-card rounded-xl p-6">
+            <h2 class="text-xl font-semibold mb-6">Profile</h2>
+            <form class="space-y-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label class="block text-sm font-medium mb-2">Nickname</label>
+                  <input
+                    type="text"
+                    value="<%= user.username %>"
+                    class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-2"
+                    >Created at</label
+                  >
+                  <input
+                    type="email"
+                    value="<%= user.created_at %>"
+                    class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    disabled
+                  />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-2"
+                    >Account ID</label
+                  >
+                  <div class="relative">
+                    <input
+                      type="text"
+                      value="<%= user.id %>"
+                      class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 pr-12"
+                      disabled
+                    />
+                    <button
+                      type="button"
+                      class="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-md hover:bg-gray-700/40 transition"
+                      onclick="navigator.clipboard.writeText('<%= user.id %>')"
+                    >
+                      <i data-lucide="copy" class="w-5 h-5"></i>
+                    </button>
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-2">SOON</label>
+                  <input
+                    type="text"
+                    value="SOON"
+                    class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    disabled
+                  />
+                </div>
+              </div>
+              <div class="flex justify-end">
+                <button
+                  type="submit"
+                  class="btn-primary px-6 py-3 rounded-lg text-blue-300 text-sm font-medium"
+                >
+                  Save
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="glass-card rounded-xl p-6">
+            <h2 class="text-xl font-semibold mb-6">Security</h2>
+
+            <div class="mb-8">
+              <h3 class="text-lg font-medium mb-4">Change password</h3>
+              <form class="space-y-4">
+                <div>
+                  <label class="block text-sm font-medium mb-2"
+                    >Current password</label
+                  >
+                  <input
+                    type="password"
+                    class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-2"
+                    >New password</label
+                  >
+                  <input
+                    type="password"
+                    class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div>
+                  <label class="block text-sm font-medium mb-2"
+                    >Confirm new password</label
+                  >
+                  <input
+                    type="password"
+                    class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div class="flex justify-end">
+                  <button
+                    type="submit"
+                    class="btn-primary px-6 py-3 rounded-lg text-blue-300 text-sm font-medium"
+                  >
+                    Update password
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-medium">2FA (In devloppement)</h3>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" class="sr-only peer" disabled />
+                  <div
+                    class="w-11 h-6 bg-gray-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"
+                  ></div>
+                </label>
+              </div>
+
+              <div class="glass-card bg-opacity-50 rounded-lg p-4 mb-4">
+                <div class="flex items-center gap-4">
+                  <div class="bg-blue-500/10 p-3 rounded-lg">
+                    <i data-lucide="qr-code" class="w-6 h-6 text-blue-400"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-medium">Setting 2FA</h4>
+                    <p class="text-sm text-muted">Scan the QR code in app</p>
+                  </div>
+                </div>
+
+                <div class="mt-4 flex justify-center">
+                  <div class="bg-white p-4 rounded-lg">
+                    <img
+                      src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=otpauth://totp/AppRun:user@example.com?secret=JBSWY3DPEHPK3PXP&issuer=AppRun"
+                      alt="2FA QR Code"
+                      class="w-32 h-32"
+                    />
+                  </div>
+                </div>
+
+                <div class="mt-4">
+                  <p class="text-sm text-muted text-center mb-2">
+                    Reserve Code
+                  </p>
+                  <div
+                    class="flex items-center justify-center gap-2 bg-gray-800/50 py-2 px-4 rounded"
+                  >
+                    <code class="font-mono text-blue-400"
+                      >JBSWY3-DPEHPK-3PXP</code
+                    >
+                    <button
+                      class="p-1 rounded-md hover:bg-gray-700/40 transition"
+                      onclick="navigator.clipboard.writeText('JBSWY3-DPEHPK-3PXP')"
+                    >
+                      <i data-lucide="copy" class="w-4 h-4"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <form class="mt-6">
+                  <label class="block text-sm font-medium mb-2"
+                    >Enter code</label
+                  >
+                  <div class="flex justify-center gap-2 mb-4">
+                    <input
+                      type="text"
+                      maxlength="1"
+                      class="verification-input w-full bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <input
+                      type="text"
+                      maxlength="1"
+                      class="verification-input w-full bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <input
+                      type="text"
+                      maxlength="1"
+                      class="verification-input w-full bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <input
+                      type="text"
+                      maxlength="1"
+                      class="verification-input w-full bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <input
+                      type="text"
+                      maxlength="1"
+                      class="verification-input w-full bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                    <input
+                      type="text"
+                      maxlength="1"
+                      class="verification-input w-full bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    />
+                  </div>
+                  <div class="flex justify-center">
+                    <button
+                      type="submit"
+                      class="btn-primary px-6 py-3 rounded-lg text-blue-300 text-sm font-medium"
+                    >
+                      Confirm
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              <p class="text-sm text-muted">
+                <i data-lucide="info" class="w-4 h-4 inline-block mr-1"></i>
+                2FA Adding additional security to your account
+              </p>
+            </div>
+          </div>
+
+          <div class="settings-card rounded-xl p-6">
+            <h2 class="text-xl font-semibold mb-6">
+              Change language (In developpement)
+            </h2>
+            <div class="space-y-4">
+              <div
+                class="flex items-center justify-between p-4 bg-gray-800/30 rounded-lg hover:bg-gray-700/40 transition cursor-pointer"
+              >
+                <div class="flex items-center gap-4">
+                  <div class="bg-red-500/10 p-2 rounded-lg">
+                    <i data-lucide="globe" class="w-5 h-5 text-red-400"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-medium">English</h4>
+                    <p class="text-sm text-gray-400">Current language</p>
+                  </div>
+                </div>
+                <i data-lucide="check" class="w-5 h-5 text-green-400"></i>
+              </div>
+
+              <div
+                class="flex items-center justify-between p-4 bg-gray-800/30 rounded-lg hover:bg-gray-700/40 transition cursor-pointer"
+              >
+                <div class="flex items-center gap-4">
+                  <div class="bg-blue-500/10 p-2 rounded-lg">
+                    <i data-lucide="globe" class="w-5 h-5 text-blue-400"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-medium">Languages list</h4>
+                    <p class="text-sm text-gray-400">Change language</p>
+                  </div>
+                </div>
+                <i
+                  data-lucide="chevron-right"
+                  class="w-5 h-5 text-gray-400"
+                ></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="glass-card rounded-xl p-6">
+            <h2 class="text-xl font-semibold mb-6">
+              Recent logins (In developpement)
+            </h2>
+            <div class="space-y-4">
+              <div
+                class="flex items-center justify-between p-4 bg-gray-800/30 rounded-lg"
+              >
+                <div class="flex items-center gap-4">
+                  <div class="bg-green-500/10 p-2 rounded-lg">
+                    <i data-lucide="monitor" class="w-5 h-5 text-green-400"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-medium">Windows 11 · Chrome</h4>
+                    <p class="text-sm text-muted">Current session</p>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="flex items-center justify-between p-4 bg-gray-800/30 rounded-lg"
+              >
+                <div class="flex items-center gap-4">
+                  <div class="bg-blue-500/10 p-2 rounded-lg">
+                    <i
+                      data-lucide="smartphone"
+                      class="w-5 h-5 text-blue-400"
+                    ></i>
+                  </div>
+                  <div>
+                    <h4 class="font-medium">iPhone 13 · Safari</h4>
+                    <p class="text-sm text-muted">Last entry: 2 hours ago</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%- include('../components/footer') %>
+    <script src="/js/sidebar.js"></script>
+
+    <script>
+      lucide.createIcons();
+
+      const verificationInputs = document.querySelectorAll(
+        ".verification-input"
+      );
+      verificationInputs.forEach((input, index) => {
+        input.addEventListener("input", (e) => {
+          if (e.target.value && index < verificationInputs.length - 1) {
+            verificationInputs[index + 1].focus();
+          }
+        });
+
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Backspace" && !e.target.value && index > 0) {
+            verificationInputs[index - 1].focus();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

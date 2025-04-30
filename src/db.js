@@ -10,13 +10,14 @@ const db = new sqlite.Database("lumenone.db", (err) => {
   }
 });
 
-// Creating the `users` table with a `rank` column
+// Creating the `users` table with a `rank` column and `created_at`
 db.run(
   `CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
-    rank TEXT DEFAULT 'default' -- By default, the rank is 'default'
+    rank TEXT DEFAULT 'default', -- By default, the rank is 'default'
+    created_at TEXT DEFAULT (datetime('now')) -- Auto timestamp at creation
   )`,
   (err) => {
     if (err) {
