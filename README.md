@@ -153,7 +153,7 @@ Project completion: ⁓ 20%
 - [ ] Backup
 - [ ] Statistics
 - [ ] Users
-- [ ] Account
+- [x] Account
 
 ### Admin pages (backend + frontend)
 
@@ -179,6 +179,8 @@ Project completion: ⁓ 20%
 - [ ] Language system
 - [ ] Docker integration (optional for service isolation)
 - [x] Add `console.log("exemple.js loaded");` for all backend files
+- [ ] 2FA system
+- [ ] Recent logins
 
 ---
 
