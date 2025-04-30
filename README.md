@@ -119,7 +119,7 @@ Contributions are welcome! Here's how you can contribute:
 
 ## :white_check_mark: ToDo List
 
-Project completion: ⁓ 20%
+Project completion: ⁓ 22%
 
 ### Core
 
