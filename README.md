@@ -22,6 +22,9 @@
 - :jigsaw: **Module/extension system** for customization
 - :arrows_counterclockwise: **REST API** for automation and integration
 
+| ⚠️ LumenOne currently doesn't encrypt user passwords. This will be fixed in Alpha 1.0 or Bêta 1.0, but for now, just don't leak your "lumenone.db". |
+| --------------------------------------------------------------------------------------------------------------------------------------------------- |
+
 ---
 
 ## :rocket: Installation
@@ -119,7 +122,7 @@ Contributions are welcome! Here's how you can contribute:
 
 ## :white_check_mark: ToDo List
 
-Project completion: ⁓ 22%
+Project completion : ⁓ 22%
 
 ### Core
 
