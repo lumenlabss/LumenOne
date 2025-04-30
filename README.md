@@ -146,6 +146,23 @@ Project completion: ⁓ 20%
 - [ ] Create a Middlewares files (`src/middlewares/exemple.js`)
 - [ ] Optimize code (make it faster, more readable, more orderly, etc.)
 
+### Users pages (backend + frontend)
+
+- [ ] Websites & Domains
+- [ ] Mail
+- [ ] Backup
+- [ ] Statistics
+- [ ] Users
+- [ ] Account
+
+### Admin pages (backend + frontend)
+
+- [ ] Customers
+- [ ] Service Plans
+- [x] Subscriptions
+- [x] Information
+- [ ] Settings
+
 ### Modules
 
 - [ ] Let's Encrypt SSL certificates (automatic generation and renewal)
