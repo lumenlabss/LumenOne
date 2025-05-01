@@ -26,6 +26,7 @@ const startWebServer = require("./src/start-webserver.js");
 const createuserRoutes = require("./src/pages/admin/customers/create.js");
 const informationRoutes = require("./src/pages/admin/information.js");
 const accountRoutes = require("./src/pages/user/account.js");
+const loadRoutes = require("./src/pages/load.js");
 
 // Application initialization
 const app = express();
@@ -71,6 +72,7 @@ app.use("/", startWebServer);
 app.use("/", createuserRoutes);
 app.use("/", informationRoutes);
 app.use("/", accountRoutes);
+app.use("/", loadRoutes);
 
 // Middleware to handle errors
 app.use((req, res, next) => {
