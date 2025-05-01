@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Your Websites - LumenOne</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .glass-card {
+        background: rgba(31, 41, 55, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+      }
+      .glass-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(59, 130, 246, 0.5);
+        box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
+      }
+      .gradient-bg {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      }
+      .gradient-text {
+        background: linear-gradient(135deg, #60a5fa, #3b82f6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .settings-card {
+        background: rgba(30, 41, 59, 0.5);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(71, 85, 105, 0.2);
+        transition: all 0.3s ease;
+      }
+      .settings-card:hover {
+        border-color: rgba(96, 165, 250, 0.5);
+        box-shadow: 0 0 20px rgba(96, 165, 250, 0.1);
+      }
+      .btn-primary {
+        background: rgba(59, 130, 246, 0.2);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        padding: 0.5rem 1.5rem;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+      }
+      .btn-primary:hover {
+        background: rgba(59, 130, 246, 0.3);
+        border-color: rgba(59, 130, 246, 0.4);
+        transform: translateY(-1px);
+      }
+      .btn-secondary {
+        background: rgba(59, 130, 246, 0.15);
+        border: 1px solid rgba(59, 130, 246, 0.25);
+        padding: 0.5rem 1.5rem;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+      }
+      .btn-secondary:hover {
+        background: rgba(59, 130, 246, 0.25);
+        border-color: rgba(59, 130, 246, 0.35);
+      }
+      .btn-danger {
+        background: rgba(239, 68, 68, 0.2);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        padding: 0.5rem 1.5rem;
+        border-radius: 0.5rem;
+        transition: all 0.3s ease;
+      }
+      .btn-danger:hover {
+        background: rgba(239, 68, 68, 0.3);
+        border-color: rgba(239, 68, 68, 0.4);
+        transform: translateY(-1px);
+      }
+      .text-muted {
+        color: rgba(255, 255, 255, 0.6);
+      }
+      .stat-card {
+        background: rgba(30, 41, 59, 0.5);
+        border: 1px solid rgba(71, 85, 105, 0.2);
+        transition: all 0.3s ease;
+      }
+      .stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px -5px rgba(59, 130, 246, 0.2);
+      }
+      .domain-card {
+        transition: all 0.3s ease;
+      }
+      .domain-card:hover {
+        background: rgba(59, 130, 246, 0.1);
+        transform: translateX(4px);
+      }
+    </style>
+  </head>
+
+  <%- include('../../components/sidebar') %>
+
+  <body class="gradient-bg text-white min-h-screen flex flex-col sm:ml-64">
+    <div class="flex-grow p-8">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex justify-between items-center mb-8">
+          <h1 class="text-3xl font-bold gradient-text">Statistics</h1>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <a
+            href="statistics.html?domain=example.com"
+            class="domain-card glass-card rounded-xl p-6"
+          >
+            <div class="flex items-center gap-4">
+              <div class="bg-blue-500/10 p-3 rounded-lg">
+                <i data-lucide="globe" class="w-6 h-6 text-blue-400"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold">example.com</h3>
+                <p class="text-muted text-sm">Last updated: 2 hours ago</p>
+              </div>
+            </div>
+            <div class="mt-4 flex justify-between items-center">
+              <div>
+                <p class="text-muted text-sm">Visits this month</p>
+                <p class="text-2xl font-bold">1,245</p>
+              </div>
+              <i data-lucide="chevron-right" class="w-5 h-5 text-muted"></i>
+            </div>
+          </a>
+
+          <a
+            href="statistics.html?domain=test-site.org"
+            class="domain-card glass-card rounded-xl p-6"
+          >
+            <div class="flex items-center gap-4">
+              <div class="bg-green-500/10 p-3 rounded-lg">
+                <i data-lucide="globe" class="w-6 h-6 text-green-400"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold">test-site.org</h3>
+                <p class="text-muted text-sm">Last updated: 1 day ago</p>
+              </div>
+            </div>
+            <div class="mt-4 flex justify-between items-center">
+              <div>
+                <p class="text-muted text-sm">Visits this month</p>
+                <p class="text-2xl font-bold">872</p>
+              </div>
+              <i data-lucide="chevron-right" class="w-5 h-5 text-muted"></i>
+            </div>
+          </a>
+
+          <a
+            href="statistics.html?domain=my-app.dev"
+            class="domain-card glass-card rounded-xl p-6"
+          >
+            <div class="flex items-center gap-4">
+              <div class="bg-purple-500/10 p-3 rounded-lg">
+                <i data-lucide="globe" class="w-6 h-6 text-purple-400"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-semibold">my-app.dev</h3>
+                <p class="text-muted text-sm">Last updated: 5 minutes ago</p>
+              </div>
+            </div>
+            <div class="mt-4 flex justify-between items-center">
+              <div>
+                <p class="text-muted text-sm">Visits this month</p>
+                <p class="text-2xl font-bold">3,421</p>
+              </div>
+              <i data-lucide="chevron-right" class="w-5 h-5 text-muted"></i>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <%- include('../../components/footer') %>
+    <script src="/js/sidebar.js"></script>
+    <script>
+      lucide.createIcons();
+    </script>
+  </body>
+</html>

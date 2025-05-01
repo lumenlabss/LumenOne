@@ -27,6 +27,8 @@ const createuserRoutes = require("./src/pages/admin/customers/create.js");
 const informationRoutes = require("./src/pages/admin/information.js");
 const accountRoutes = require("./src/pages/user/account.js");
 const loadRoutes = require("./src/pages/load.js");
+const statisticsdomainsRoutes = require("./src/pages/user/statistics/domains.js");
+const statisticsRoutes = require("./src/pages/user/statistics/statistics.js");
 
 // Application initialization
 const app = express();
@@ -73,6 +75,8 @@ app.use("/", createuserRoutes);
 app.use("/", informationRoutes);
 app.use("/", accountRoutes);
 app.use("/", loadRoutes);
+app.use("/", statisticsdomainsRoutes);
+app.use("/", statisticsRoutes);
 
 // Middleware to handle errors
 app.use((req, res, next) => {
