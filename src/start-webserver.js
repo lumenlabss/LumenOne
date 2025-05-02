@@ -1,4 +1,5 @@
-console.log("start-webserver.js loaded"); // To confirm that the page has been loaded correctly
+console.log("start-webserver.js loaded");
+
 const express = require("express");
 const fs = require("fs");
 const http = require("http");
@@ -7,7 +8,9 @@ const db = require("./db.js");
 const router = express.Router();
 const createWS = require("./pages/admin/subscriptions/create.js");
 
-let activeServers = createWS.activeServers || {}; // that's a trash way to do it but hey i mean it works (David Goodenough ykyk)
+let activeServers = createWS.activeServers || {};
+
+const statisticsFile = path.join(__dirname, "../storage/statistics.json");
 
 function getContentType(filename) {
   const ext = path.extname(filename).toLowerCase();
@@ -31,6 +34,38 @@ function getContentType(filename) {
       return "image/x-icon";
     default:
       return "application/octet-stream";
+  }
+}
+
+function trackVisit(uuid, req, res) {
+  const cookieHeader = req.headers.cookie || "";
+  const visitedKey = `visited_${uuid}`;
+  const hasVisited = cookieHeader.includes(`${visitedKey}=true`);
+
+  if (!hasVisited) {
+    fs.readFile(statisticsFile, "utf8", (err, data) => {
+      let stats = {};
+      if (!err && data) {
+        try {
+          stats = JSON.parse(data);
+        } catch (e) {
+          console.error("Failed to parse statistics.json:", e);
+        }
+      }
+
+      if (!stats[uuid]) stats[uuid] = 0;
+      stats[uuid] += 1;
+
+      fs.writeFile(statisticsFile, JSON.stringify(stats, null, 2), (err) => {
+        if (err) console.error("Error writing statistics file:", err);
+      });
+    });
+
+    const expires = new Date(Date.now() + 86400000).toUTCString();
+    res.setHeader(
+      "Set-Cookie",
+      `${visitedKey}=true; Expires=${expires}; Path=/`
+    );
   }
 }
 
@@ -58,6 +93,8 @@ router.post("/web/restart/:uuid", (req, res) => {
       }
 
       const server = http.createServer((req2, res2) => {
+        trackVisit(uuid, req2, res2);
+
         const requestedFile =
           req2.url === "/"
             ? "index.html"
@@ -96,7 +133,6 @@ router.post("/web/restart/:uuid", (req, res) => {
   });
 });
 
-// startAllActiveServers()
 function startAllActiveServers() {
   db.all("SELECT * FROM websites", (err, rows) => {
     if (err) return console.error("Error retrieving sites:", err.message);
@@ -108,6 +144,8 @@ function startAllActiveServers() {
       fs.exists(filePath, (exists) => {
         if (exists) {
           const server = http.createServer((req, res) => {
+            trackVisit(row.uuid, req, res);
+
             const requestedFile =
               req.url === "/"
                 ? "index.html"

@@ -109,8 +109,9 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <% websites.forEach(site => { %>
           <a
-            href="statistics.html?domain=example.com"
+            href="statistics.html?domain=<%= site.name %>"
             class="domain-card glass-card rounded-xl p-6"
           >
             <div class="flex items-center gap-4">
@@ -118,62 +119,19 @@
                 <i data-lucide="globe" class="w-6 h-6 text-blue-400"></i>
               </div>
               <div>
-                <h3 class="text-xl font-semibold">example.com</h3>
-                <p class="text-muted text-sm">Last updated: 2 hours ago</p>
+                <h3 class="text-xl font-semibold"><%= site.name %></h3>
+                <p class="text-muted text-sm">Last updated: SOON</p>
               </div>
             </div>
             <div class="mt-4 flex justify-between items-center">
               <div>
                 <p class="text-muted text-sm">Visits this month</p>
-                <p class="text-2xl font-bold">1,245</p>
+                <p class="text-2xl font-bold"><%= website.visitCount %></p>
               </div>
               <i data-lucide="chevron-right" class="w-5 h-5 text-muted"></i>
             </div>
           </a>
-
-          <a
-            href="statistics.html?domain=test-site.org"
-            class="domain-card glass-card rounded-xl p-6"
-          >
-            <div class="flex items-center gap-4">
-              <div class="bg-green-500/10 p-3 rounded-lg">
-                <i data-lucide="globe" class="w-6 h-6 text-green-400"></i>
-              </div>
-              <div>
-                <h3 class="text-xl font-semibold">test-site.org</h3>
-                <p class="text-muted text-sm">Last updated: 1 day ago</p>
-              </div>
-            </div>
-            <div class="mt-4 flex justify-between items-center">
-              <div>
-                <p class="text-muted text-sm">Visits this month</p>
-                <p class="text-2xl font-bold">872</p>
-              </div>
-              <i data-lucide="chevron-right" class="w-5 h-5 text-muted"></i>
-            </div>
-          </a>
-
-          <a
-            href="statistics.html?domain=my-app.dev"
-            class="domain-card glass-card rounded-xl p-6"
-          >
-            <div class="flex items-center gap-4">
-              <div class="bg-purple-500/10 p-3 rounded-lg">
-                <i data-lucide="globe" class="w-6 h-6 text-purple-400"></i>
-              </div>
-              <div>
-                <h3 class="text-xl font-semibold">my-app.dev</h3>
-                <p class="text-muted text-sm">Last updated: 5 minutes ago</p>
-              </div>
-            </div>
-            <div class="mt-4 flex justify-between items-center">
-              <div>
-                <p class="text-muted text-sm">Visits this month</p>
-                <p class="text-2xl font-bold">3,421</p>
-              </div>
-              <i data-lucide="chevron-right" class="w-5 h-5 text-muted"></i>
-            </div>
-          </a>
+          <% }) %>
         </div>
       </div>
     </div>

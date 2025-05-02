@@ -2,6 +2,8 @@ console.log("statistics.js loaded"); // To confirm that the page has been loaded
 const express = require("express");
 const db = require("../../../db.js");
 const router = express.Router();
+const fs = require("fs");
+const path = require("path");
 
 // Authentication middleware
 function isAuthenticated(req, res, next) {
@@ -13,6 +15,10 @@ function isAuthenticated(req, res, next) {
 router.get("/web/statistics/:id", isAuthenticated, (req, res) => {
   const userId = req.session.user.id;
   const websiteUuid = req.params.id;
+  const statisticsFile = path.join(
+    __dirname,
+    "../../../../storage/statistics.json"
+  );
 
   db.get(
     "SELECT * FROM websites WHERE uuid = ? AND user_id = ?",
@@ -32,11 +38,25 @@ router.get("/web/statistics/:id", isAuthenticated, (req, res) => {
           return res.status(500).render("error/500.ejs");
         }
 
+        let visitCount = 0;
+
+        // Read the statistics file
+        if (fs.existsSync(statisticsFile)) {
+          try {
+            const data = fs.readFileSync(statisticsFile, "utf8");
+            const stats = JSON.parse(data);
+            visitCount = stats[websiteUuid] || 0;
+          } catch (e) {
+            console.error("Error reading/parsing statistics.json:", e);
+          }
+        }
+
         res.render("web/statistics/statistics.ejs", {
           user: req.session.user,
           website,
           rank: row ? row.rank : null,
           websiteUuid,
+          visitCount,
         });
       });
     }

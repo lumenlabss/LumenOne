@@ -52,9 +52,7 @@
           <a href="/web/statistics/list" class="btn-secondary p-2 rounded-lg">
             <i data-lucide="arrow-left" class="w-5 h-5"></i>
           </a>
-          <h1 class="text-3xl font-bold gradient-text" id="domainTitle">
-            Loading...
-          </h1>
+          <h1 class="text-3xl font-bold gradient-text">example.com</h1>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -65,8 +63,7 @@
               </div>
               <h3 class="text-lg font-medium">Visits This Month</h3>
             </div>
-            <p class="text-3xl font-bold mb-2" id="visitsCount">0</p>
-            <p class="text-muted text-sm" id="visitsChange">Loading...</p>
+            <p class="text-3xl font-bold"><%= visitCount %></p>
           </div>
 
           <div class="stat-card rounded-xl p-6">
@@ -76,8 +73,7 @@
               </div>
               <h3 class="text-lg font-medium">Page Views</h3>
             </div>
-            <p class="text-3xl font-bold mb-2" id="pageViews">0</p>
-            <p class="text-muted text-sm" id="pagesPerVisit">Loading...</p>
+            <p class="text-3xl font-bold">SOON</p>
           </div>
 
           <div class="stat-card rounded-xl p-6">
@@ -85,21 +81,19 @@
               <div class="bg-purple-500/10 p-2 rounded-lg">
                 <i data-lucide="file" class="w-5 h-5 text-purple-400"></i>
               </div>
-              <h3 class="text-lg font-medium">Total Pages</h3>
+              <h3 class="text-lg font-medium">Total Files</h3>
             </div>
-            <p class="text-3xl font-bold mb-2" id="totalPages">0</p>
-            <p class="text-muted text-sm" id="newPages">Loading...</p>
+            <p class="text-3xl font-bold">SOON</p>
           </div>
 
           <div class="stat-card rounded-xl p-6">
             <div class="flex items-center gap-3 mb-4">
               <div class="bg-yellow-500/10 p-2 rounded-lg">
-                <i data-lucide="clock" class="w-5 h-5 text-yellow-400"></i>
+                <i data-lucide="users" class="w-5 h-5 text-yellow-400"></i>
               </div>
-              <h3 class="text-lg font-medium">Avg. Time</h3>
+              <h3 class="text-lg font-medium">Total Visits</h3>
             </div>
-            <p class="text-3xl font-bold mb-2" id="avgTime">0</p>
-            <p class="text-muted text-sm" id="timeChange">Loading...</p>
+            <p class="text-3xl font-bold">SOON</p>
           </div>
         </div>
 
@@ -107,7 +101,6 @@
           <div class="flex justify-between items-center mb-6">
             <h2 class="text-xl font-semibold">Monthly Visits</h2>
             <select
-              id="timeRange"
               class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-1 text-sm"
             >
               <option>Last 30 days</option>
@@ -121,8 +114,49 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div class="glass-card rounded-xl p-6">
             <h2 class="text-xl font-semibold mb-6">Top Pages</h2>
-            <div class="space-y-4" id="topPages">
-              <!-- Will be populated by JavaScript -->
+            <div class="space-y-4">
+              <div
+                class="flex justify-between items-center p-3 hover:bg-gray-800/30 rounded-lg transition"
+              >
+                <div class="flex items-center gap-3">
+                  <div class="bg-blue-500/10 p-2 rounded-lg">
+                    <i
+                      data-lucide="file-text"
+                      class="w-4 h-4 text-blue-400"
+                    ></i>
+                  </div>
+                  <span>/index.html</span>
+                </div>
+                <span class="text-muted">1,024 visits</span>
+              </div>
+              <div
+                class="flex justify-between items-center p-3 hover:bg-gray-800/30 rounded-lg transition"
+              >
+                <div class="flex items-center gap-3">
+                  <div class="bg-blue-500/10 p-2 rounded-lg">
+                    <i
+                      data-lucide="file-text"
+                      class="w-4 h-4 text-blue-400"
+                    ></i>
+                  </div>
+                  <span>/products</span>
+                </div>
+                <span class="text-muted">872 visits</span>
+              </div>
+              <div
+                class="flex justify-between items-center p-3 hover:bg-gray-800/30 rounded-lg transition"
+              >
+                <div class="flex items-center gap-3">
+                  <div class="bg-blue-500/10 p-2 rounded-lg">
+                    <i
+                      data-lucide="file-text"
+                      class="w-4 h-4 text-blue-400"
+                    ></i>
+                  </div>
+                  <span>/about</span>
+                </div>
+                <span class="text-muted">645 visits</span>
+              </div>
             </div>
           </div>
 
@@ -141,153 +175,28 @@
     <script>
       lucide.createIcons();
 
-      const urlParams = new URLSearchParams(window.location.search);
-      const domain = urlParams.get("domain") || "example.com";
-      document.getElementById("domainTitle").textContent = domain;
-
-      const domainData = {
-        "example.com": {
-          visits: 1245,
-          visitsChange: "+12.5% from last month",
-          pageViews: 3872,
-          pagesPerVisit: "2.1 pages per visit",
-          totalPages: 24,
-          newPages: "5 new pages this month",
-          avgTime: "2m 45s",
-          timeChange: "+15s from last month",
-          topPages: [
-            { path: "/index.html", visits: 1024, change: "+12%" },
-            { path: "/products", visits: 872, change: "+8%" },
-            { path: "/about", visits: 645, change: "-3%" },
-          ],
-        },
-        "test-site.org": {
-          visits: 872,
-          visitsChange: "+8.2% from last month",
-          pageViews: 2105,
-          pagesPerVisit: "1.8 pages per visit",
-          totalPages: 18,
-          newPages: "3 new pages this month",
-          avgTime: "1m 52s",
-          timeChange: "+10s from last month",
-          topPages: [
-            { path: "/home", visits: 720, change: "+15%" },
-            { path: "/blog", visits: 543, change: "+5%" },
-            { path: "/contact", visits: 321, change: "-2%" },
-          ],
-        },
-        "my-app.dev": {
-          visits: 3421,
-          visitsChange: "+24.7% from last month",
-          pageViews: 7892,
-          pagesPerVisit: "2.3 pages per visit",
-          totalPages: 42,
-          newPages: "12 new pages this month",
-          avgTime: "3m 18s",
-          timeChange: "+22s from last month",
-          topPages: [
-            { path: "/dashboard", visits: 2100, change: "+18%" },
-            { path: "/settings", visits: 987, change: "+12%" },
-            { path: "/docs", visits: 765, change: "+5%" },
-          ],
-        },
-      };
-
-      function loadDomainData() {
-        const data = domainData[domain] || domainData["example.com"];
-
-        document.getElementById("visitsCount").textContent =
-          data.visits.toLocaleString();
-        document.getElementById("visitsChange").textContent = data.visitsChange;
-        document.getElementById("pageViews").textContent =
-          data.pageViews.toLocaleString();
-        document.getElementById("pagesPerVisit").textContent =
-          data.pagesPerVisit;
-        document.getElementById("totalPages").textContent = data.totalPages;
-        document.getElementById("newPages").textContent = data.newPages;
-        document.getElementById("avgTime").textContent = data.avgTime;
-        document.getElementById("timeChange").textContent = data.timeChange;
-
-        const topPagesContainer = document.getElementById("topPages");
-        topPagesContainer.innerHTML = "";
-
-        data.topPages.forEach((page) => {
-          const pageElement = document.createElement("div");
-          pageElement.className =
-            "flex justify-between items-center p-3 hover:bg-gray-800/30 rounded-lg transition";
-          pageElement.innerHTML = `
-              <div class="flex items-center gap-3">
-                <div class="bg-blue-500/10 p-2 rounded-lg">
-                  <i data-lucide="file-text" class="w-4 h-4 text-blue-400"></i>
-                </div>
-                <span>${page.path}</span>
-              </div>
-              <div class="flex items-center gap-4">
-                <span class="text-muted">${page.visits.toLocaleString()} visits</span>
-                <span class="${
-                  page.change.startsWith("+")
-                    ? "text-green-400"
-                    : "text-red-400"
-                } text-sm">${page.change}</span>
-              </div>
-            `;
-          topPagesContainer.appendChild(pageElement);
-        });
-
-        lucide.createIcons();
-      }
-
-      // Initialize charts
-      let visitsChart, sourcesChart;
-
+      // Initialize charts with static data
       function initCharts() {
-        const visitsData = {
-          labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-          datasets: [
-            {
-              label: "Visits",
-              data:
-                domain === "example.com"
-                  ? [120, 150, 180, 210, 240, 200]
-                  : domain === "test-site.org"
-                  ? [80, 95, 110, 130, 150, 170]
-                  : [200, 250, 300, 350, 400, 420],
-              backgroundColor: "rgba(59, 130, 246, 0.2)",
-              borderColor: "rgba(59, 130, 246, 0.8)",
-              borderWidth: 2,
-              tension: 0.4,
-              fill: true,
-            },
-          ],
-        };
-
-        const sourcesData = {
-          labels: ["Direct", "Social", "Referral", "Search"],
-          datasets: [
-            {
-              data:
-                domain === "example.com"
-                  ? [35, 25, 20, 20]
-                  : domain === "test-site.org"
-                  ? [40, 30, 15, 15]
-                  : [30, 20, 25, 25],
-              backgroundColor: [
-                "rgba(59, 130, 246, 0.8)",
-                "rgba(16, 185, 129, 0.8)",
-                "rgba(139, 92, 246, 0.8)",
-                "rgba(245, 158, 11, 0.8)",
-              ],
-              borderWidth: 0,
-            },
-          ],
-        };
-
+        // Visits chart
         const visitsCtx = document
           .getElementById("visitsChart")
           .getContext("2d");
-        visitsChart = new Chart(visitsCtx, {
+        new Chart(visitsCtx, {
           type: "line",
-          data: visitsData,
+          data: {
+            labels: ["1 Week", "2 Week", "3 Week", "4 Week"],
+            datasets: [
+              {
+                label: "Visits",
+                data: [120, 150, 180, 210],
+                backgroundColor: "rgba(59, 130, 246, 0.2)",
+                borderColor: "rgba(59, 130, 246, 0.8)",
+                borderWidth: 2,
+                tension: 0.4,
+                fill: true,
+              },
+            ],
+          },
           options: {
             responsive: true,
             maintainAspectRatio: false,
@@ -318,12 +227,27 @@
           },
         });
 
+        // Sources chart
         const sourcesCtx = document
           .getElementById("sourcesChart")
           .getContext("2d");
-        sourcesChart = new Chart(sourcesCtx, {
+        new Chart(sourcesCtx, {
           type: "doughnut",
-          data: sourcesData,
+          data: {
+            labels: ["Direct", "Social", "Referral", "Search"],
+            datasets: [
+              {
+                data: [35, 25, 20, 20],
+                backgroundColor: [
+                  "rgba(59, 130, 246, 0.8)",
+                  "rgba(16, 185, 129, 0.8)",
+                  "rgba(139, 92, 246, 0.8)",
+                  "rgba(245, 158, 11, 0.8)",
+                ],
+                borderWidth: 0,
+              },
+            ],
+          },
           options: {
             responsive: true,
             maintainAspectRatio: false,
@@ -340,14 +264,7 @@
         });
       }
 
-      document
-        .getElementById("timeRange")
-        .addEventListener("change", function () {
-          console.log("Time range changed to:", this.value);
-        });
-
       document.addEventListener("DOMContentLoaded", () => {
-        loadDomainData();
         initCharts();
       });
     </script>
