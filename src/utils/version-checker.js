@@ -13,7 +13,7 @@ async function getLumenOneOverviewData() {
 
   try {
     const response = await axios.get(
-      "https://lumenlabs.pro/version/lumenone.html" //isn't work now because I haven't created the page yet, but normally this weekend it will be created
+      "https://lumenlabs.pro/version/lumenone.html"
     );
     latestVersion = response.data.trim();
 
