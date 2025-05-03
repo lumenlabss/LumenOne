@@ -230,7 +230,7 @@ router.post("/web/manage/:id/edit/:file", isAuthenticated, (req, res) => {
             }
 
             console.log(`File saved successfully: ${filePath}`);
-            res.redirect(`/web/manage/${websiteUuid}`);
+            res.redirect(`/load`);
           });
         });
       });
