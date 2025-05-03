@@ -1,4 +1,4 @@
-console.log("domain.js loaded"); // To confirm that the page has been loaded correctly
+console.log("web/domain.js loaded"); // To confirm that the page has been loaded correctly
 const fs = require("fs");
 const { exec } = require("child_process");
 

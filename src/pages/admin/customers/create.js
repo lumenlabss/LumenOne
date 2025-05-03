@@ -1,4 +1,4 @@
-console.log("create.js loaded"); // To confirm that the page has been loaded correctly
+console.log("pages/admin/customers/create.js loaded"); // To confirm that the page has been loaded correctly
 const express = require("express");
 const db = require("../../../db.js");
 const router = express.Router();

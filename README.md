@@ -151,7 +151,7 @@ Project completion : ⁓ 22%
 
 ### Users pages (backend + frontend)
 
-- [ ] Websites & Domains
+- [x] Websites & Domains
 - [ ] Mail
 - [ ] Backup
 - [ ] Statistics

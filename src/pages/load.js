@@ -1,4 +1,4 @@
-console.log("load.js loaded"); // To confirm that the page has been loaded correctly
+console.log("pages/load.js loaded"); // To confirm that the page has been loaded correctly
 const express = require("express");
 const router = express.Router();
 

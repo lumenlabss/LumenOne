@@ -1,4 +1,4 @@
-console.log("logout.js loaded"); // To confirm that the page has been loaded correctly
+console.log("pages/auth/logout.js loaded"); // To confirm that the page has been loaded correctly
 const express = require("express");
 
 const router = express.Router();

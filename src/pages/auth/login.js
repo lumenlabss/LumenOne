@@ -1,4 +1,4 @@
-console.log("login.js loaded"); // To confirm that the page has been loaded correctly
+console.log("pages/auth/login.js loaded"); // To confirm that the page has been loaded correctly
 const express = require("express");
 const db = require("../../db.js");
 const router = express.Router();

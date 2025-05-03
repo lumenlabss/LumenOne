@@ -1,4 +1,4 @@
-console.log("statistics.js loaded"); // To confirm that the page has been loaded correctly
+console.log("pages/user/statistics/statistics.js loaded"); // To confirm that the page has been loaded correctly
 const express = require("express");
 const db = require("../../../db.js");
 const router = express.Router();
