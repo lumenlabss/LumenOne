@@ -60,7 +60,7 @@
               <div class="bg-blue-500/10 p-2 rounded-lg">
                 <i data-lucide="users" class="w-5 h-5 text-blue-400"></i>
               </div>
-              <h3 class="text-lg font-medium">Visits This Month</h3>
+              <h3 class="text-lg font-medium">Total Visits</h3>
             </div>
             <p class="text-3xl font-bold"><%= visitCount %></p>
           </div>
@@ -90,7 +90,7 @@
               <div class="bg-yellow-500/10 p-2 rounded-lg">
                 <i data-lucide="users" class="w-5 h-5 text-yellow-400"></i>
               </div>
-              <h3 class="text-lg font-medium">Total Visits</h3>
+              <h3 class="text-lg font-medium">Visits This Month</h3>
             </div>
             <p class="text-3xl font-bold">SOON</p>
           </div>
@@ -98,7 +98,7 @@
 
         <div class="glass-card rounded-xl p-6 mb-6">
           <div class="flex justify-between items-center mb-6">
-            <h2 class="text-xl font-semibold">Monthly Visits</h2>
+            <h2 class="text-xl font-semibold">Monthly Visits - SOON</h2>
             <select
               class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-1 text-sm"
             >
@@ -112,7 +112,7 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div class="glass-card rounded-xl p-6">
-            <h2 class="text-xl font-semibold mb-6">Top Pages</h2>
+            <h2 class="text-xl font-semibold mb-6">Top Pages - SOON</h2>
             <div class="space-y-4">
               <div
                 class="flex justify-between items-center p-3 hover:bg-gray-800/30 rounded-lg transition"
@@ -160,7 +160,7 @@
           </div>
 
           <div class="glass-card rounded-xl p-6">
-            <h2 class="text-xl font-semibold mb-6">Traffic Sources</h2>
+            <h2 class="text-xl font-semibold mb-6">Traffic Sources - SOON</h2>
             <div class="h-64">
               <canvas id="sourcesChart"></canvas>
             </div>
@@ -187,7 +187,7 @@
             datasets: [
               {
                 label: "Visits",
-                data: [120, 150, 180, 210],
+                data: [0, 0, 0, 0],
                 backgroundColor: "rgba(59, 130, 246, 0.2)",
                 borderColor: "rgba(59, 130, 246, 0.8)",
                 borderWidth: 2,
@@ -236,7 +236,7 @@
             labels: ["Direct", "Social", "Referral", "Search"],
             datasets: [
               {
-                data: [35, 25, 20, 20],
+                data: [0, 0, 0, 0],
                 backgroundColor: [
                   "rgba(59, 130, 246, 0.8)",
                   "rgba(16, 185, 129, 0.8)",
