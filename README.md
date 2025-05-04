@@ -42,7 +42,7 @@
 0. Go to :
 
    ```bash
-   cd var/www/
+   cd /var/www/
    ```
 
 1. Clone the repository:
