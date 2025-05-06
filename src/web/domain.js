@@ -1,36 +1,50 @@
-console.log("web/domain.js loaded"); // To confirm that the page has been loaded correctly
 const fs = require("fs");
 const { exec } = require("child_process");
 
-function addDomain(name, port, callback) {
-  const nginxConfig = `
+function addDomain(name,filepath, callback,) {
+  // Vérifie si PHP est installé
+  exec("php -v", (phpErr, stdout, stderr) => {
+    const phpInstalled = !phpErr;
+    let phpBlock = "";
+
+    if (phpInstalled) {
+      // Extrait la version de PHP installée
+      const match = stdout.match(/PHP (\d+\.\d+)/);
+      const version = match ? match[1] : "8.1"; // fallback à 8.1 si non détectée
+
+      phpBlock = `
+    location ~ \\.php$ {
+        fastcgi_split_path_info ^(.+\\.php)(/.+)$;
+        fastcgi_pass unix:/run/php/php${version}-fpm.sock;
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param PHP_VALUE "upload_max_filesize = 100M \\n post_max_size=100M";
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param HTTP_PROXY "";
+        fastcgi_intercept_errors off;
+        fastcgi_buffer_size 16k;
+        fastcgi_buffers 4 16k;
+        fastcgi_connect_timeout 300;
+        fastcgi_send_timeout 300;
+        fastcgi_read_timeout 300;
+    }`;
+    }
+
+    const nginxConfig = `
 server {
     listen 80;
     server_name ${name};
 
+    root ${filepath};
+    index index.php index.html index.htm;
+
     location / {
-        proxy_pass http://127.0.0.1:${port};  # Reste inchangé
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-    }
+        try_files $uri $uri/ =404;
+    }${phpBlock}
 }`;
 
-  const configPath = `/etc/nginx/sites-enabled/${name}.conf`;
+    const configPath = `/etc/nginx/sites-enabled/${name}.conf`;
 
-  console.log(
-    `Attempting to write Nginx config for ${name} on port ${port}...`
-  );
-
-  fs.access(configPath, fs.constants.F_OK, (err) => {
-    if (!err) {
-      console.log(`The config file already exists at ${configPath}`);
-    } else {
-      console.log(
-        `No existing config file at ${configPath}. Creating new one.`
-      );
-    }
-
-    // Write the nginx config file
     fs.writeFile(configPath, nginxConfig, (err) => {
       if (err) {
         console.error("Failed to create nginx config:", err);
@@ -38,19 +52,15 @@ server {
         return;
       }
 
-      console.log(`Nginx config successfully written to ${configPath}.`);
+      console.log(`Nginx config written to ${configPath}. Reloading Nginx...`);
 
-      // Reload Nginx service
-      console.log("Attempting to reload Nginx...");
-      exec("systemctl reload nginx", (error, stdout, stderr) => {
-        if (error) {
-          console.error(`Reload error: ${error.message}`);
-          if (callback) callback(error);
+      exec("nginx -s reload", (reloadErr, stdout, stderr) => {
+        if (reloadErr) {
+          console.error(`Reload error: ${reloadErr.message}`);
+          if (callback) callback(reloadErr);
           return;
         }
-        if (stderr) {
-          console.error(`Reload stderr: ${stderr}`);
-        }
+        if (stderr) console.error(`Reload stderr: ${stderr}`);
         console.log("Nginx reloaded successfully.");
         if (callback) callback(null);
       });
