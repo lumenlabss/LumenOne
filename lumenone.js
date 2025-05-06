@@ -22,7 +22,6 @@ const subscriptionsRoute = require("./src/pages/admin/subscriptions.js");
 const manageRoute = require("./src/pages/user/manage.js");
 const filesRoutes = require("./src/pages/user/edit/files.js");
 const config = require("./src/config/config.js");
-const startWebServer = require("./src/start-webserver.js");
 const createuserRoutes = require("./src/pages/admin/customers/create.js");
 const informationRoutes = require("./src/pages/admin/information.js");
 const accountRoutes = require("./src/pages/user/account.js");
@@ -70,7 +69,6 @@ app.use("/", subscriptions_createRoute);
 app.use("/", subscriptionsRoute);
 app.use("/", manageRoute);
 app.use("/", filesRoutes);
-app.use("/", startWebServer);
 app.use("/", createuserRoutes);
 app.use("/", informationRoutes);
 app.use("/", accountRoutes);
@@ -104,4 +102,5 @@ const hostname = config.hostname || "localhost";
 
 app.listen(port, hostname, () => {
   console.log(`LumenOne successfully started: http://${hostname}:${port}`);
+  
 });

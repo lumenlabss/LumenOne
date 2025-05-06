@@ -117,26 +117,9 @@ router.post("/web/admin/subscriptions/create", isAuthenticated, (req, res) => {
         }
 
         // Create an HTTP server to listen on the specified port
-        const server = http.createServer((req, res) => {
-          fs.readFile(filePath, "utf8", (err, data) => {
-            if (err) {
-              res.statusCode = 500;
-              res.end("File read error");
-            } else {
-              res.setHeader("Content-Type", "text/html");
-              res.end(data);
-            }
-          });
-        });
-
-        activeServers[uuid] = server;
-        // Start the server on the specified port
-        server.listen(port, () => {
-          console.log(`Server running on http://localhost:${port}`);
-        });
-
+    
         // Add domain to Nginx configuration
-        addDomain(name, port, (err) => {
+        addDomain(name, folderPath, (err) => {
           if (err) {
             console.error(`Error adding domain for ${name}:`, err);
             return res.status(500).send("Failed to add domain.");
