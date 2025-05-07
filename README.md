@@ -139,6 +139,7 @@ Project completion : ⁓ 22%
 - [x] Domain and subdomain management
 - [x] Integrated file manager (upload, delete, edit)
 - [ ] Interface for database management (create, delete, access)
+- [ ] Add backend integration
 
 ### Backend
 
