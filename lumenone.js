@@ -28,6 +28,7 @@ const accountRoutes = require("./src/pages/user/account.js");
 const loadRoutes = require("./src/pages/load.js");
 const statisticsdomainsRoutes = require("./src/pages/user/statistics/domains.js");
 const statisticsRoutes = require("./src/pages/user/statistics/statistics.js");
+const settingsadminRoutes = require("./src/pages/admin/settings.js");
 
 // Application initialization
 const app = express();
@@ -75,6 +76,7 @@ app.use("/", accountRoutes);
 app.use("/", loadRoutes);
 app.use("/", statisticsdomainsRoutes);
 app.use("/", statisticsRoutes);
+app.use("/", settingsadminRoutes);
 
 // Middleware to handle errors
 app.use((req, res, next) => {
@@ -102,5 +104,4 @@ const hostname = config.hostname || "localhost";
 
 app.listen(port, hostname, () => {
   console.log(`LumenOne successfully started: http://${hostname}:${port}`);
-  
 });
