@@ -127,7 +127,8 @@ Project completion : ⁓ 22%
 ### Core
 
 - [x] User authentication (login, logout, sessions)
-- [ ] Role system (admin, user, and custom)
+- [x] Role system for user (admin, user)
+- [ ] Role system for php (admin, user, and custom)
 - [ ] Dashboard for service management (web, FTP, databases)
 - [ ] User/action logs system (audit)
 - [ ] devloppement and production mode (production = no logs)
