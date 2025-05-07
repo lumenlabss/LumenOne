@@ -38,7 +38,6 @@
         border: 1px solid rgba(71, 85, 105, 0.2);
         transition: all 0.3s ease;
       }
-
       .settings-card:hover {
         border-color: rgba(96, 165, 250, 0.5);
         box-shadow: 0 0 20px rgba(96, 165, 250, 0.1);
@@ -90,71 +89,40 @@
     </style>
   </head>
 
-  <!-- Sidebar -->
-  <%- include('../../components/sidebar') %>
-
   <body class="gradient-bg text-white min-h-screen flex flex-col sm:ml-64">
+    <!-- Sidebar -->
+    <%- include('../../components/sidebar') %>
+
     <div class="flex-grow p-8">
       <div class="max-w-4xl mx-auto">
         <h1 class="text-3xl font-bold gradient-text mb-8">Settings</h1>
 
         <div class="space-y-6">
           <div class="glass-card rounded-xl p-6">
-            <h2 class="text-xl font-semibold mb-6">Profile</h2>
-            <form
-              method="POST"
-              action="/web/account/username/save"
-              class="space-y-6"
-            >
+            <h2 class="text-xl font-semibold mb-6">General</h2>
+            <form method="POST" action="/web/settings/save" class="space-y-6">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label class="block text-sm font-medium mb-2">Username</label>
+                  <label class="block text-sm font-medium mb-2">
+                    Company Name
+                  </label>
                   <input
                     type="text"
-                    name="username"
+                    name="companyName"
                     value="aaa"
                     class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div>
-                  <label class="block text-sm font-medium mb-2"
-                    >Created at</label
-                  >
-                  <input
-                    type="email"
-                    value="aaa"
+                  <label class="block text-sm font-medium mb-2">
+                    Default Language
+                  </label>
+                  <select
+                    name="defaultLanguage"
                     class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    disabled
-                  />
-                </div>
-                <div>
-                  <label class="block text-sm font-medium mb-2"
-                    >Account ID</label
                   >
-                  <div class="relative">
-                    <input
-                      type="text"
-                      value="aaa"
-                      class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 pr-12"
-                      disabled
-                    />
-                    <button
-                      type="button"
-                      class="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-md hover:bg-gray-700/40 transition"
-                      onclick="navigator.clipboard.writeText('aaaa')"
-                    >
-                      <i data-lucide="copy" class="w-5 h-5"></i>
-                    </button>
-                  </div>
-                </div>
-                <div>
-                  <label class="block text-sm font-medium mb-2">Rank</label>
-                  <input
-                    type="text"
-                    value="aaaa"
-                    class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    disabled
-                  />
+                    <option>English</option>
+                  </select>
                 </div>
               </div>
               <div class="flex justify-end">
