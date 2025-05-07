@@ -140,6 +140,7 @@ Project completion : ⁓ 22%
 - [x] Integrated file manager (upload, delete, edit)
 - [ ] Interface for database management (create, delete, access)
 - [ ] Add backend integration
+- [ ] Add stastisic
 
 ### Backend
 
@@ -150,6 +151,7 @@ Project completion : ⁓ 22%
 - [x] Code reorganization into modules (`src`)
 - [ ] Create a Middlewares files (`src/middlewares/exemple.js`)
 - [ ] Optimize code (make it faster, more readable, more orderly, etc.)
+- [ ] Convert stastistic storage from .json to .db
 
 ### Users pages (backend + frontend)
 
