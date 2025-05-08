@@ -122,7 +122,7 @@ Contributions are welcome! Here's how you can contribute:
 
 ## :white_check_mark: ToDo List
 
-Project completion : ⁓ 22%
+Project completion : ⁓ 25%
 
 ### Core
 
@@ -139,7 +139,7 @@ Project completion : ⁓ 22%
 - [x] Domain and subdomain management
 - [x] Integrated file manager (upload, delete, edit)
 - [ ] Interface for database management (create, delete, access)
-- [ ] Add backend integration
+- [x] Add backend integration
 - [ ] Add stastisic
 
 ### Backend
@@ -153,7 +153,24 @@ Project completion : ⁓ 22%
 - [ ] Optimize code (make it faster, more readable, more orderly, etc.)
 - [ ] Convert stastistic storage from .json to .db
 
-### Users pages (backend + frontend)
+### Users pages (frontend)
+
+- [x] Websites & Domains
+- [ ] Mail
+- [x] Backup
+- [x] Statistics
+- [ ] Users
+- [x] Account
+
+### Admin pages (frontend)
+
+- [x] Customers
+- [ ] Service Plans
+- [x] Subscriptions
+- [x] Information
+- [ ] Settings
+
+### Users pages (Backend)
 
 - [x] Websites & Domains
 - [ ] Mail
@@ -162,9 +179,9 @@ Project completion : ⁓ 22%
 - [ ] Users
 - [x] Account
 
-### Admin pages (backend + frontend)
+### Admin pages (Backend)
 
-- [ ] Customers
+- [x] Customers
 - [ ] Service Plans
 - [x] Subscriptions
 - [x] Information

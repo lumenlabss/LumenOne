@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Backups - LumenOne</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .glass-card {
+        background: rgba(31, 41, 55, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+      }
+      .gradient-bg {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      }
+      .gradient-text {
+        background: linear-gradient(135deg, #60a5fa, #3b82f6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .stat-card {
+        background: rgba(30, 41, 59, 0.5);
+        border: 1px solid rgba(71, 85, 105, 0.2);
+        transition: all 0.3s ease;
+      }
+      .stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px -5px rgba(59, 130, 246, 0.2);
+      }
+      .text-muted {
+        color: rgba(255, 255, 255, 0.6);
+      }
+      .backup-item:hover {
+        background: rgba(71, 85, 105, 0.3);
+      }
+    </style>
+  </head>
+  <body class="gradient-bg text-white min-h-screen flex flex-col sm:ml-64">
+    <div class="flex-grow p-8">
+      <div class="max-w-6xl mx-auto">
+        <div class="flex items-center gap-4 mb-8">
+          <a href="domains.html" class="btn-secondary p-2 rounded-lg">
+            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+          </a>
+          <h1 class="text-3xl font-bold gradient-text">Backup Manager</h1>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          <div class="stat-card rounded-xl p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="bg-blue-500/10 p-2 rounded-lg">
+                <i data-lucide="hard-drive" class="w-5 h-5 text-blue-400"></i>
+              </div>
+              <h3 class="text-lg font-medium">Total Backups</h3>
+            </div>
+            <p class="text-3xl font-bold mb-2" id="totalBackups">12</p>
+            <p class="text-muted text-sm">5.4GB total storage</p>
+          </div>
+
+          <div class="stat-card rounded-xl p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="bg-green-500/10 p-2 rounded-lg">
+                <i data-lucide="clock" class="w-5 h-5 text-green-400"></i>
+              </div>
+              <h3 class="text-lg font-medium">Last Backup</h3>
+            </div>
+            <p class="text-3xl font-bold mb-2" id="lastBackup">2h ago</p>
+            <p class="text-muted text-sm">456MB</p>
+          </div>
+
+          <div class="stat-card rounded-xl p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="bg-purple-500/10 p-2 rounded-lg">
+                <i data-lucide="calendar" class="w-5 h-5 text-purple-400"></i>
+              </div>
+              <h3 class="text-lg font-medium">Next Backup</h3>
+            </div>
+            <p class="text-3xl font-bold mb-2" id="nextBackup">22:00</p>
+            <p class="text-muted text-sm">Automatic daily</p>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-xl p-6 mb-6">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-semibold">Create New Backup</h2>
+          </div>
+          <div class="space-y-4">
+            <div class="flex items-center gap-4">
+              <div class="flex-1">
+                <label class="block text-sm font-medium mb-1"
+                  >Backup Name</label
+                >
+                <input
+                  type="text"
+                  class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2"
+                  placeholder="my-backup-2023"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-1">Type</label>
+                <select
+                  class="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2"
+                >
+                  <option>Full Backup</option>
+                  <option>Database Only</option>
+                  <option>Files Only</option>
+                </select>
+              </div>
+            </div>
+            <div class="flex justify-end gap-3">
+              <button
+                class="px-4 py-2 border border-gray-700 rounded-lg hover:border-blue-400 transition"
+              >
+                Cancel
+              </button>
+              <button
+                class="px-4 py-2 bg-blue-600 rounded-lg hover:bg-blue-700 transition flex items-center gap-2"
+              >
+                <i data-lucide="plus" class="w-4 h-4"></i>
+                Create Backup
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-xl p-6">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-semibold">Recent Backups</h2>
+            <div class="flex items-center gap-3">
+              <button class="p-2 rounded-lg hover:bg-gray-800/50 transition">
+                <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+              </button>
+              <select
+                class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-1 text-sm"
+              >
+                <option>All Backups</option>
+                <option>Last 7 days</option>
+                <option>Last 30 days</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <div
+              class="backup-item flex items-center justify-between p-4 rounded-lg transition"
+            >
+              <div class="flex items-center gap-4">
+                <div class="bg-blue-500/10 p-3 rounded-lg">
+                  <i data-lucide="hard-drive" class="w-6 h-6 text-blue-400"></i>
+                </div>
+                <div>
+                  <h3 class="font-medium">Full Backup - 2023-11-15</h3>
+                  <p class="text-sm text-muted">Created 2 hours ago • 456MB</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <button
+                  class="p-2 rounded-lg hover:bg-gray-800/50 transition"
+                  title="Download"
+                >
+                  <i data-lucide="download" class="w-5 h-5"></i>
+                </button>
+                <button
+                  class="p-2 rounded-lg hover:bg-gray-800/50 transition"
+                  title="Restore"
+                >
+                  <i data-lucide="rotate-cw" class="w-5 h-5"></i>
+                </button>
+                <button
+                  class="p-2 rounded-lg hover:bg-red-500/20 transition"
+                  title="Delete"
+                >
+                  <i data-lucide="trash-2" class="w-5 h-5 text-red-400"></i>
+                </button>
+              </div>
+            </div>
+
+            <div
+              class="backup-item flex items-center justify-between p-4 rounded-lg transition"
+            >
+              <div class="flex items-center gap-4">
+                <div class="bg-green-500/10 p-3 rounded-lg">
+                  <i data-lucide="database" class="w-6 h-6 text-green-400"></i>
+                </div>
+                <div>
+                  <h3 class="font-medium">Database Backup - 2023-11-14</h3>
+                  <p class="text-sm text-muted">Created 1 day ago • 128MB</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <button
+                  class="p-2 rounded-lg hover:bg-gray-800/50 transition"
+                  title="Download"
+                >
+                  <i data-lucide="download" class="w-5 h-5"></i>
+                </button>
+                <button
+                  class="p-2 rounded-lg hover:bg-gray-800/50 transition"
+                  title="Restore"
+                >
+                  <i data-lucide="rotate-cw" class="w-5 h-5"></i>
+                </button>
+                <button
+                  class="p-2 rounded-lg hover:bg-red-500/20 transition"
+                  title="Delete"
+                >
+                  <i data-lucide="trash-2" class="w-5 h-5 text-red-400"></i>
+                </button>
+              </div>
+            </div>
+
+            <div
+              class="backup-item flex items-center justify-between p-4 rounded-lg transition"
+            >
+              <div class="flex items-center gap-4">
+                <div class="bg-purple-500/10 p-3 rounded-lg">
+                  <i data-lucide="folder" class="w-6 h-6 text-purple-400"></i>
+                </div>
+                <div>
+                  <h3 class="font-medium">Files Backup - 2023-11-13</h3>
+                  <p class="text-sm text-muted">Created 2 days ago • 342MB</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <button
+                  class="p-2 rounded-lg hover:bg-gray-800/50 transition"
+                  title="Download"
+                >
+                  <i data-lucide="download" class="w-5 h-5"></i>
+                </button>
+                <button
+                  class="p-2 rounded-lg hover:bg-gray-800/50 transition"
+                  title="Restore"
+                >
+                  <i data-lucide="rotate-cw" class="w-5 h-5"></i>
+                </button>
+                <button
+                  class="p-2 rounded-lg hover:bg-red-500/20 transition"
+                  title="Delete"
+                >
+                  <i data-lucide="trash-2" class="w-5 h-5 text-red-400"></i>
+                </button>
+              </div>
+            </div>
+
+            <div
+              class="backup-item flex items-center justify-between p-4 rounded-lg transition"
+            >
+              <div class="flex items-center gap-4">
+                <div class="bg-blue-500/10 p-3 rounded-lg">
+                  <i data-lucide="hard-drive" class="w-6 h-6 text-blue-400"></i>
+                </div>
+                <div>
+                  <h3 class="font-medium">Full Backup - 2023-11-12</h3>
+                  <p class="text-sm text-muted">Created 3 days ago • 498MB</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <button
+                  class="p-2 rounded-lg hover:bg-gray-800/50 transition"
+                  title="Download"
+                >
+                  <i data-lucide="download" class="w-5 h-5"></i>
+                </button>
+                <button
+                  class="p-2 rounded-lg hover:bg-gray-800/50 transition"
+                  title="Restore"
+                >
+                  <i data-lucide="rotate-cw" class="w-5 h-5"></i>
+                </button>
+                <button
+                  class="p-2 rounded-lg hover:bg-red-500/20 transition"
+                  title="Delete"
+                >
+                  <i data-lucide="trash-2" class="w-5 h-5 text-red-400"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="mt-6 flex justify-between items-center text-sm text-muted"
+          >
+            <div>Showing 4 of 12 backups</div>
+            <div class="flex items-center gap-2">
+              <button
+                class="p-2 rounded-lg hover:bg-gray-800/50 transition disabled:opacity-50"
+                disabled
+              >
+                <i data-lucide="chevron-left" class="w-4 h-4"></i>
+              </button>
+              <span>Page 1 of 3</span>
+              <button class="p-2 rounded-lg hover:bg-gray-800/50 transition">
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      lucide.createIcons();
+
+      document.addEventListener("DOMContentLoaded", () => {
+        console.log("Backup manager loaded");
+      });
+    </script>
+  </body>
+</html>
