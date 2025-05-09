@@ -1,15 +1,8 @@
 console.log("pages/user/home.js loaded"); // To confirm that the page has been loaded correctly
 const express = require("express");
 const db = require("../../db.js");
+const { isAuthenticated } = require("../../middleware/auth.js");
 const router = express.Router();
-
-// Middleware to check if the user is authenticated
-function isAuthenticated(req, res, next) {
-  if (req.session && req.session.user) {
-    return next();
-  }
-  res.redirect("/");
-}
 
 // Route for the user's website list
 router.get("/web/list", isAuthenticated, (req, res) => {

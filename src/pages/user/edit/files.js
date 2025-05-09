@@ -6,15 +6,10 @@ const db = require("../../../db.js");
 const router = express.Router();
 const { checkSizeBeforeCreate } = require("../../../web/size-limit.js");
 const app = express();
+const { isAuthenticated } = require("../../../middleware/auth.js");
 
 app.use(express.json({ limit: "80mb" }));
 app.use(express.urlencoded({ limit: "80mb", extended: true }));
-
-// Authentication middleware
-function isAuthenticated(req, res, next) {
-  if (req.session?.user) return next();
-  res.redirect("/");
-}
 
 // Function to calculate the total size of a folder
 function getFolderSize(folderPath, callback) {

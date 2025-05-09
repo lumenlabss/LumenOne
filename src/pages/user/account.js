@@ -2,14 +2,7 @@ console.log("pages/user/account.js loaded"); // To confirm that the page has bee
 const express = require("express");
 const db = require("../../db.js");
 const router = express.Router();
-
-// Middleware to check if the user is authenticated
-function isAuthenticated(req, res, next) {
-  if (req.session && req.session.user) {
-    return next();
-  }
-  res.redirect("/");
-}
+const { isAuthenticated } = require("../../middleware/auth.js");
 
 // Route for the user's account info
 router.get("/web/account", isAuthenticated, (req, res) => {

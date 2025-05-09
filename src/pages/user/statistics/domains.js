@@ -4,14 +4,7 @@ const db = require("../../../db.js");
 const router = express.Router();
 const fs = require("fs");
 const path = require("path");
-
-// Middleware to check if the user is authenticated
-function isAuthenticated(req, res, next) {
-  if (req.session && req.session.user) {
-    return next();
-  }
-  res.redirect("/");
-}
+const { isAuthenticated } = require("../../../middleware/auth.js");
 
 // Route for the user's website list
 router.get("/web/statistics/list", isAuthenticated, (req, res) => {

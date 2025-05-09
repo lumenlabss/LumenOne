@@ -4,12 +4,7 @@ const db = require("../../../db.js");
 const router = express.Router();
 const fs = require("fs");
 const path = require("path");
-
-// Authentication middleware
-function isAuthenticated(req, res, next) {
-  if (req.session?.user) return next();
-  res.redirect("/");
-}
+const { isAuthenticated } = require("../../../middleware/auth.js");
 
 // Website statistics page route
 router.get("/web/statistics/:id", isAuthenticated, (req, res) => {
