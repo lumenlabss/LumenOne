@@ -2,32 +2,7 @@ console.log("pages/admin/customers_edit.js loaded"); // To confirm that the page
 const express = require("express");
 const db = require("../../db.js");
 const router = express.Router();
-
-// Middleware to check if the user is authenticated and has the admin rank
-function isAuthenticated(req, res, next) {
-  if (req.session && req.session.user) {
-    const userId = req.session.user.id;
-
-    db.get("SELECT rank FROM users WHERE id = ?", [userId], (err, row) => {
-      if (err) {
-        console.error("Error while checking user rank: " + err.message);
-        return res.status(500).render("error/500.ejs", {
-          message: "Internal server error",
-        });
-      }
-
-      if (row && row.rank === "admin") {
-        return next();
-      }
-
-      return res.status(403).render("error/403.ejs", {
-        message: "Access denied. Admins only.",
-      });
-    });
-  } else {
-    res.redirect("/");
-  }
-}
+const { isAuthenticated } = require("../../middleware/auth-admin.js");
 
 // Route to edit a user
 router.get("/web/admin/customers/edit/:id", isAuthenticated, (req, res) => {

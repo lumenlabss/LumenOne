@@ -7,35 +7,9 @@ const http = require("http");
 const router = express.Router();
 const db = require("../../../db");
 const { addDomain } = require("../../../web/domain");
+const { isAuthenticated } = require("../../../middleware/auth-admin.js");
 
 let activeServers = {};
-
-// Middleware to check if the user is authenticated and has admin rank
-function isAuthenticated(req, res, next) {
-  if (req.session && req.session.user) {
-    const userId = req.session.user.id;
-
-    db.get("SELECT rank FROM users WHERE id = ?", [userId], (err, row) => {
-      if (err) {
-        console.error("Erreur de récupération du rang :", err.message);
-        return res.status(500).render("error/500.ejs", {
-          message: "Internal server error",
-        });
-      }
-
-      if (row && row.rank === "admin") {
-        req.session.user.rank = row.rank;
-        return next();
-      }
-
-      return res.status(403).render("error/403.ejs", {
-        message: "Access forbidden. Admins only.",
-      });
-    });
-  } else {
-    res.redirect("/");
-  }
-}
 
 // Route GET to display the creation page
 router.get("/web/admin/subscriptions/create", isAuthenticated, (req, res) => {
@@ -117,7 +91,7 @@ router.post("/web/admin/subscriptions/create", isAuthenticated, (req, res) => {
         }
 
         // Create an HTTP server to listen on the specified port
-    
+
         // Add domain to Nginx configuration
         addDomain(name, folderPath, (err) => {
           if (err) {

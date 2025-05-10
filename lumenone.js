@@ -1,8 +1,8 @@
 /*
  * ╳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╳
- *      LumenOne - Open Source Project by Lumen
+ *      LumenOne - Open Source Project by LumenLabs
  *
- *     © 2025 Lumen. Licensed under the MIT License
+ *     © 2025 LumenLabs. Licensed under the MIT License
  * ╳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╳
  */
 
