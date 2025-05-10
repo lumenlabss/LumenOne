@@ -29,9 +29,8 @@ router.get("/web/admin/subscriptions/create", isAuthenticated, (req, res) => {
 
 // POST route to create a site
 router.post("/web/admin/subscriptions/create", isAuthenticated, (req, res) => {
-  const { userId, diskLimit, port, name } = req.body; // Use of 'name' for the domain
+  const { userId, diskLimit, port, name } = req.body;
 
-  // Check that all required fields are present
   if (!userId || !diskLimit || !port || !name) {
     return res.status(400).send("Missing fields!");
   }
@@ -65,7 +64,6 @@ router.post("/web/admin/subscriptions/create", isAuthenticated, (req, res) => {
 
       fs.exists(filePath, (exists) => {
         if (!exists) {
-          // Create a basic index.html file if it doesn't exist
           const defaultHtml = `
             <!DOCTYPE html>
             <html lang="en">
@@ -90,19 +88,35 @@ router.post("/web/admin/subscriptions/create", isAuthenticated, (req, res) => {
           });
         }
 
-        // Create an HTTP server to listen on the specified port
+        // Création du fichier php.ini
+        const phpIniPath = path.join(folderPath, "php.ini");
+        const phpIniContent = `
+disable_functions = exec,passthru,shell_exec,system,proc_open,popen
+display_errors = Off
+expose_php = Off
+memory_limit = 256M
+upload_max_filesize = 100M
+post_max_size = 100M
+`.trim();
 
-        // Add domain to Nginx configuration
-        addDomain(name, folderPath, (err) => {
+        fs.writeFile(phpIniPath, phpIniContent, (err) => {
           if (err) {
-            console.error(`Error adding domain for ${name}:`, err);
-            return res.status(500).send("Failed to add domain.");
+            console.error("Error writing php.ini:", err.message);
+            return res.status(500).send("Failed to create php.ini.");
           }
 
-          console.log(
-            `New website : UUID=${uuid}, Domaine=${name}, Port=${port}, Disk=${diskLimit}MB`
-          );
-          return res.redirect("/web/admin/subscriptions");
+          // Ajout du domaine nginx
+          addDomain(name, folderPath, (err) => {
+            if (err) {
+              console.error(`Error adding domain for ${name}:`, err);
+              return res.status(500).send("Failed to add domain.");
+            }
+
+            console.log(
+              `New website : UUID=${uuid}, Domaine=${name}, Port=${port}, Disk=${diskLimit}MB`
+            );
+            return res.redirect("/web/admin/subscriptions");
+          });
         });
       });
     });

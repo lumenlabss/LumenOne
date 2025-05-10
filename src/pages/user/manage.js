@@ -5,6 +5,7 @@ const router = express.Router();
 const fs = require("fs");
 const path = require("path");
 const { isAuthenticated } = require("../../middleware/auth.js");
+const filesProtect = require("../../middleware/protect-sensitive-files.js"); // Import du middleware de protection des fichiers
 
 // Website management page route
 router.get("/web/manage/:id", isAuthenticated, (req, res) => {
@@ -46,7 +47,7 @@ router.get("/web/manage/:id", isAuthenticated, (req, res) => {
             const stats = fs.statSync(fileFullPath);
             return {
               name: fileName,
-              size: (stats.size / 1024 / 1024).toFixed(2),
+              size: (stats.size / 1024 / 1024).toFixed(2), // Taille en Mo
             };
           });
 
@@ -110,50 +111,55 @@ router.post("/web/manage/:id/create-file", isAuthenticated, (req, res) => {
   );
 });
 
-// File deletion route
-router.get("/web/manage/:id/delete/:file", isAuthenticated, (req, res) => {
-  const userId = req.session.user.id;
-  const websiteUuid = req.params.id;
-  const fileToDelete = req.params.file;
+// File deletion route with protection middleware
+router.get(
+  "/web/manage/:id/delete/:file",
+  isAuthenticated,
+  filesProtect, // Protection des fichiers avant suppression
+  (req, res) => {
+    const userId = req.session.user.id;
+    const websiteUuid = req.params.id;
+    const fileToDelete = req.params.file;
 
-  // Basic security check
-  if (
-    !fileToDelete ||
-    fileToDelete.includes("..") ||
-    fileToDelete.includes("/")
-  ) {
-    return res.status(400).send("Invalid file name.");
-  }
+    // Basic security check
+    if (
+      !fileToDelete ||
+      fileToDelete.includes("..") ||
+      fileToDelete.includes("/")
+    ) {
+      return res.status(400).send("Invalid file name.");
+    }
 
-  db.get(
-    "SELECT * FROM websites WHERE uuid = ? AND user_id = ?",
-    [websiteUuid, userId],
-    (err, website) => {
-      if (err) {
-        console.error("Database error:", err.message);
-        return res.status(500).render("error/500.ejs");
-      }
-      if (!website) {
-        return res.status(404).render("error/404.ejs");
-      }
-
-      const filePath = path.join(
-        __dirname,
-        "../../../storage/volumes",
-        websiteUuid,
-        fileToDelete
-      );
-
-      fs.unlink(filePath, (err) => {
+    db.get(
+      "SELECT * FROM websites WHERE uuid = ? AND user_id = ?",
+      [websiteUuid, userId],
+      (err, website) => {
         if (err) {
-          console.error("File deletion error:", err.message);
+          console.error("Database error:", err.message);
           return res.status(500).render("error/500.ejs");
         }
+        if (!website) {
+          return res.status(404).render("error/404.ejs");
+        }
 
-        res.redirect(`/web/manage/${websiteUuid}`);
-      });
-    }
-  );
-});
+        const filePath = path.join(
+          __dirname,
+          "../../../storage/volumes",
+          websiteUuid,
+          fileToDelete
+        );
+
+        fs.unlink(filePath, (err) => {
+          if (err) {
+            console.error("File deletion error:", err.message);
+            return res.status(500).render("error/500.ejs");
+          }
+
+          res.redirect(`/web/manage/${websiteUuid}`);
+        });
+      }
+    );
+  }
+);
 
 module.exports = router;
