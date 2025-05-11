@@ -5,7 +5,12 @@ const router = express.Router();
 const fs = require("fs");
 const path = require("path");
 const { isAuthenticated } = require("../../middleware/auth.js");
-const filesProtect = require("../../middleware/protect-sensitive-files.js"); // Import du middleware de protection des fichiers
+const {
+  protectSensitiveFiles,
+} = require("../../middleware/protect-sensitive-files.js");
+
+const filesPath = path.join(__dirname, "../../../storage/volumes");
+const filesProtect = protectSensitiveFiles(filesPath);
 
 // Website management page route
 router.get("/web/manage/:id", isAuthenticated, (req, res) => {
@@ -115,7 +120,7 @@ router.post("/web/manage/:id/create-file", isAuthenticated, (req, res) => {
 router.get(
   "/web/manage/:id/delete/:file",
   isAuthenticated,
-  filesProtect, // Protection des fichiers avant suppression
+  filesProtect,
   (req, res) => {
     const userId = req.session.user.id;
     const websiteUuid = req.params.id;
