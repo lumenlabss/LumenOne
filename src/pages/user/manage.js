@@ -8,6 +8,7 @@ const { isAuthenticated } = require("../../middleware/auth.js");
 const {
   protectSensitiveFiles,
 } = require("../../middleware/protect-sensitive-files.js");
+const { checkSizeBeforeCreate } = require("../../web/size-limit.js"); // <- ajout du size check
 
 const filesPath = path.join(__dirname, "../../../storage/volumes");
 const filesProtect = protectSensitiveFiles(filesPath);
@@ -104,13 +105,23 @@ router.post("/web/manage/:id/create-file", isAuthenticated, (req, res) => {
         filename
       );
 
-      fs.writeFile(filePath, "", (err) => {
+      // Vérifie la taille avant de créer
+      checkSizeBeforeCreate(websiteUuid, 0, (err) => {
         if (err) {
-          console.error("File creation error:", err.message);
-          return res.status(500).render("error/500.ejs");
+          console.error("Disk quota error:", err.message);
+          return res
+            .status(403)
+            .send("Disk limit exceeded, cannot create file.");
         }
 
-        res.redirect(`/web/manage/${websiteUuid}`);
+        fs.writeFile(filePath, "", (err) => {
+          if (err) {
+            console.error("File creation error:", err.message);
+            return res.status(500).render("error/500.ejs");
+          }
+
+          res.redirect(`/web/manage/${websiteUuid}`);
+        });
       });
     }
   );

@@ -7,8 +7,9 @@ const router = express.Router();
 const { checkSizeBeforeCreate } = require("../../../web/size-limit.js");
 const app = express();
 const { isAuthenticated } = require("../../../middleware/auth.js");
-const filesProtect = require("../../../middleware/protect-sensitive-files.js"); // Import du middleware
-
+const {
+  protectSensitiveFiles,
+} = require("../../../middleware/protect-sensitive-files.js"); // Import du middleware correct
 app.use(express.json({ limit: "80mb" }));
 app.use(express.urlencoded({ limit: "80mb", extended: true }));
 
@@ -40,11 +41,16 @@ function getFolderSize(folderPath, callback) {
     .catch((err) => callback(err));
 }
 
+// Helper function to get the volume directory path (avoids repetition)
+function getVolumesDir() {
+  return path.join(__dirname, "../../../../storage/volumes");
+}
+
 // Route to display the file editor
 router.get(
   "/web/manage/:id/edit/:file",
   isAuthenticated,
-  filesProtect,
+  protectSensitiveFiles(getVolumesDir()), // Utilise le helper pour éviter la répétition
   (req, res) => {
     const userId = req.session.user.id;
     const websiteUuid = req.params.id;
@@ -70,11 +76,7 @@ router.get(
           return res.status(404).render("error/404.ejs");
         }
 
-        const websiteDir = path.join(
-          __dirname,
-          "../../../../storage/volumes",
-          websiteUuid
-        );
+        const websiteDir = path.join(getVolumesDir(), websiteUuid); // Utilise le helper
 
         db.get("SELECT rank FROM users WHERE id = ?", [userId], (err, row) => {
           if (err) {
@@ -169,7 +171,7 @@ router.get(
 router.post(
   "/web/manage/:id/edit/:file",
   isAuthenticated,
-  filesProtect,
+  protectSensitiveFiles(getVolumesDir()), // Utilise le helper pour éviter la répétition
   (req, res) => {
     const userId = req.session.user.id;
     const websiteUuid = req.params.id;
@@ -201,11 +203,7 @@ router.post(
           return res.status(404).render("error/500.ejs");
         }
 
-        const websiteDir = path.join(
-          __dirname,
-          "../../../../storage/volumes",
-          websiteUuid
-        );
+        const websiteDir = path.join(getVolumesDir(), websiteUuid); // Utilise le helper
 
         fs.mkdir(websiteDir, { recursive: true }, (err) => {
           if (err && err.code !== "EEXIST") {
@@ -252,7 +250,7 @@ router.post(
 router.get(
   "/web/manage/:id/size",
   isAuthenticated,
-  filesProtect,
+  protectSensitiveFiles(getVolumesDir()),
   (req, res) => {
     const userId = req.session.user.id;
     const websiteUuid = req.params.id;
@@ -275,11 +273,7 @@ router.get(
           return res.status(404).json({ error: "Website not found" });
         }
 
-        const websiteDir = path.join(
-          __dirname,
-          "../../../../storage/volumes",
-          websiteUuid
-        );
+        const websiteDir = path.join(getVolumesDir(), websiteUuid);
 
         getFolderSize(websiteDir, (err, size) => {
           if (err) {
