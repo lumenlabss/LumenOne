@@ -85,39 +85,6 @@
           <div class="glass-card rounded-xl p-6">
             <div class="flex items-start justify-between mb-4">
               <h2 class="text-xl font-semibold"><%= site.name %></h2>
-              <div class="relative inline-block text-left">
-                <button
-                  onclick="toggleMenu('<%= site.uuid %>')"
-                  class="text-gray-400 hover:text-white transition-colors"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
-                    />
-                  </svg>
-                </button>
-
-                <div
-                  id="dropdownMenu-<%= site.uuid %>"
-                  class="hidden absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-md shadow-lg z-50"
-                >
-                  <ul class="py-1 text-sm text-white">
-                    <li>
-                      <button
-                        class="block w-full text-left px-4 py-2 hover:bg-gray-700 transition"
-                        onclick="restartServer('<%= site.uuid %>')"
-                      >
-                        Restart
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              </div>
             </div>
             <div class="space-y-3">
               <div
