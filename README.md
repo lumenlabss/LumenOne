@@ -9,7 +9,7 @@
 
 ---
 
-## :sparkles: Key Features
+## :sparkles: Key Features (some feature not available now)
 
 - :control_knobs: **Simple, responsive, and modern web interface**
 - :globe_with_meridians: **Domain & subdomain management**
