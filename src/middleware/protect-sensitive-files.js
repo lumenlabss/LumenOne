@@ -1,21 +1,28 @@
+console.log("protect-sensitive-files.js loaded");
 const path = require("path");
 const fs = require("fs");
 
 const protectedFiles = ["php.ini"];
-
 function protectSensitiveFiles(baseDir) {
   return (req, res, next) => {
-    const normalizedPath = path.normalize(req.path);
-    const requestedPath = path.join(baseDir, normalizedPath);
+    const fileName = path.basename(req.path); // "php.ini"
+    const match = req.path.match(/\/web\/manage\/([^/]+)/); // extrait l'UUID
 
-    const isProtected = protectedFiles.some((filename) =>
-      requestedPath.endsWith(filename)
-    );
+    if (!match) {
+      console.log("[MIDDLEWARE] No detected UUID, Skipping");
+      return next();
+    }
 
-    if (isProtected) {
+    const websiteUuid = match[1]; // exemple : "840ac4c7-d81a-4816-be05-798d7f45a839"
+    const requestedPath = path.join(baseDir, websiteUuid, fileName); // chemin réel sur le disque
+
+    console.log("[MIDDLEWARE] Checking file:", requestedPath);
+
+    if (protectedFiles.includes(fileName)) {
       fs.stat(requestedPath, (err, stats) => {
         if (!err && stats.isFile()) {
-          return res.status(403).send("Access denied to protected file.");
+          console.log("[MIDDLEWARE] BLOCKED:", requestedPath);
+          return res.status(403).send("Error 403 - Access Denied. It is an error on your side, don't make an issue report on github.");
         }
         next();
       });
@@ -25,4 +32,6 @@ function protectSensitiveFiles(baseDir) {
   };
 }
 
+
 module.exports = { protectSensitiveFiles };
+
