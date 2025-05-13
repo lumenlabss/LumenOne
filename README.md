@@ -210,9 +210,9 @@ Project completion : ⁓ 25%
 
 ## :speech_balloon: Community
 
-Join the LumenOne community to ask questions, report bugs, or propose ideas:
+Join the LumenLabs community to ask questions, report bugs, or propose ideas:
 
-- [GitHub Issues](https://github.com/your-username/RubixOne/issues)
+- [GitHub Issues](https://github.com/lumenlabss/LumenOne/issues)
 - [Discord](https://discord.gg/ty92ffCYUC)
 
 ---
