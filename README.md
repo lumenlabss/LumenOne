@@ -140,7 +140,7 @@ Project completion : ⁓ 25%
 - [x] Integrated file manager (upload, delete, edit)
 - [ ] Interface for database management (create, delete, access)
 - [x] Add backend integration
-- [ ] Add stastisic
+- [ ] Add stastisic (To be realized potentially by the community)
 
 ### Backend
 
@@ -156,9 +156,9 @@ Project completion : ⁓ 25%
 ### Users pages (frontend)
 
 - [x] Websites & Domains
-- [ ] Mail
+- [ ] Mail (To be realized potentially by the community)
 - [x] Backup
-- [x] Statistics
+- [x] Statistics (To be realized potentially by the community)
 - [ ] Users
 - [x] Account
 
@@ -173,9 +173,9 @@ Project completion : ⁓ 25%
 ### Users pages (Backend)
 
 - [x] Websites & Domains
-- [ ] Mail
+- [ ] Mail (To be realized potentially by the community)
 - [ ] Backup
-- [ ] Statistics
+- [ ] Statistics (To be realized potentially by the community)
 - [ ] Users
 - [x] Account
 
