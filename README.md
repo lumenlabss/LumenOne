@@ -34,7 +34,7 @@
 - **Node.js** (version 18 or higher)
 - **npm** or **yarn**
 - **SQLite database** (default)
-- Linux or Windows (recommended: Linux)
+- Linux or Windows (recommended: Linux, Windows support is only with WSL)
 - **Nginx**
 
 ### Installation Steps
