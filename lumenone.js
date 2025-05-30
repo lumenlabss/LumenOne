@@ -33,7 +33,7 @@ const statisticsdomainsRoutes = require("./src/pages/user/statistics/domains.js"
 const statisticsRoutes = require("./src/pages/user/statistics/statistics.js");
 const settingsadminRoutes = require("./src/pages/admin/settings.js");
 
-const { authLimiter } = require("./src/middleware/rate-limiter.js");
+//const { authLimiter } = require("./src/middleware/rate-limiter.js");
 
 // Application initialization
 const app = express();
@@ -66,8 +66,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 
 // Registering routes
-app.use("/", authLimiter, loginRoutes);
-app.use("/", authLimiter, loginRoutes);
+app.use("/", loginRoutes);
 app.use("/", logoutRoutes);
 app.use("/", homeRoutes);
 app.use("/", customersRoutes);
