@@ -43,26 +43,37 @@ router.get("/web/admin/settings", isAuthenticated, (req, res) => {
 
 // POST - Update config
 router.post("/web/admin/settings", isAuthenticated, (req, res) => {
-  const updatedConfig = {
-    hostname: req.body.hostname,
-    port: parseInt(req.body.port),
-    name: req.body.name,
-    version: req.body.version,
-    session: {
-      secret: req.body.session_secret,
-      resave: req.body.session_resave === "true",
-      saveUninitialized: req.body.session_saveUninitialized === "true",
-      cookie: {
-        secure: req.body.session_cookie_secure === "true",
-      },
-    },
-  };
+  fs.readFile(configPath, "utf8", (err, data) => {
+    if (err) {
+      console.error("Error reading config file: " + err.message);
+      return res.status(500).render("error/500.ejs");
+    }
 
-  fs.writeFile(
-    configPath,
-    JSON.stringify(updatedConfig, null, 2),
-    "utf8",
-    (err) => {
+    let config;
+    try {
+      config = JSON.parse(data);
+    } catch (parseErr) {
+      console.error("Error parsing config file: " + parseErr.message);
+      return res.status(500).render("error/500.ejs");
+    }
+
+    // Update fields, retaining those that have not been modified
+    config.hostname = req.body.hostname || config.hostname;
+
+    const port = parseInt(req.body.port);
+    config.port = isNaN(port) ? config.port : port;
+
+    config.name = req.body.name || config.name;
+    config.version = req.body.version || config.version;
+
+    // Session
+    config.session.secret = req.body.session_secret || config.session.secret;
+    config.session.resave = req.body.session_resave === "true";
+    config.session.saveUninitialized =
+      req.body.session_saveUninitialized === "true";
+    config.session.cookie.secure = req.body.session_cookie_secure === "true";
+
+    fs.writeFile(configPath, JSON.stringify(config, null, 2), "utf8", (err) => {
       if (err) {
         console.error("Error writing config file: " + err.message);
         return res
@@ -71,8 +82,8 @@ router.post("/web/admin/settings", isAuthenticated, (req, res) => {
       }
 
       res.redirect("/web/admin/settings");
-    }
-  );
+    });
+  });
 });
 
 module.exports = router;
