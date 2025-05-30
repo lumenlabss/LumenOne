@@ -12,6 +12,10 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const path = require("path");
 const fs = require("fs");
+
+const config = require("./src/config/config.js");
+
+// Import Routes
 const loginRoutes = require("./src/pages/auth/login.js");
 const logoutRoutes = require("./src/pages/auth/logout.js");
 const homeRoutes = require("./src/pages/user/home.js");
@@ -21,7 +25,6 @@ const subscriptions_createRoute = require("./src/pages/admin/subscriptions/creat
 const subscriptionsRoute = require("./src/pages/admin/subscriptions.js");
 const manageRoute = require("./src/pages/user/manage.js");
 const filesRoutes = require("./src/pages/user/edit/files.js");
-const config = require("./src/config/config.js");
 const createuserRoutes = require("./src/pages/admin/customers/create.js");
 const informationRoutes = require("./src/pages/admin/information.js");
 const accountRoutes = require("./src/pages/user/account.js");
@@ -29,6 +32,7 @@ const loadRoutes = require("./src/pages/load.js");
 const statisticsdomainsRoutes = require("./src/pages/user/statistics/domains.js");
 const statisticsRoutes = require("./src/pages/user/statistics/statistics.js");
 const settingsadminRoutes = require("./src/pages/admin/settings.js");
+
 const { authLimiter } = require("./src/middleware/rate-limiter.js");
 
 // Application initialization
@@ -63,7 +67,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Registering routes
 app.use("/", authLimiter, loginRoutes);
-app.use('/', authLimiter, loginRoutes)
+app.use("/", authLimiter, loginRoutes);
 app.use("/", logoutRoutes);
 app.use("/", homeRoutes);
 app.use("/", customersRoutes);
