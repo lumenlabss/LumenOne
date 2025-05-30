@@ -7,14 +7,14 @@ const fs = require("fs");
 const path = require("path");
 const { isAuthenticated } = require("../../middleware/auth-admin.js");
 
-const configPath = path.join(__dirname, "../../config/config.json");
+const configPath = path.join(__dirname, "../../../config/config.json");
 
-// GET - Display parameters page
+// GET - Display settings page
 router.get("/web/admin/settings", isAuthenticated, (req, res) => {
   fs.readFile(configPath, "utf8", (err, data) => {
     if (err) {
       console.error("Error reading config file: " + err.message);
-      return res.status(500).send("Internal server error");
+      return res.status(500).render("error/500.ejs");
     }
 
     let config;
@@ -22,13 +22,13 @@ router.get("/web/admin/settings", isAuthenticated, (req, res) => {
       config = JSON.parse(data);
     } catch (parseErr) {
       console.error("Error parsing config file: " + parseErr.message);
-      return res.status(500).send("Internal server error");
+      return res.status(500).render("error/500.ejs");
     }
 
     db.all("SELECT id, username, rank FROM users", (err, rows) => {
       if (err) {
         console.error("Error fetching users: " + err.message);
-        return res.status(500).send("Internal server error");
+        return res.status(500).render("error/500.ejs");
       }
 
       res.render("web/admin/settings.ejs", {
