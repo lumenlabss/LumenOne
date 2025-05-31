@@ -9,7 +9,7 @@ const app = express();
 const { isAuthenticated } = require("../../../middleware/auth.js");
 const {
   protectSensitiveFiles,
-} = require("../../../middleware/protect-sensitive-files.js"); // Import du middleware correct
+} = require("../../../middleware/protect-sensitive-files.js");
 app.use(express.json({ limit: "80mb" }));
 app.use(express.urlencoded({ limit: "80mb", extended: true }));
 
@@ -50,7 +50,7 @@ function getVolumesDir() {
 router.get(
   "/web/manage/:id/edit/:file",
   isAuthenticated,
-  protectSensitiveFiles(getVolumesDir()), // Utilise le helper pour éviter la répétition
+  protectSensitiveFiles(getVolumesDir()), // Use the helper to avoid repetition
   (req, res) => {
     const userId = req.session.user.id;
     const websiteUuid = req.params.id;
@@ -76,7 +76,7 @@ router.get(
           return res.status(404).render("error/404.ejs");
         }
 
-        const websiteDir = path.join(getVolumesDir(), websiteUuid); // Utilise le helper
+        const websiteDir = path.join(getVolumesDir(), websiteUuid); // Use the helper
 
         db.get("SELECT rank FROM users WHERE id = ?", [userId], (err, row) => {
           if (err) {
@@ -171,7 +171,7 @@ router.get(
 router.post(
   "/web/manage/:id/edit/:file",
   isAuthenticated,
-  protectSensitiveFiles(getVolumesDir()), // Utilise le helper pour éviter la répétition
+  protectSensitiveFiles(getVolumesDir()), // Use the helper to avoid repetition
   (req, res) => {
     const userId = req.session.user.id;
     const websiteUuid = req.params.id;
@@ -203,7 +203,7 @@ router.post(
           return res.status(404).render("error/500.ejs");
         }
 
-        const websiteDir = path.join(getVolumesDir(), websiteUuid); // Utilise le helper
+        const websiteDir = path.join(getVolumesDir(), websiteUuid); // Use the helper
 
         fs.mkdir(websiteDir, { recursive: true }, (err) => {
           if (err && err.code !== "EEXIST") {
@@ -237,7 +237,7 @@ router.post(
               }
 
               console.log(`File saved successfully: ${filePath}`);
-              res.redirect(`/web/manage/${websiteUuid}`);
+              res.redirect(`/load?x=/web/manage/${websiteUuid}`);
             });
           });
         });

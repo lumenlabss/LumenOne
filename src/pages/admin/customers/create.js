@@ -4,7 +4,7 @@ const db = require("../../../db.js");
 const router = express.Router();
 const { isAuthenticated } = require("../../../middleware/auth-admin.js");
 
-// Route GET : afficher le formulaire d'inscription
+// Route GET : display registration form
 router.get("/web/admin/customers/create", isAuthenticated, (req, res) => {
   res.render("web/admin/customers/create.ejs", {
     user: req.session.user,
@@ -12,28 +12,23 @@ router.get("/web/admin/customers/create", isAuthenticated, (req, res) => {
   });
 });
 
-// Route POST : enregistrer un nouvel utilisateur dans la base de données
+// Route POST : register a new user in the database
 router.post("/web/admin/customers/create", isAuthenticated, (req, res) => {
   const { username, password, rank } = req.body;
 
   if (!username || !password || !rank) {
-    return res.status(400).send("Tous les champs sont requis.");
+    return res.status(400).send("All fields are required.");
   }
 
   const sql = `INSERT INTO users (username, password, rank) VALUES (?, ?, ?)`;
 
   db.run(sql, [username, password, rank], function (err) {
     if (err) {
-      console.error(
-        "Erreur lors de l'enregistrement de l'utilisateur :",
-        err.message
-      );
-      return res
-        .status(500)
-        .send("Erreur serveur lors de la création de l'utilisateur.");
+      console.error("User registration error :", err.message);
+      return res.status(500).send("Server error during user creation.");
     }
 
-    console.log("Nouvel utilisateur enregistré avec l'ID :", this.lastID);
+    console.log("New user registered with ID :", this.lastID);
     res.redirect("/web/admin/customers/create");
   });
 });

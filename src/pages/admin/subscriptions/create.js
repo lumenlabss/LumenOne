@@ -88,7 +88,7 @@ router.post("/web/admin/subscriptions/create", isAuthenticated, (req, res) => {
           });
         }
 
-        // Création du fichier php.ini
+        // Creating the php.ini file
         const phpIniPath = path.join(folderPath, "php.ini");
         const phpIniContent = `
 disable_functions = exec,passthru,shell_exec,system,proc_open,popen

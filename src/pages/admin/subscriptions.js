@@ -57,10 +57,10 @@ router.get(
 
         // Corrected path for Nginx config file
         const nginxConfigPath = path.join(
-          "/etc", // Aller directement dans /etc
-          "nginx", // Aller dans /nginx
-          "sites-enabled", // Répertoire des configurations activées
-          website.name + ".conf" // Le fichier de configuration Nginx
+          "/etc", // Go directly to /etc
+          "nginx", // Go to /nginx
+          "sites-enabled", // Directory of activated configurations
+          website.name + ".conf" // The Nginx configuration file
         );
 
         // Delete from DB

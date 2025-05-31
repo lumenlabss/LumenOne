@@ -15,9 +15,16 @@
       }
     </style>
     <script>
+      // Function to retrieve the “x” parameter in the URL
+      function getParam(name) {
+        const url = new URL(window.location.href);
+        return url.searchParams.get(name);
+      }
+
+      const destination = getParam("x") || "/web/list"; // Default value
       setTimeout(() => {
-        window.location.href = "/web/list";
-      }, 5000); // 5000 ms = 5 sec
+        window.location.href = destination;
+      }, 1000);
     </script>
   </head>
   <body

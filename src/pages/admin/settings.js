@@ -76,9 +76,7 @@ router.post("/web/admin/settings", isAuthenticated, (req, res) => {
     fs.writeFile(configPath, JSON.stringify(config, null, 2), "utf8", (err) => {
       if (err) {
         console.error("Error writing config file: " + err.message);
-        return res
-          .status(500)
-          .send("Erreur lors de la sauvegarde de la configuration.");
+        return res.status(500).send("Error saving configuration.");
       }
 
       res.redirect("/web/admin/settings");

@@ -33,6 +33,24 @@ router.get("/web/admin/information", isAuthenticated, async (req, res) => {
     const cpuCores = cpuData.cores;
     const cpuThreads = cpuData.logical;
 
+    // Storage detection
+    let storageSize = "Unknown";
+    let storageMainType = "Unknown"; // HDD / SSD
+    let storageInterface = "Unknown"; // SATA / NVMe / etc.
+
+    if (diskData.length > 0) {
+      const disk = diskData[0];
+      storageSize = (disk.size / 1024 / 1024 / 1024).toFixed(0) + " GB";
+
+      if (disk.type === "SSD") {
+        storageMainType = "SSD";
+      } else if (disk.type === "HD") {
+        storageMainType = "HDD";
+      }
+
+      storageInterface = disk.interfaceType || "Unknown";
+    }
+
     const sql = `
       SELECT websites.*, users.username 
       FROM websites 
@@ -76,10 +94,9 @@ router.get("/web/admin/information", isAuthenticated, async (req, res) => {
       RAMspeed: RAMspeed,
 
       StorageSize:
-        diskData.length > 0
-          ? (diskData[0].size / 1024 / 1024 / 1024).toFixed(0) + " GB"
-          : "Unknown",
-      StorageType: diskData.length > 0 ? diskData[0].interfaceType : "Unknown",
+        storageSize +
+        (storageMainType !== "Unknown" ? ` ${storageMainType}` : ""),
+      StorageType: storageInterface,
 
       OSname: osInfo.distro,
       Osversion: osInfo.release,
