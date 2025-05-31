@@ -14,7 +14,7 @@ router.post("/login", (req, res) => {
   if (!req.body || !req.body.username || !req.body.password) {
     return res
       .status(400)
-      .render("auth/login.ejs", { error: "Tous les champs sont requis." });
+      .render("auth/login.ejs", { error: "All fields are required." });
   }
 
   const { username, password } = req.body;
@@ -24,11 +24,11 @@ router.post("/login", (req, res) => {
     [username, password],
     (err, row) => {
       if (err) {
-        console.error("Erreur SQL : " + err.message);
-        res.status(500).send("Erreur serveur interne");
+        console.error("ERROR SQL : " + err.message);
+        res.status(500).send("Internal server error");
       } else if (row) {
         req.session.user = { id: row.id, username: row.username };
-        console.log("Utilisateur connecté :", req.session.user);
+        console.log("User logged in :", req.session.user);
         res.redirect("/web/list");
       } else {
         res.render("auth/login.ejs", { error: "Identifiants invalides." });

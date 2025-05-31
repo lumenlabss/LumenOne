@@ -1,16 +1,16 @@
 const fs = require("fs");
 const { exec } = require("child_process");
 
-function addDomain(name,filepath, callback,) {
-  // Vérifie si PHP est installé
+function addDomain(name, filepath, callback) {
+  // Checks if PHP is installed
   exec("php -v", (phpErr, stdout, stderr) => {
     const phpInstalled = !phpErr;
     let phpBlock = "";
 
     if (phpInstalled) {
-      // Extrait la version de PHP installée
+      // Extract installed PHP version
       const match = stdout.match(/PHP (\d+\.\d+)/);
-      const version = match ? match[1] : "8.1"; // fallback à 8.1 si non détectée
+      const version = match ? match[1] : "8.1"; // fallback to 8.1 if not detected
 
       phpBlock = `
     location ~ \\.php$ {
