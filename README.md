@@ -220,3 +220,8 @@ Join the LumenLabs community to ask questions, report bugs, or propose ideas:
 ## :tada: Acknowledgments
 
 Thanks to all contributors and users who support the LumenOne project!
+
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=lumenlabss/lumenone&type=Date)](https://www.star-history.com/#lumenlabss/lumenone&Date)
