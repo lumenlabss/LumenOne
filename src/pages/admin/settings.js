@@ -43,6 +43,8 @@ router.get("/web/admin/settings", isAuthenticated, (req, res) => {
 
 // POST - Update config
 router.post("/web/admin/settings", isAuthenticated, (req, res) => {
+  // console.log(req.body); for débug
+
   fs.readFile(configPath, "utf8", (err, data) => {
     if (err) {
       console.error("Error reading config file: " + err.message);
