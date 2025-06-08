@@ -1,7 +1,7 @@
 {
   "hostname": "localhost",
   "port": 3000,
-  "name": "LumenOneee",
+  "name": "LumenOne",
   "version": "Pre-Alpha",
   "session": {
     "secret": "secret-key",
