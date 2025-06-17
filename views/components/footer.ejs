@@ -1,9 +1,14 @@
 <script type="text/javascript">
-  var startTime = new Date().getTime();
   window.onload = function () {
-    var endTime = new Date().getTime();
-    var pageLoadTime = (endTime - startTime) / 1000;
-    document.getElementById("loadtime").innerHTML = pageLoadTime + "s";
+    var timing = window.performance.timing;
+    var pageLoadTime = (timing.loadEventEnd - timing.navigationStart) / 1000;
+
+    if (!pageLoadTime || pageLoadTime < 0) {
+      pageLoadTime = (new Date().getTime() - timing.navigationStart) / 1000;
+    }
+
+    document.getElementById("loadtime").innerHTML =
+      pageLoadTime.toFixed(2) + " s";
   };
 </script>
 
