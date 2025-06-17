@@ -227,33 +227,33 @@
               />
             </div>
 
-            <div>
-              <label class="block text-gray-400 mb-2">Database Type</label>
-              <select
-                class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option>MySQL</option>
-                <option>PostgreSQL</option>
-                <option>MongoDB</option>
-              </select>
-            </div>
+<div>
+  <label class="block text-gray-400 mb-2">Database Type</label>
+  <select
+    id="dbTypeSelect"
+    class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+  >
+    <option value="sqlite3">SQLite3</option>
+  </select>
+</div>
 
-            <div>
-              <label class="block text-gray-400 mb-2">Username</label>
-              <input
-                type="text"
-                class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+<!-- Username -->
+<div id="usernameField" class="mt-4 hidden">
+  <label class="block text-gray-400 mb-2">Username</label>
+  <input
+    type="text"
+    class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+  />
+</div>
 
-            <div>
-              <label class="block text-gray-400 mb-2">Password</label>
-              <input
-                type="password"
-                class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-
+<!-- Password -->
+<div id="passwordField" class="mt-4 hidden">
+  <label class="block text-gray-400 mb-2">Password</label>
+  <input
+    type="password"
+    class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+  />
+</div>
             <div class="pt-4">
               <button
                 class="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded-lg font-medium transition-colors"
