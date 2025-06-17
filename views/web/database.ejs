@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Database Management - LumenOne</title>
+    <title>Database Management - <%= appName %></title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
@@ -139,7 +139,6 @@
             <th class="px-6 py-3">Name</th>
             <th class="px-6 py-3">Type</th>
             <th class="px-6 py-3">Size</th>
-            <th class="px-6 py-3">Users</th>
             <th class="px-6 py-3">Status</th>
             <th class="px-6 py-3 text-right">Actions</th>
           </tr>
@@ -156,8 +155,7 @@
             <td class="px-6 py-4">
               <span class="badge px-3 py-1 rounded-full text-sm"><%= db.database_type %></span>
             </td>
-            <td class="px-6 py-4"><%= db.disk_usage || "—" %></td>
-            <td class="px-6 py-4">—</td> <!-- Si tu veux afficher les users dynamiquement, adapte ici -->
+            <td class="px-6 py-4"><%= db.disk_usage || "unknown" %></td>
             <td class="px-6 py-4">
               <span class="flex items-center gap-2 text-green-400">
                 <i data-lucide="check-circle" class="w-4 h-4"></i>
