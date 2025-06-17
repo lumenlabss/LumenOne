@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Database Management - LumenOne</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      .gradient-bg {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0f172a;
+        color: #f8fafc;
+      }
+      .glass-panel {
+        background: rgba(31, 41, 55, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+      }
+      .glass-panel:hover {
+        transform: translateY(-4px);
+        border-color: rgba(59, 130, 246, 0.5);
+        box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
+      }
+      .gradient-text {
+        background: linear-gradient(135deg, #60a5fa, #3b82f6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .badge {
+        background: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.2);
+      }
+      .table-row:hover {
+        background: rgba(59, 130, 246, 0.05);
+      }
+      .tab-active {
+        border-bottom: 2px solid #3b82f6;
+        color: #3b82f6;
+      }
+    </style>
+  </head>
+  <!-- Sidebar -->
+  <%- include('../components/sidebar') %>
+
+  <body class="gradient-bg text-white min-h-screen flex flex-col sm:ml-64">
+    <div class="flex-grow p-8">
+      <!-- Header -->
+      <div
+        class="flex flex-col md:flex-row md:items-center md:justify-between mb-8"
+      >
+        <div>
+          <h1 class="text-3xl font-bold gradient-text">Database Management</h1>
+        </div>
+        <button
+          class="mt-4 md:mt-0 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg flex items-center gap-2 transition-colors"
+        >
+          <i data-lucide="plus" class="w-5 h-5"></i>
+          Create Database
+        </button>
+      </div>
+
+      <!-- Tabs -->
+      <div class="flex border-b border-gray-700 mb-6">
+        <button class="tab-active px-4 py-2 font-medium">All Databases</button>
+        <button
+          class="px-4 py-2 font-medium text-gray-400 hover:text-white transition"
+        >
+          <!--MySQL
+        </button>
+        <button
+          class="px-4 py-2 font-medium text-gray-400 hover:text-white transition"
+        >
+          PostgreSQL
+        </button>
+        <button
+          class="px-4 py-2 font-medium text-gray-400 hover:text-white transition"
+        >
+          MongoDB
+        </button>-->
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div class="glass-panel rounded-xl p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-400">Total Databases</p>
+              <h3 class="text-2xl font-bold">12</h3>
+            </div>
+            <div class="p-3 rounded-full bg-blue-900/30">
+              <i data-lucide="database" class="w-6 h-6 text-blue-400"></i>
+            </div>
+          </div>
+        </div>
+        <div class="glass-panel rounded-xl p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-400">Disk Usage</p>
+              <h3 class="text-2xl font-bold">1.2 GB</h3>
+            </div>
+            <div class="p-3 rounded-full bg-purple-900/30">
+              <i data-lucide="hard-drive" class="w-6 h-6 text-purple-400"></i>
+            </div>
+          </div>
+        </div>
+        <div class="glass-panel rounded-xl p-6">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-gray-400">Databases limit</p>
+              <h3 class="text-2xl font-bold">0/10</h3>
+            </div>
+            <div class="p-3 rounded-full bg-green-900/30">
+              <i data-lucide="zap" class="w-6 h-6 text-green-400"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Database Table -->
+      <div class="glass-panel rounded-xl overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="border-b border-gray-700">
+              <tr class="text-left text-gray-400">
+                <th class="px-6 py-3">Name</th>
+                <th class="px-6 py-3">Type</th>
+                <th class="px-6 py-3">Size</th>
+                <th class="px-6 py-3">Users</th>
+                <th class="px-6 py-3">Status</th>
+                <th class="px-6 py-3 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- MySQL Database -->
+              <tr
+                class="table-row border-b border-gray-800 hover:bg-gray-800/50"
+              >
+                <td class="px-6 py-4">
+                  <div class="flex items-center gap-3">
+                    <i data-lucide="database" class="w-5 h-5 text-blue-400"></i>
+                    <span>wordpress_db</span>
+                  </div>
+                </td>
+                <td class="px-6 py-4">
+                  <span class="badge px-3 py-1 rounded-full text-sm"
+                    >MySQL</span
+                  >
+                </td>
+                <td class="px-6 py-4">350 MB</td>
+                <td class="px-6 py-4">2</td>
+                <td class="px-6 py-4">
+                  <span class="flex items-center gap-2 text-green-400">
+                    <i data-lucide="check-circle" class="w-4 h-4"></i>
+                    Active
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-right">
+                  <div class="flex justify-end gap-2">
+                    <button
+                      class="p-2 text-gray-400 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition"
+                    >
+                      <i data-lucide="settings" class="w-4 h-4"></i>
+                    </button>
+                    <button
+                      class="p-2 text-gray-400 hover:text-green-400 hover:bg-gray-700 rounded-lg transition"
+                    >
+                      <i data-lucide="terminal" class="w-4 h-4"></i>
+                    </button>
+                    <button
+                      class="p-2 text-gray-400 hover:text-red-400 hover:bg-gray-700 rounded-lg transition"
+                    >
+                      <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- PostgreSQL Database -->
+              <tr
+                class="table-row border-b border-gray-800 hover:bg-gray-800/50"
+              >
+                <td class="px-6 py-4">
+                  <div class="flex items-center gap-3">
+                    <i
+                      data-lucide="database"
+                      class="w-5 h-5 text-purple-400"
+                    ></i>
+                    <span>analytics_db</span>
+                  </div>
+                </td>
+                <td class="px-6 py-4">
+                  <span class="badge px-3 py-1 rounded-full text-sm"
+                    >PostgreSQL</span
+                  >
+                </td>
+                <td class="px-6 py-4">780 MB</td>
+                <td class="px-6 py-4">3</td>
+                <td class="px-6 py-4">
+                  <span class="flex items-center gap-2 text-green-400">
+                    <i data-lucide="check-circle" class="w-4 h-4"></i>
+                    Active
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-right">
+                  <div class="flex justify-end gap-2">
+                    <button
+                      class="p-2 text-gray-400 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition"
+                    >
+                      <i data-lucide="settings" class="w-4 h-4"></i>
+                    </button>
+                    <button
+                      class="p-2 text-gray-400 hover:text-green-400 hover:bg-gray-700 rounded-lg transition"
+                    >
+                      <i data-lucide="terminal" class="w-4 h-4"></i>
+                    </button>
+                    <button
+                      class="p-2 text-gray-400 hover:text-red-400 hover:bg-gray-700 rounded-lg transition"
+                    >
+                      <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- MongoDB Database -->
+              <tr
+                class="table-row border-b border-gray-800 hover:bg-gray-800/50"
+              >
+                <td class="px-6 py-4">
+                  <div class="flex items-center gap-3">
+                    <i
+                      data-lucide="database"
+                      class="w-5 h-5 text-green-400"
+                    ></i>
+                    <span>user_profiles</span>
+                  </div>
+                </td>
+                <td class="px-6 py-4">
+                  <span class="badge px-3 py-1 rounded-full text-sm"
+                    >MongoDB</span
+                  >
+                </td>
+                <td class="px-6 py-4">420 MB</td>
+                <td class="px-6 py-4">1</td>
+                <td class="px-6 py-4">
+                  <span class="flex items-center gap-2 text-yellow-400">
+                    <i data-lucide="alert-circle" class="w-4 h-4"></i>
+                    Maintenance
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-right">
+                  <div class="flex justify-end gap-2">
+                    <button
+                      class="p-2 text-gray-400 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition"
+                    >
+                      <i data-lucide="settings" class="w-4 h-4"></i>
+                    </button>
+                    <button
+                      class="p-2 text-gray-400 hover:text-green-400 hover:bg-gray-700 rounded-lg transition"
+                    >
+                      <i data-lucide="terminal" class="w-4 h-4"></i>
+                    </button>
+                    <button
+                      class="p-2 text-gray-400 hover:text-red-400 hover:bg-gray-700 rounded-lg transition"
+                    >
+                      <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Empty State (hidden) -->
+        <div class="hidden p-8 text-center">
+          <div class="mb-4">
+            <i
+              data-lucide="database"
+              class="w-16 h-16 mx-auto text-gray-500"
+            ></i>
+          </div>
+          <h2 class="text-xl font-semibold mb-2">No Databases Found</h2>
+          <p class="text-gray-400 mb-6">
+            Create your first database to start storing your application data.
+          </p>
+          <button
+            class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg flex items-center gap-2 mx-auto transition-colors"
+          >
+            <i data-lucide="plus" class="w-5 h-5"></i>
+            Create Database
+          </button>
+        </div>
+      </div>
+
+      <!-- Database Creation Modal (hidden) -->
+      <div
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
+      >
+        <div class="glass-panel rounded-xl p-6 w-full max-w-md">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-bold">Create New Database</h3>
+            <button class="text-gray-400 hover:text-white">
+              <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <label class="block text-gray-400 mb-2">Database Name</label>
+              <input
+                type="text"
+                class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div>
+              <label class="block text-gray-400 mb-2">Database Type</label>
+              <select
+                class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option>MySQL</option>
+                <option>PostgreSQL</option>
+                <option>MongoDB</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-gray-400 mb-2">Username</label>
+              <input
+                type="text"
+                class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div>
+              <label class="block text-gray-400 mb-2">Password</label>
+              <input
+                type="password"
+                class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div class="pt-4">
+              <button
+                class="w-full py-2 bg-blue-600 hover:bg-blue-700 rounded-lg font-medium transition-colors"
+              >
+                Create Database
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      lucide.createIcons();
+
+      // Tab switching functionality
+      document.querySelectorAll('[role="tab"]').forEach((tab) => {
+        tab.addEventListener("click", function () {
+          // Remove active class from all tabs
+          document.querySelectorAll('[role="tab"]').forEach((t) => {
+            t.classList.remove("tab-active");
+            t.classList.add("text-gray-400");
+          });
+
+          // Add active class to clicked tab
+          this.classList.add("tab-active");
+          this.classList.remove("text-gray-400");
+
+          // Here you would typically load content for the selected tab
+          console.log("Switched to tab:", this.textContent.trim());
+        });
+      });
+
+      // Database creation modal toggle
+      const createDbButtons = document.querySelectorAll(
+        '[data-action="create-database"]'
+      );
+      const dbModal = document.querySelector("#database-modal");
+
+      createDbButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          dbModal.classList.toggle("hidden");
+        });
+      });
+    </script>
+
+    <!-- Footer -->
+    <%- include('../components/footer') %>
+    <script src="/js/restart.js"></script>
+  </body>
+</html>
