@@ -16,6 +16,7 @@ db.run(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
+    database_use_tatal_disk INTEGER DEFAULT 0,
     rank TEXT DEFAULT 'default', -- By default, the rank is 'default'
     created_at TEXT DEFAULT (datetime('now')) -- Auto timestamp at creation
   )`,
@@ -75,6 +76,21 @@ db.run(
       console.log("Websites table created or already exists.");
     }
   }
+);
+
+db.run(
+  `CREATE TABLE IF NOT EXISTS Databases (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    uuid TEXT NOT NULL,
+    database_name TEXT NOT NULL,
+    database_type TEXT NOT NULL,
+    database_port INTEGER,
+    database_ipv4 TEXT,
+    database_username TEXT,
+    database_password TEXT,
+    disk_usage INTEGER
+  )`
 );
 
 module.exports = db;

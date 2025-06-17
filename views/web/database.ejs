@@ -62,11 +62,13 @@
           <h1 class="text-3xl font-bold gradient-text">Database Management</h1>
         </div>
         <button
+          id="openDatabaseModal"
           class="mt-4 md:mt-0 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg flex items-center gap-2 transition-colors"
         >
           <i data-lucide="plus" class="w-5 h-5"></i>
           Create Database
         </button>
+        
       </div>
 
       <!-- Tabs -->
@@ -75,12 +77,12 @@
         <button
           class="px-4 py-2 font-medium text-gray-400 hover:text-white transition"
         >
-          <!--MySQL
+          SQLite3
         </button>
         <button
           class="px-4 py-2 font-medium text-gray-400 hover:text-white transition"
         >
-          PostgreSQL
+          <!--PostgreSQL
         </button>
         <button
           class="px-4 py-2 font-medium text-gray-400 hover:text-white transition"
@@ -126,191 +128,92 @@
         </div>
       </div>
 
-      <!-- Database Table -->
-      <div class="glass-panel rounded-xl overflow-hidden">
-        <div class="overflow-x-auto">
-          <table class="w-full">
-            <thead class="border-b border-gray-700">
-              <tr class="text-left text-gray-400">
-                <th class="px-6 py-3">Name</th>
-                <th class="px-6 py-3">Type</th>
-                <th class="px-6 py-3">Size</th>
-                <th class="px-6 py-3">Users</th>
-                <th class="px-6 py-3">Status</th>
-                <th class="px-6 py-3 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- MySQL Database -->
-              <tr
-                class="table-row border-b border-gray-800 hover:bg-gray-800/50"
-              >
-                <td class="px-6 py-4">
-                  <div class="flex items-center gap-3">
-                    <i data-lucide="database" class="w-5 h-5 text-blue-400"></i>
-                    <span>wordpress_db</span>
-                  </div>
-                </td>
-                <td class="px-6 py-4">
-                  <span class="badge px-3 py-1 rounded-full text-sm"
-                    >MySQL</span
-                  >
-                </td>
-                <td class="px-6 py-4">350 MB</td>
-                <td class="px-6 py-4">2</td>
-                <td class="px-6 py-4">
-                  <span class="flex items-center gap-2 text-green-400">
-                    <i data-lucide="check-circle" class="w-4 h-4"></i>
-                    Active
-                  </span>
-                </td>
-                <td class="px-6 py-4 text-right">
-                  <div class="flex justify-end gap-2">
-                    <button
-                      class="p-2 text-gray-400 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition"
-                    >
-                      <i data-lucide="settings" class="w-4 h-4"></i>
-                    </button>
-                    <button
-                      class="p-2 text-gray-400 hover:text-green-400 hover:bg-gray-700 rounded-lg transition"
-                    >
-                      <i data-lucide="terminal" class="w-4 h-4"></i>
-                    </button>
-                    <button
-                      class="p-2 text-gray-400 hover:text-red-400 hover:bg-gray-700 rounded-lg transition"
-                    >
-                      <i data-lucide="trash-2" class="w-4 h-4"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
 
-              <!-- PostgreSQL Database -->
-              <tr
-                class="table-row border-b border-gray-800 hover:bg-gray-800/50"
-              >
-                <td class="px-6 py-4">
-                  <div class="flex items-center gap-3">
-                    <i
-                      data-lucide="database"
-                      class="w-5 h-5 text-purple-400"
-                    ></i>
-                    <span>analytics_db</span>
-                  </div>
-                </td>
-                <td class="px-6 py-4">
-                  <span class="badge px-3 py-1 rounded-full text-sm"
-                    >PostgreSQL</span
-                  >
-                </td>
-                <td class="px-6 py-4">780 MB</td>
-                <td class="px-6 py-4">3</td>
-                <td class="px-6 py-4">
-                  <span class="flex items-center gap-2 text-green-400">
-                    <i data-lucide="check-circle" class="w-4 h-4"></i>
-                    Active
-                  </span>
-                </td>
-                <td class="px-6 py-4 text-right">
-                  <div class="flex justify-end gap-2">
-                    <button
-                      class="p-2 text-gray-400 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition"
-                    >
-                      <i data-lucide="settings" class="w-4 h-4"></i>
-                    </button>
-                    <button
-                      class="p-2 text-gray-400 hover:text-green-400 hover:bg-gray-700 rounded-lg transition"
-                    >
-                      <i data-lucide="terminal" class="w-4 h-4"></i>
-                    </button>
-                    <button
-                      class="p-2 text-gray-400 hover:text-red-400 hover:bg-gray-700 rounded-lg transition"
-                    >
-                      <i data-lucide="trash-2" class="w-4 h-4"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
+<!-- Database Table -->
+<% if (Databases.length > 0) { %>
+  <div class="glass-panel rounded-xl overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead class="border-b border-gray-700">
+          <tr class="text-left text-gray-400">
+            <th class="px-6 py-3">Name</th>
+            <th class="px-6 py-3">Type</th>
+            <th class="px-6 py-3">Size</th>
+            <th class="px-6 py-3">Users</th>
+            <th class="px-6 py-3">Status</th>
+            <th class="px-6 py-3 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% Databases.forEach(db => { %>
+          <tr class="table-row border-b border-gray-800 hover:bg-gray-800/50">
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-3">
+                <i data-lucide="database" class="w-5 h-5 text-blue-400"></i>
+                <span><%= db.database_name %></span>
+              </div>
+            </td>
+            <td class="px-6 py-4">
+              <span class="badge px-3 py-1 rounded-full text-sm"><%= db.database_type %></span>
+            </td>
+            <td class="px-6 py-4"><%= db.disk_usage || "—" %></td>
+            <td class="px-6 py-4">—</td> <!-- Si tu veux afficher les users dynamiquement, adapte ici -->
+            <td class="px-6 py-4">
+              <span class="flex items-center gap-2 text-green-400">
+                <i data-lucide="check-circle" class="w-4 h-4"></i>
+                Active
+              </span>
+            </td>
+            <td class="px-6 py-4 text-right">
+              <div class="flex justify-end gap-2">
+                <button class="p-2 text-gray-400 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition">
+                  <i data-lucide="settings" class="w-4 h-4"></i>
+                </button>
+                <button class="p-2 text-gray-400 hover:text-green-400 hover:bg-gray-700 rounded-lg transition">
+                  <i data-lucide="terminal" class="w-4 h-4"></i>
+                </button>
+                <button class="p-2 text-gray-400 hover:text-red-400 hover:bg-gray-700 rounded-lg transition">
+                  <i data-lucide="trash-2" class="w-4 h-4"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% } else { %>
+  <!-- Empty State -->
+  <div class="glass-panel rounded-xl p-8 text-center">
+    <div class="mb-4">
+      <i data-lucide="database" class="w-16 h-16 mx-auto text-gray-500"></i>
+    </div>
+    <h2 class="text-xl font-semibold mb-2">No Databases Found</h2>
+    <p class="text-gray-400 mb-6">
+      Create your first database to start storing your application data.
+    </p>
+    <button
+      id="openDatabaseModal"
+      class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg flex items-center gap-2 mx-auto transition-colors"
+    >
+      <i data-lucide="plus" class="w-5 h-5"></i>
+      Create Database
+    </button>
+  </div>
+<% } %>
 
-              <!-- MongoDB Database -->
-              <tr
-                class="table-row border-b border-gray-800 hover:bg-gray-800/50"
-              >
-                <td class="px-6 py-4">
-                  <div class="flex items-center gap-3">
-                    <i
-                      data-lucide="database"
-                      class="w-5 h-5 text-green-400"
-                    ></i>
-                    <span>user_profiles</span>
-                  </div>
-                </td>
-                <td class="px-6 py-4">
-                  <span class="badge px-3 py-1 rounded-full text-sm"
-                    >MongoDB</span
-                  >
-                </td>
-                <td class="px-6 py-4">420 MB</td>
-                <td class="px-6 py-4">1</td>
-                <td class="px-6 py-4">
-                  <span class="flex items-center gap-2 text-yellow-400">
-                    <i data-lucide="alert-circle" class="w-4 h-4"></i>
-                    Maintenance
-                  </span>
-                </td>
-                <td class="px-6 py-4 text-right">
-                  <div class="flex justify-end gap-2">
-                    <button
-                      class="p-2 text-gray-400 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition"
-                    >
-                      <i data-lucide="settings" class="w-4 h-4"></i>
-                    </button>
-                    <button
-                      class="p-2 text-gray-400 hover:text-green-400 hover:bg-gray-700 rounded-lg transition"
-                    >
-                      <i data-lucide="terminal" class="w-4 h-4"></i>
-                    </button>
-                    <button
-                      class="p-2 text-gray-400 hover:text-red-400 hover:bg-gray-700 rounded-lg transition"
-                    >
-                      <i data-lucide="trash-2" class="w-4 h-4"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
 
-        <!-- Empty State (hidden) -->
-        <div class="hidden p-8 text-center">
-          <div class="mb-4">
-            <i
-              data-lucide="database"
-              class="w-16 h-16 mx-auto text-gray-500"
-            ></i>
-          </div>
-          <h2 class="text-xl font-semibold mb-2">No Databases Found</h2>
-          <p class="text-gray-400 mb-6">
-            Create your first database to start storing your application data.
-          </p>
-          <button
-            class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg flex items-center gap-2 mx-auto transition-colors"
-          >
-            <i data-lucide="plus" class="w-5 h-5"></i>
-            Create Database
-          </button>
-        </div>
-      </div>
 
       <!-- Database Creation Modal (hidden) -->
       <div
+        id="databaseModal"
         class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
       >
         <div class="glass-panel rounded-xl p-6 w-full max-w-md">
           <div class="flex justify-between items-center mb-4">
             <h3 class="text-xl font-bold">Create New Database</h3>
-            <button class="text-gray-400 hover:text-white">
+            <button id="closeDatabaseModal"class="text-gray-400 hover:text-white">
               <i data-lucide="x" class="w-6 h-6"></i>
             </button>
           </div>
@@ -384,21 +287,11 @@
         });
       });
 
-      // Database creation modal toggle
-      const createDbButtons = document.querySelectorAll(
-        '[data-action="create-database"]'
-      );
-      const dbModal = document.querySelector("#database-modal");
-
-      createDbButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-          dbModal.classList.toggle("hidden");
-        });
-      });
     </script>
 
     <!-- Footer -->
     <%- include('../components/footer') %>
     <script src="/js/restart.js"></script>
+    <script src="/js/modal_database_creation.js"></script>
   </body>
 </html>

@@ -1,19 +1,19 @@
-console.log("pages/user/home.js loaded"); // To confirm that the page has been loaded correctly
+console.log("pages/user/database.js loaded"); // To confirm that the page has been loaded correctly
 const express = require("express");
 const db = require("../../db.js");
 const { isAuthenticated } = require("../../middleware/auth.js");
 const router = express.Router();
 
-// Route for the user's website list
+// Route for the user's database list
 router.get("/web/database", isAuthenticated, (req, res) => {
   const userId = req.session.user.id;
 
   db.all(
-    "SELECT name, port, disk_limit, uuid FROM websites WHERE user_id = ?",
+    "SELECT id, uuid, database_name, database_type, database_port, database_ipv4, database_username, database_password, disk_usage FROM databases WHERE user_id = ?",
     [userId],
-    (err, websites) => {
+    (err, Databases) => {
       if (err) {
-        console.error("Error retrieving websites:", err.message);
+        console.error("Error retrieving database:", err.message);
         return res.status(500).send("Internal server error");
       }
 
@@ -25,7 +25,7 @@ router.get("/web/database", isAuthenticated, (req, res) => {
 
         res.render("web/database.ejs", {
           user: req.session.user,
-          websites,
+          Databases,
           rank: row ? row.rank : null,
         });
       });
