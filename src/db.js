@@ -81,7 +81,7 @@ db.run(
 db.run(
   `CREATE TABLE IF NOT EXISTS Databases (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    user_id INTEGER NOT NULL,
+    website_id INTEGER NOT NULL,
     uuid TEXT NOT NULL,
     database_name TEXT NOT NULL,
     database_type TEXT NOT NULL,
