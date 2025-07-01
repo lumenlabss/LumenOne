@@ -29,21 +29,6 @@ router.get("/web/statistics/list", isAuthenticated, (req, res) => {
           return res.status(500).send("Internal server error");
         }
 
-        // Read the statistics file
-        let stats = {};
-        if (fs.existsSync(statisticsFile)) {
-          try {
-            const data = fs.readFileSync(statisticsFile, "utf8");
-            stats = JSON.parse(data);
-          } catch (e) {
-            console.error("Error reading / parsing statistics.json:", e);
-          }
-        }
-
-        websites.forEach((website) => {
-          website.visitCount = stats[website.uuid] || 0;
-        });
-
         res.render("web/statistics/domains.ejs", {
           user: req.session.user,
           websites,

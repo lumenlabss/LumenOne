@@ -35,17 +35,6 @@ router.get("/web/statistics/:id", isAuthenticated, (req, res) => {
 
         let visitCount = 0;
 
-        // Read the statistics file
-        if (fs.existsSync(statisticsFile)) {
-          try {
-            const data = fs.readFileSync(statisticsFile, "utf8");
-            const stats = JSON.parse(data);
-            visitCount = stats[websiteUuid] || 0;
-          } catch (e) {
-            console.error("Error reading/parsing statistics.json:", e);
-          }
-        }
-
         res.render("web/statistics/statistics.ejs", {
           user: req.session.user,
           website,

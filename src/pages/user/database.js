@@ -1,5 +1,7 @@
 console.log("pages/user/database.js loaded"); // To confirm that the page has been loaded correctly
 
+// ins't work now, but will be working in the future, when ? i don't know btw i know its for soon
+
 const express = require("express");
 const db = require("../../db.js");
 const { isAuthenticated } = require("../../middleware/auth.js");
