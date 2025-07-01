@@ -66,7 +66,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Configuring views and static files
+// Configurin       g views and static files
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
