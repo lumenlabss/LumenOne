@@ -65,19 +65,55 @@ router.post("/web/admin/subscriptions/create", isAuthenticated, (req, res) => {
       fs.exists(filePath, (exists) => {
         if (!exists) {
           const defaultHtml = `
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-              <meta charset="UTF-8">
-              <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <title>Welcome to ${name}</title>
-            </head>
-            <body>
-              <h1>Welcome to ${name}!</h1>
-              <p>This is the default page for your website.</p>
-            </body>
-            </html>
-          `;
+          <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${name}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .glass-card {
+        background: rgba(31, 41, 55, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+      }
+      .glass-card:hover {
+        transform: translateY(-4px);
+        border-color: rgba(59, 130, 246, 0.5);
+        box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
+      }
+      .gradient-bg {
+        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      }
+      .gradient-text {
+        background: linear-gradient(135deg, #60a5fa, #3b82f6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    </style>
+  </head>
+  <body class="gradient-bg text-white min-h-screen flex items-center justify-center p-4">
+    
+    <div class="glass-card max-w-lg w-full rounded-2xl p-8 text-center shadow-lg">
+      <h1 class="text-3xl md:text-4xl font-bold gradient-text mb-4">Welcome to ${name}!</h1>
+      <p class="text-gray-300 mb-6">This is the default page for your website ${name}.</p>
+      
+      <div class="mt-8 text-sm text-gray-400">
+        <p>&copy; <span id="year"></span> LumenOne. All rights reserved.</p>
+      </div>
+    </div>
+
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>`;
 
           fs.writeFile(filePath, defaultHtml, (err) => {
             if (err) {

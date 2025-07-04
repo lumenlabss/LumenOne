@@ -95,11 +95,12 @@ db.run(
 
 db.run(
   `CREATE TABLE IF NOT EXISTS statistic (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    visitors_month INTEGER DEFAULT 0,
-    visitors_week INTEGER DEFAULT 0,
-    visitors_day INTEGER DEFAULT 0,
-    visitors_total INTEGER DEFAULT 0
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  site TEXT UNIQUE,
+  visitors_month INTEGER DEFAULT 0,
+  visitors_week INTEGER DEFAULT 0,
+  visitors_day INTEGER DEFAULT 0,
+  visitors_total INTEGER DEFAULT 0
   )`
 );
 
