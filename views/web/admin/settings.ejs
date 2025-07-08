@@ -249,13 +249,16 @@
 >
   <div class="bg-gray-900 p-6 rounded-xl w-full max-w-xl shadow-xl border border-gray-700">
     <h3 class="text-2xl font-semibold mb-4">Create API Token</h3>
-    <form class="space-y-6">
+    <form id="apiTokenForm" class="space-y-6">
       <!-- Description -->
       <div>
-        <label class="block text-sm font-medium mb-1">Description</label>
+        <label class="block text-sm font-medium mb-1" for="description">Description</label>
         <input
+          id="description"
+          name="description"
           type="text"
           placeholder="e.g. LumenBot backups"
+          required
           class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
@@ -264,40 +267,44 @@
       <div>
         <label class="block text-sm font-medium mb-2">Permissions</label>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <!-- Example Category 1 -->
+          <!-- Category 1 -->
           <div class="bg-gray-800 border border-gray-700 rounded-lg p-4">
-            <p class="font-semibold text-sm mb-2">Servers</p>
+            <p class="font-semibold text-sm mb-2">Websites</p>
             <div class="space-y-2">
               <label class="flex items-center justify-between">
-                <span>View Servers</span>
-                <input type="checkbox" class="toggle-checkbox" />
+                <span>View Website</span>
+                <input type="checkbox" name="view_website" value="1" class="toggle-checkbox" />
               </label>
               <label class="flex items-center justify-between">
-                <span>Start/Stop Servers</span>
-                <input type="checkbox" class="toggle-checkbox" />
+                <span>Delete Website</span>
+                <input type="checkbox" name="delete_website" value="1" class="toggle-checkbox" />
               </label>
               <label class="flex items-center justify-between">
-                <span>Delete Servers</span>
-                <input type="checkbox" class="toggle-checkbox" />
+                <span>Create Website</span>
+                <input type="checkbox" name="create_website" value="1" class="toggle-checkbox" />
               </label>
             </div>
           </div>
 
-          <!-- Example Category 2 -->
+          <!-- Category 2 -->
           <div class="bg-gray-800 border border-gray-700 rounded-lg p-4">
             <p class="font-semibold text-sm mb-2">Users</p>
             <div class="space-y-2">
               <label class="flex items-center justify-between">
                 <span>View Users</span>
-                <input type="checkbox" class="toggle-checkbox" />
+                <input type="checkbox" name="view_users" value="1" class="toggle-checkbox" />
               </label>
               <label class="flex items-center justify-between">
                 <span>Modify Users</span>
-                <input type="checkbox" class="toggle-checkbox" />
+                <input type="checkbox" name="modify_users" value="1" class="toggle-checkbox" />
               </label>
               <label class="flex items-center justify-between">
-                <span>Ban Users</span>
-                <input type="checkbox" class="toggle-checkbox" />
+                <span>Delete Users</span>
+                <input type="checkbox" name="delete_users" value="1" class="toggle-checkbox" />
+              </label>
+              <label class="flex items-center justify-between">
+                <span>Create Users</span>
+                <input type="checkbox" name="create_users" value="1" class="toggle-checkbox" />
               </label>
             </div>
           </div>
@@ -318,6 +325,7 @@
     </form>
   </div>
 </div>
+
 
     <%- include('../../components/footer') %>
     <script src="/js/sidebar.js"></script>

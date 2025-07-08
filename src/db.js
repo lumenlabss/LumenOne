@@ -104,4 +104,18 @@ db.run(
   )`
 );
 
+db.run(`
+  CREATE TABLE IF NOT EXISTS apikey (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    api_key TEXT UNIQUE NOT NULL,
+    view_website INTEGER DEFAULT 0,
+    delete_website INTEGER DEFAULT 0,
+    create_website INTEGER DEFAULT 0,
+    modify_users INTEGER DEFAULT 0,
+    delete_users INTEGER DEFAULT 0,
+    view_users INTEGER DEFAULT 0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )
+`);
+
 module.exports = db;
