@@ -86,6 +86,36 @@
         font-size: 1.5rem;
         text-align: center;
       }
+.toggle-checkbox {
+  appearance: none;
+  width: 2.5rem;
+  height: 1.4rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  position: relative;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.toggle-checkbox::before {
+  content: "";
+  position: absolute;
+  left: 0.2rem;
+  top: 0.2rem;
+  width: 1rem;
+  height: 1rem;
+  background-color: white;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.toggle-checkbox:checked {
+  background-color: #3b82f6;
+}
+
+.toggle-checkbox:checked::before {
+  transform: translateX(1.1rem);
+}
     </style>
   </head>
 
@@ -186,10 +216,108 @@
                 </button>
               </div>
             </form>
+
+            <!-- API Token Section -->
+<div class="glass-card rounded-xl p-6">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-xl font-semibold">API Tokens</h2>
+    <button
+      onclick="document.getElementById('apiModal').classList.remove('hidden')"
+      class="btn-primary text-sm"
+    >
+      Create API Token
+    </button>
+  </div>
+
+  <p class="text-muted mb-4">Manage your personal API tokens for accessing the platform.</p>
+
+  <div class="bg-gray-800 border border-gray-700 rounded-lg p-4 text-sm text-muted">
+    <p>No tokens created yet.</p>
+  </div>
+</div>
+
+
           </div>
         </div>
       </div>
     </div>
+
+<!-- Modal for Creating API Token -->
+<div
+  id="apiModal"
+  class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 hidden"
+>
+  <div class="bg-gray-900 p-6 rounded-xl w-full max-w-xl shadow-xl border border-gray-700">
+    <h3 class="text-2xl font-semibold mb-4">Create API Token</h3>
+    <form class="space-y-6">
+      <!-- Description -->
+      <div>
+        <label class="block text-sm font-medium mb-1">Description</label>
+        <input
+          type="text"
+          placeholder="e.g. LumenBot backups"
+          class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+
+      <!-- Permissions -->
+      <div>
+        <label class="block text-sm font-medium mb-2">Permissions</label>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Example Category 1 -->
+          <div class="bg-gray-800 border border-gray-700 rounded-lg p-4">
+            <p class="font-semibold text-sm mb-2">Servers</p>
+            <div class="space-y-2">
+              <label class="flex items-center justify-between">
+                <span>View Servers</span>
+                <input type="checkbox" class="toggle-checkbox" />
+              </label>
+              <label class="flex items-center justify-between">
+                <span>Start/Stop Servers</span>
+                <input type="checkbox" class="toggle-checkbox" />
+              </label>
+              <label class="flex items-center justify-between">
+                <span>Delete Servers</span>
+                <input type="checkbox" class="toggle-checkbox" />
+              </label>
+            </div>
+          </div>
+
+          <!-- Example Category 2 -->
+          <div class="bg-gray-800 border border-gray-700 rounded-lg p-4">
+            <p class="font-semibold text-sm mb-2">Users</p>
+            <div class="space-y-2">
+              <label class="flex items-center justify-between">
+                <span>View Users</span>
+                <input type="checkbox" class="toggle-checkbox" />
+              </label>
+              <label class="flex items-center justify-between">
+                <span>Modify Users</span>
+                <input type="checkbox" class="toggle-checkbox" />
+              </label>
+              <label class="flex items-center justify-between">
+                <span>Ban Users</span>
+                <input type="checkbox" class="toggle-checkbox" />
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex justify-end space-x-3 pt-2">
+        <button
+          type="button"
+          onclick="document.getElementById('apiModal').classList.add('hidden')"
+          class="btn-secondary"
+        >
+          Cancel
+        </button>
+        <button type="submit" class="btn-primary">Create</button>
+      </div>
+    </form>
+  </div>
+</div>
 
     <%- include('../../components/footer') %>
     <script src="/js/sidebar.js"></script>
