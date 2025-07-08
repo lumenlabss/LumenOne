@@ -10,5 +10,15 @@
     "cookie": {
       "secure": false
     }
+  },
+  "rateLimit": {
+    "global": {
+      "windowMinutes": 15,
+      "max": 100
+    },
+    "auth": {
+      "windowMinutes": 15,
+      "max": 5
+    }
   }
 }

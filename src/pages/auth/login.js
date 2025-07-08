@@ -10,7 +10,7 @@ router.get("/", (req, res) => {
 });
 
 // Route POST with limiter to handle login
-router.post("/login", (req, res) => {
+router.post("/login", authLimiter, (req, res) => {
   if (!req.body || !req.body.username || !req.body.password) {
     return res
       .status(400)

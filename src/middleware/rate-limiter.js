@@ -1,9 +1,10 @@
 const rateLimit = require("express-rate-limit");
+const config = require("../../config/config.json");
 
-// Basic rate limiter for all routes
+// Global limiter
 const globalLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
+  windowMs: config.rateLimit.global.windowMinutes * 60 * 1000,
+  max: config.rateLimit.global.max,
   standardHeaders: true,
   legacyHeaders: false,
   message: {
@@ -12,14 +13,15 @@ const globalLimiter = rateLimit({
   },
 });
 
-// Strict limiter for auth route(Login, Reditsr)
+// Auth limiter
 const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 5,
+  windowMs: config.rateLimit.auth.windowMinutes * 60 * 1000,
+  max: config.rateLimit.auth.max,
+  standardHeaders: true,
+  legacyHeaders: false,
   handler: (req, res) => {
-    // Render the login page with an error message
-    res.status(429).render("auth/login.ejs", {
-      error: "Too many requests, please try again later.",
+    res.status(429).render("auth/login", {
+      error: "Too many attempts. Try again later.",
     });
   },
 });
