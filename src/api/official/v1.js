@@ -1,35 +1,48 @@
-console.log("api/official/v1.js loaded");
-
 const express = require("express");
 const router = express.Router();
-const db = require("../../db.js");
+const sqlite3 = require("sqlite3").verbose();
+const path = require("path");
 
-// Middleware pour vérifier la clé API dans la DB
+const dbPath = path.resolve(__dirname, "../../../lumenone.db");
+const db = new sqlite3.Database(dbPath);
+
 function checkApiKey(req, res, next) {
-  const apiKey = req.headers["x-api-key"];
-  if (!apiKey) return res.status(401).json({ error: "API key required." });
+  const apiKey = req.header("x-api-key");
+  if (!apiKey) {
+    return res.status(401).json({ error: "API key required" });
+  }
 
   db.get("SELECT * FROM apikey WHERE api_key = ?", [apiKey], (err, row) => {
-    if (err) return res.status(500).json({ error: "Database error." });
-    if (!row) return res.status(403).json({ error: "Invalid API key." });
+    if (err) {
+      console.error("DB error in API key check:", err);
+      return res.status(500).json({ error: "Internal server error" });
+    }
 
-    // Accès aux permissions si besoin via row
-    // ex: req.permissions = row;
+    if (!row) {
+      return res.status(401).json({ error: "Invalid API key" });
+    }
 
     next();
   });
 }
 
-// Route pour valider la clé API
-router.get("/api/v1/application/validate-key", checkApiKey, (req, res) => {
-  res.json({ success: true, message: "API key is valid." });
-});
+router.delete("/user/delete", checkApiKey, (req, res) => {
+  const userId = req.body.id || req.query.id;
+  if (!userId) {
+    return res.status(400).json({ error: "User ID required" });
+  }
 
-// Route protégée pour lister les utilisateurs
-router.get("/api/v1/application/users", checkApiKey, (req, res) => {
-  db.all("SELECT id, username, email FROM users", (err, rows) => {
-    if (err) return res.status(500).json({ error: "Database error." });
-    res.json({ success: true, users: rows });
+  db.run("DELETE FROM users WHERE id = ?", [userId], function (err) {
+    if (err) {
+      console.error("Error deleting user:", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    if (this.changes === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json({ success: true, deletedUserId: userId });
   });
 });
 
