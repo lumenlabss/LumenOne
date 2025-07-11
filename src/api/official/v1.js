@@ -36,6 +36,8 @@ router.get("/test", checkApiKey, (req, res) => {
 
 // == API Routes ===
 
+// === User API ===
+
 // Create a new user
 router.post("/users", checkApiKey, (req, res) => {
   const { username, password, rank } = req.body;
@@ -48,10 +50,10 @@ router.post("/users", checkApiKey, (req, res) => {
   }
 
   // check if rank is valid
-  if (rank !== "admin" && rank !== "user") {
+  if (rank !== "admin" && rank !== "default") {
     return res
       .status(400)
-      .json({ error: "Invalid rank. Must be 'admin' or 'user'." });
+      .json({ error: "Invalid rank. Must be 'admin' or 'default'." });
   }
 
   // Insert the new user into the database
@@ -69,7 +71,8 @@ router.post("/users", checkApiKey, (req, res) => {
     }
   );
 });
-
+//
+//
 // Get all users information
 router.get("/users", checkApiKey, (req, res) => {
   db.all("SELECT * FROM users", [], (err, rows) => {
@@ -83,5 +86,61 @@ router.get("/users", checkApiKey, (req, res) => {
     res.json({ success: true, users: rows });
   });
 });
+//
+//
+// Get a user by username
+router.get("/users/:username", checkApiKey, (req, res) => {
+  const username = req.params.username;
+
+  db.get("SELECT * FROM users WHERE username = ?", [username], (err, row) => {
+    if (err) {
+      console.error("DB error:", err);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+    if (!row) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.json({ success: true, user: row });
+  });
+});
+//
+//
+// Update a user by username
+router.put("/users/:username", checkApiKey, (req, res) => {
+  const username = req.params.username;
+  const { password, rank } = req.body;
+  // check if at least one field is provided
+  if (!password && !rank) {
+    return res.status(400).json({
+      error: "At least one field (password or rank) is require to update",
+    });
+  }
+  // check if rank is valid if provided
+  if (rank && rank !== "admin" && rank !== "default") {
+    return res
+      .status(400)
+      .json({ error: "Invalid rank. Must be admin or default." });
+  }
+  // Update the user in the database
+  db.run(
+    `UPDATE users SET password = ?, rank = ? WHERE username = ?`,
+    [password, rank, username],
+    function (err) {
+      if (err) {
+        console.error("DB error:", err);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+      if (this.changes === 0) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      res.json({ success: true, message: "User updated" });
+    }
+  );
+});
+//
+//
+// Delete a user by username
+// im lazy, so i just create this route for deleting a user later lol
+// === Website API ===
 
 module.exports = router;
