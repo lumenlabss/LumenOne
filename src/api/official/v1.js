@@ -35,6 +35,7 @@ router.get("/test", checkApiKey, (req, res) => {
 });
 
 // == API Routes ===
+
 // Create a new user
 router.post("/users", checkApiKey, (req, res) => {
   const { username, password, rank } = req.body;
@@ -67,6 +68,20 @@ router.post("/users", checkApiKey, (req, res) => {
       res.json({ success: true, message: "User created", userId: this.lastID });
     }
   );
+});
+
+// Get all users information
+router.get("/users", checkApiKey, (req, res) => {
+  db.all("SELECT * FROM users", [], (err, rows) => {
+    if (err) {
+      console.error("DB error:", err);
+      return res.status(500).json({ error: "internal server error" });
+    }
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "No users found" });
+    }
+    res.json({ success: true, users: rows });
+  });
 });
 
 module.exports = router;
