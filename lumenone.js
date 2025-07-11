@@ -138,6 +138,9 @@ app.use((req, res, next) => {
   }
 });
 
+// === API ROUTES ===
+app.use("/api", require("./src/utils/create_api_key.js"));
+
 // === SERVER LAUNCH ===
 const port = config.port || 3000;
 const hostname = config.hostname || "localhost";
