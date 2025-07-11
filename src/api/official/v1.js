@@ -137,10 +137,7 @@ router.put("/users/:username", checkApiKey, (req, res) => {
     }
   );
 });
-//
-//
-// Delete a user by username
-// im lazy, so i just create this route for deleting a user later lol
+
 // === Website API ===
 
 module.exports = router;
