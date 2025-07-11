@@ -3,9 +3,11 @@ const router = express.Router();
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
 
+// Chemin vers la DB lumenone.db
 const dbPath = path.resolve(__dirname, "../../../lumenone.db");
 const db = new sqlite3.Database(dbPath);
 
+// Middleware pour vérifier la clé API dans header x-api-key
 function checkApiKey(req, res, next) {
   const apiKey = req.header("x-api-key");
   if (!apiKey) {
@@ -14,7 +16,7 @@ function checkApiKey(req, res, next) {
 
   db.get("SELECT * FROM apikey WHERE api_key = ?", [apiKey], (err, row) => {
     if (err) {
-      console.error("DB error in API key check:", err);
+      console.error("DB error:", err);
       return res.status(500).json({ error: "Internal server error" });
     }
 
@@ -26,24 +28,45 @@ function checkApiKey(req, res, next) {
   });
 }
 
-router.delete("/user/delete", checkApiKey, (req, res) => {
-  const userId = req.body.id || req.query.id;
-  if (!userId) {
-    return res.status(400).json({ error: "User ID required" });
+// Route for testing the API key
+router.get("/test", checkApiKey, (req, res) => {
+  console.log("Route /api/v1/test called with valid API key !");
+  res.json({ success: true, message: "Valid API key, route works." });
+});
+
+// == API Routes ===
+// Create a new user
+router.post("/users", checkApiKey, (req, res) => {
+  const { username, password, rank } = req.body;
+
+  // check if all required fields are provided
+  if (!username || !password || !rank) {
+    return res
+      .status(400)
+      .json({ error: "Username, password and rank are required" });
   }
 
-  db.run("DELETE FROM users WHERE id = ?", [userId], function (err) {
-    if (err) {
-      console.error("Error deleting user:", err);
-      return res.status(500).json({ error: "Database error" });
-    }
+  // check if rank is valid
+  if (rank !== "admin" && rank !== "user") {
+    return res
+      .status(400)
+      .json({ error: "Invalid rank. Must be 'admin' or 'user'." });
+  }
 
-    if (this.changes === 0) {
-      return res.status(404).json({ error: "User not found" });
-    }
+  // Insert the new user into the database
+  db.run(
+    `INSERT INTO users (username, password, rank) VALUES (?, ?, ?)`,
+    [username, password, rank],
+    function (err) {
+      if (err) {
+        console.error("DB error:", err);
+        return res.status(500).json({ error: "Internal server error" });
+      }
 
-    res.json({ success: true, deletedUserId: userId });
-  });
+      // here this.lastID = inserted id
+      res.json({ success: true, message: "User created", userId: this.lastID });
+    }
+  );
 });
 
 module.exports = router;
