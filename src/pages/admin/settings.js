@@ -31,11 +31,20 @@ router.get("/web/admin/settings", isAuthenticated, (req, res) => {
         return res.status(500).render("error/500.ejs");
       }
 
-      res.render("web/admin/settings.ejs", {
-        user: req.session.user,
-        rank: req.session.user.rank,
-        users: rows,
-        config: config,
+      // Database table "apikey" info
+      db.all("SELECT * FROM apikey", (err, apiKeys) => {
+        if (err) {
+          console.error("Error fetching API keys: " + err.message);
+          return res.status(500).render("error/500.ejs");
+        }
+
+        res.render("web/admin/settings.ejs", {
+          user: req.session.user,
+          rank: req.session.user.rank,
+          users: rows,
+          apiKeys: apiKeys,
+          config: config,
+        });
       });
     });
   });

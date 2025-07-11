@@ -10,11 +10,11 @@ async function createApiToken() {
 
     const data = await response.json();
     if (data.success) {
-      alert("Clé API générée : " + data.api_key);
+      alert("API Create refresh your page to see the key");
     } else {
-      alert("Erreur : " + (data.error || "Échec inconnu"));
+      alert("error : " + (data.error || "Unknown error"));
     }
   } catch (err) {
-    alert("Erreur réseau : " + err.message);
+    alert("Network error : " + err.message);
   }
 }

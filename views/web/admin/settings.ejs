@@ -217,7 +217,7 @@
               </div>
             </form>
 
-            <!-- API Token Section -->
+<!-- API Token Section -->
 <div class="glass-card rounded-xl p-6">
   <div class="flex justify-between items-center mb-6">
     <h2 class="text-xl font-semibold">API Tokens</h2>
@@ -232,7 +232,23 @@
   <p class="text-muted mb-4">Manage your personal API tokens for accessing the platform.</p>
 
   <div class="bg-gray-800 border border-gray-700 rounded-lg p-4 text-sm text-muted">
-    <p>No tokens created yet.</p>
+    <% if (apiKeys.length === 0) { %>
+      <p>No tokens created yet.</p>
+    <% } else { %>
+      <ul class="space-y-2">
+        <% apiKeys.forEach(token => { %>
+          <li class="bg-gray-700 p-3 rounded flex justify-between items-center">
+            <span class="font-mono break-all"><%= token.api_key %></span>
+            <small class="text-xs text-gray-400">ID: <%= token.id %></small>
+            <small class="text-xs text-gray-400"><%= token.created_at %></small>
+            <button
+             class="btn-danger text xs"
+             oneclick="deleteApiToken('<%= token.id %>')"
+             >Delete</button>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
   </div>
 </div>
 

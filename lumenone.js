@@ -98,6 +98,9 @@ app.use("/", settingsadminRoutes);
 //  Various Routes
 app.use("/", loadRoutes);
 
+// === API ROUTES ===
+app.use("/api", require("./src/utils/create_api_key.js"));
+
 // === ERROR MANAGEMENT ===
 
 // 404 - Page not found
@@ -137,9 +140,6 @@ app.use((req, res, next) => {
     next();
   }
 });
-
-// === API ROUTES ===
-app.use("/api", require("./src/utils/create_api_key.js"));
 
 // === SERVER LAUNCH ===
 const port = config.port || 3000;
