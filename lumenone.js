@@ -38,6 +38,9 @@ const subscriptionsRoute = require("./src/pages/admin/subscriptions.js");
 const createuserRoutes = require("./src/pages/admin/customers/create.js");
 const informationRoutes = require("./src/pages/admin/information.js");
 
+// Api routes
+const apiV1Router = require("./src/api/official/v1.js");
+
 // Various Routes
 const loadRoutes = require("./src/pages/load.js");
 
@@ -100,6 +103,7 @@ app.use("/", loadRoutes);
 
 // === API ROUTES ===
 app.use("/api", require("./src/utils/create_api_key.js"));
+app.use("/api/v1", apiV1Router);
 
 // === ERROR MANAGEMENT ===
 
