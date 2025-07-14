@@ -1,3 +1,4 @@
+console.log("src/api/official/v1.js loaded");
 const express = require("express");
 const router = express.Router();
 const sqlite3 = require("sqlite3").verbose();
@@ -136,6 +137,23 @@ router.put("/users/:username", checkApiKey, (req, res) => {
       res.json({ success: true, message: "User updated" });
     }
   );
+});
+//
+//
+// Delete a user by username
+router.delete("/users/:username", checkApiKey, (req, res) => {
+  const username = req.params.username;
+
+  db.run("DELETE FROM users WHERE username = ?", [username], function (err) {
+    if (err) {
+      console.error("DB error:", err);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+    if (this.changes === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.json({ success: true, message: "User deleted" });
+  });
 });
 
 // === Website API ===
