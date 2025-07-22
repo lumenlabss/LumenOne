@@ -176,5 +176,45 @@ router.get("/websites", checkApiKey, (req, res) => {
 //
 //
 // Get a website by user owner
+router.get("/websites/:userId", checkApiKey, (req, res) => {
+  const userId = req.params.userId;
 
+  db.all("SELECT * FROM websites WHERE user_id = ?", [userId], (err, row) => {
+    if (err) {
+      console.error("DB error:", err);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+    if (row.length === 0) {
+      return res.status(404).json({ error: "No websites found for this user" });
+    }
+    res.json({ success: true, websites: row });
+  });
+});
+//
+//
+// Create a new website
+router.post("/websites", checkApiKey, (req, res) => {
+  const { userId, name, url } = req.body;
+
+  if (!userId || !name || !url) {
+    return res
+      .status(400)
+      .json({ error: "User ID, name and URL are required" });
+  }
+  db.run(
+    `INSERT INTO websites (user_id, name, url) VALUES (?, ?, ?)`,
+    [userId, name, url],
+    function (err) {
+      if (err) {
+        console.error("DB error:", err);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+      res.json({
+        success: true,
+        message: "Website created",
+        websiteID: this.lastID,
+      });
+    }
+  );
+});
 module.exports = router;
