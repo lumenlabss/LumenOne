@@ -158,4 +158,23 @@ router.delete("/users/:username", checkApiKey, (req, res) => {
 
 // === Website API ===
 
+// Get all websites
+router.get("/websites", checkApiKey, (req, res) => {
+  db.all("SELECT * FROM websites", [], (err, rows) => {
+    if (err) {
+      console.error("DB error:", err);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "No websites found" });
+    }
+
+    res.json({ success: true, websites: rows });
+  });
+});
+//
+//
+// Get a website by user owner
+
 module.exports = router;
