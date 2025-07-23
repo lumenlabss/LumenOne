@@ -81,7 +81,7 @@ app.use("/", loginRoutes);
 app.use("/", logoutRoutes);
 
 // Users Routes
-app.use("/  ", homeRoutes);
+app.use("/", homeRoutes);
 app.use("/", manageRoute);
 app.use("/", filesRoutes);
 app.use("/", accountRoutes);
