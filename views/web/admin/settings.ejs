@@ -126,7 +126,6 @@
     <div class="flex-grow p-8">
       <div class="max-w-4xl mx-auto">
         <h1 class="text-3xl font-bold gradient-text mb-8">Settings</h1>
-
         <div class="space-y-6">
           <div class="glass-card rounded-xl p-6">
             <h2 class="text-xl font-semibold mb-6">General</h2>
@@ -243,7 +242,7 @@
             <small class="text-xs text-gray-400"><%= token.created_at %></small>
             <button
              class="btn-danger text xs"
-             oneclick="deleteApiToken('<%= token.id %>')"
+              onclick="deleteApiKey('<%= token.id %>')"
              >Delete</button>
           </li>
         <% }) %>
@@ -262,6 +261,8 @@
     <%- include('../../components/footer') %>
     <script src="/js/sidebar.js"></script>
     <script src="/js/api_key_create.js"></script>
+
+
 
   </body>
 </html>
