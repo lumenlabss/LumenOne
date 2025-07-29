@@ -1,6 +1,6 @@
 ![image](https://github.com/user-attachments/assets/5222bd49-29c6-4346-8a37-296a2ecb6e8c)
 
-# LumenOne Pre-Alpha
+# LumenOne v1.0.0-bêta
 
 | :exclamation: **LumenOne is under development**: some features may be unstable or incomplete. Its use in a production environment is strongly discouraged at this time. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -117,94 +117,6 @@ Contributions are welcome! Here's how you can contribute:
 3. Commit your changes (`git commit -am 'Add a new feature'`)
 4. Push your changes (`git push origin feature/feature-name`)
 5. Open a Pull Request
-
----
-
-## :white_check_mark: ToDo List
-
-Project completion : ⁓ 25%
-
-### Core
-
-- [x] User authentication (login, logout, sessions)
-- [x] Role system for user (admin, user)
-- [ ] Role system for php (admin, user, and custom)
-- [ ] Dashboard for service management (web, FTP, databases)
-- [ ] User/action logs system (audit)
-- [ ] devloppement and production mode (production = no logs)
-
-### Web
-
-- [x] Welcome interface with service summary
-- [x] Domain and subdomain management
-- [x] Integrated file manager (upload, delete, edit)
-- [ ] Interface for database management (create, delete, access)
-- [x] Add backend integration
-- [ ] Add stastisic (To be realized potentially by the community)
-
-### Backend
-
-- [ ] REST API (users, domains, files, databases)
-- [ ] Security (rate limiting, JWT token management, CSRF protection)
-- [ ] Multi-server support for scalability
-- [x] Size limit system (normally works)
-- [x] Code reorganization into modules (`src`)
-- [ ] Create a Middlewares files (`src/middlewares/exemple.js`)
-- [ ] Optimize code (make it faster, more readable, more orderly, etc.)
-- [ ] Convert stastistic storage from .json to .db
-
-### Users pages (frontend)
-
-- [x] Websites & Domains
-- [ ] Mail (To be realized potentially by the community)
-- [x] Backup
-- [x] Statistics (To be realized potentially by the community)
-- [ ] Users
-- [x] Account
-
-### Admin pages (frontend)
-
-- [x] Customers
-- [ ] Service Plans
-- [x] Subscriptions
-- [x] Information
-- [ ] Settings
-
-### Users pages (Backend)
-
-- [x] Websites & Domains
-- [ ] Mail (To be realized potentially by the community)
-- [ ] Backup
-- [ ] Statistics (To be realized potentially by the community)
-- [ ] Users
-- [x] Account
-
-### Admin pages (Backend)
-
-- [x] Customers
-- [ ] Service Plans
-- [x] Subscriptions
-- [x] Information
-- [ ] Settings
-
-### Modules
-
-- [ ] Let's Encrypt SSL certificates (automatic generation and renewal)
-- [ ] Integrated webmail (Rainloop, Roundcube)
-- [ ] Application installation (WordPress, Joomla, etc.)
-- [ ] Resource monitoring (CPU, RAM, storage)
-
-### Bonus
-
-- [ ] Complete documentation (installation, API, development)
-- [ ] Mobile-friendly interface
-- [ ] Multiple theme (Light theme, Plesk theme, and other)
-- [ ] Notification system (emails, alerts)
-- [ ] Language system
-- [ ] Docker integration (optional for service isolation)
-- [x] Add `console.log("exemple.js loaded");` for all backend files
-- [ ] 2FA system
-- [ ] Recent logins
 
 ---
 
