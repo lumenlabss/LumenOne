@@ -43,6 +43,7 @@ const apiV1Router = require("./src/api/official/v1.js");
 
 // Various Routes
 const loadRoutes = require("./src/pages/load.js");
+const { generateKey } = require("./src/utils/SecretKey-generator.js");
 
 // === APPLICATION INITIALIZATION ===
 const app = express();
@@ -148,6 +149,8 @@ app.use((req, res, next) => {
 // === SERVER LAUNCH ===
 const port = config.port || 3000;
 const hostname = config.hostname || "localhost";
+
+generateKey();
 
 app.listen(port, hostname, () => {
   console.log(`LumenOne successfully started: http://${hostname}:${port}`);
