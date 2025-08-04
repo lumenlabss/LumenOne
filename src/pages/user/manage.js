@@ -81,6 +81,7 @@ router.post("/web/manage/:id/create-file", isAuthenticated, (req, res) => {
     !filename ||
     filename.includes("..") ||
     filename.includes("/") ||
+    filename.includes("php.ini") ||
     filename.length > 100
   ) {
     return res.status(400).send("Invalid file name.");
