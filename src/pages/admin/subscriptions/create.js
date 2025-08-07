@@ -127,6 +127,7 @@ router.post("/web/admin/subscriptions/create", isAuthenticated, (req, res) => {
         // Creating the php.ini file
         const phpIniPath = path.join(folderPath, "php.ini");
         const phpIniContent = `
+open_basedir = ${folderPath}
 disable_functions = exec,passthru,shell_exec,system,proc_open,popen
 display_errors = Off
 expose_php = Off
