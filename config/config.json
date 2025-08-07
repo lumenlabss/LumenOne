@@ -2,7 +2,7 @@
   "hostname": "localhost",
   "port": 3000,
   "name": "LumenOne",
-  "version": "v1.1.0-bêta",
+  "version": "v1.2.0-bêta",
   "session": {
     "secret": "secret-key",
     "resave": false,
