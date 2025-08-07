@@ -58,6 +58,7 @@ router.post("/web/account/username/save", isAuthenticated, (req, res) => {
         console.error("Error updating username:", err.message);
         return res.render("web/account", {
           error: "Server Error",
+          succes: false,
           rank: req.session.user.rank, // Pass rank to the view
           user: req.session.user,
         });
