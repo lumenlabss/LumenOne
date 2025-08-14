@@ -112,4 +112,12 @@ db.run(`
   )
 `);
 
+db.run(`
+  CREATE TABLE IF NOT EXISTS backups (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    path TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP)`);
+
 module.exports = db;
