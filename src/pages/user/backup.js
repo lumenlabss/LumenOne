@@ -5,8 +5,9 @@ const { isAuthenticated } = require("../../middleware/auth.js");
 
 const router = express.Router();
 
-router.get("web/backup", isAuthenticated, (req, res) => {
+router.get("/web/backup", isAuthenticated, (req, res) => {
   const userId = req.session.user.id;
+
   db.all(
     "SELECT id, name, created_at FROM backups WHERE user_id = ?",
     [userId],
@@ -16,9 +17,18 @@ router.get("web/backup", isAuthenticated, (req, res) => {
         return res.status(500).send("Internal server error");
       }
 
-      res.render("web/backup.ejs", {
-        user: req.session.user,
-        backups,
+      // Retrieving the user's rank
+      db.get("SELECT rank FROM users WHERE id = ?", [userId], (err, row) => {
+        if (err) {
+          console.error("Error while retrieving the rank: " + err.message);
+          return res.status(500).send("Internal server error");
+        }
+
+        res.render("web/backup.ejs", {
+          user: req.session.user,
+          backups,
+          rank: row ? row.rank : null,
+        });
       });
     }
   );
