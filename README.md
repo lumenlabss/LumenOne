@@ -48,7 +48,7 @@
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/lumenlabss/LumenOne.git
+   git clone --branch v1.2.0-bêta https://github.com/lumenlabss/LumenOne.git
    cd LumenOne
    ```
 
