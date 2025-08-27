@@ -81,12 +81,15 @@
           <div class="stat-card rounded-xl p-6">
             <div class="flex items-center gap-3 mb-4">
               <div class="bg-purple-500/10 p-2 rounded-lg">
-                <i data-lucide="calendar" class="w-5 h-5 text-purple-400"></i>
+                <i
+                  data-lucide="shield-question-mark"
+                  class="w-5 h-5 text-purple-400"
+                ></i>
               </div>
-              <h3 class="text-lg font-medium">Next Backup</h3>
+              <h3 class="text-lg font-medium">SOON</h3>
             </div>
-            <p class="text-3xl font-bold mb-2" id="nextBackup">22:00</p>
-            <p class="text-muted text-sm">Automatic daily</p>
+            <p class="text-3xl font-bold mb-2" id="nextBackup">SOON</p>
+            <p class="text-muted text-sm">SOON</p>
           </div>
         </div>
 
@@ -107,13 +110,11 @@
                 />
               </div>
               <div>
-                <label class="block text-sm font-medium mb-1">Type</label>
+                <label class="block text-sm font-medium mb-1">Website</label>
                 <select
                   class="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2"
                 >
-                  <option>Full Backup</option>
-                  <option>Database Only</option>
-                  <option>Files Only</option>
+                  <option>test.fr</option>
                 </select>
               </div>
             </div>
@@ -135,7 +136,7 @@
 
         <div class="glass-card rounded-xl p-6">
           <div class="flex justify-between items-center mb-6">
-            <h2 class="text-xl font-semibold">Recent Backups</h2>
+            <h2 class="text-xl font-semibold">Backups</h2>
             <div class="flex items-center gap-3">
               <button class="p-2 rounded-lg hover:bg-gray-800/50 transition">
                 <i data-lucide="refresh-cw" class="w-5 h-5"></i>
@@ -151,6 +152,8 @@
           </div>
 
           <div class="space-y-2">
+            <% if (backups.length > 0) { %> <% backups.forEach(function(backup)
+            { %>
             <div
               class="backup-item flex items-center justify-between p-4 rounded-lg transition"
             >
@@ -159,139 +162,43 @@
                   <i data-lucide="hard-drive" class="w-6 h-6 text-blue-400"></i>
                 </div>
                 <div>
-                  <h3 class="font-medium">Full Backup - 2023-11-15</h3>
-                  <p class="text-sm text-muted">Created 2 hours ago • 456MB</p>
+                  <h3 class="font-medium">
+                    <%= backup.name %> - <%= backup.created_at %>
+                  </h3>
+                  <p class="text-sm text-muted">
+                    Créé le <%= backup.created_at %>
+                    <!-- tu peux améliorer formatage date ici -->
+                  </p>
                 </div>
               </div>
               <div class="flex items-center gap-3">
                 <button
                   class="p-2 rounded-lg hover:bg-gray-800/50 transition"
                   title="Download"
+                  onclick="window.location.href='/web/backup/download/<%= backup.id %>'"
                 >
                   <i data-lucide="download" class="w-5 h-5"></i>
                 </button>
                 <button
-                  class="p-2 rounded-lg hover:bg-gray-800/50 transition"
-                  title="Restore"
-                >
-                  <i data-lucide="rotate-cw" class="w-5 h-5"></i>
-                </button>
-                <button
                   class="p-2 rounded-lg hover:bg-red-500/20 transition"
                   title="Delete"
+                  onclick="window.location.href='/web/backup/delete/<%= backup.id %>'"
                 >
                   <i data-lucide="trash-2" class="w-5 h-5 text-red-400"></i>
                 </button>
               </div>
             </div>
-
-            <div
-              class="backup-item flex items-center justify-between p-4 rounded-lg transition"
-            >
-              <div class="flex items-center gap-4">
-                <div class="bg-green-500/10 p-3 rounded-lg">
-                  <i data-lucide="database" class="w-6 h-6 text-green-400"></i>
-                </div>
-                <div>
-                  <h3 class="font-medium">Database Backup - 2023-11-14</h3>
-                  <p class="text-sm text-muted">Created 1 day ago • 128MB</p>
-                </div>
-              </div>
-              <div class="flex items-center gap-3">
-                <button
-                  class="p-2 rounded-lg hover:bg-gray-800/50 transition"
-                  title="Download"
-                >
-                  <i data-lucide="download" class="w-5 h-5"></i>
-                </button>
-                <button
-                  class="p-2 rounded-lg hover:bg-gray-800/50 transition"
-                  title="Restore"
-                >
-                  <i data-lucide="rotate-cw" class="w-5 h-5"></i>
-                </button>
-                <button
-                  class="p-2 rounded-lg hover:bg-red-500/20 transition"
-                  title="Delete"
-                >
-                  <i data-lucide="trash-2" class="w-5 h-5 text-red-400"></i>
-                </button>
-              </div>
+            <% }) %> <% } else { %>
+            <div class="p-4 rounded-lg bg-gray-800/30 text-center text-muted">
+              It appears that no backups are currently stored.
             </div>
-
-            <div
-              class="backup-item flex items-center justify-between p-4 rounded-lg transition"
-            >
-              <div class="flex items-center gap-4">
-                <div class="bg-purple-500/10 p-3 rounded-lg">
-                  <i data-lucide="folder" class="w-6 h-6 text-purple-400"></i>
-                </div>
-                <div>
-                  <h3 class="font-medium">Files Backup - 2023-11-13</h3>
-                  <p class="text-sm text-muted">Created 2 days ago • 342MB</p>
-                </div>
-              </div>
-              <div class="flex items-center gap-3">
-                <button
-                  class="p-2 rounded-lg hover:bg-gray-800/50 transition"
-                  title="Download"
-                >
-                  <i data-lucide="download" class="w-5 h-5"></i>
-                </button>
-                <button
-                  class="p-2 rounded-lg hover:bg-gray-800/50 transition"
-                  title="Restore"
-                >
-                  <i data-lucide="rotate-cw" class="w-5 h-5"></i>
-                </button>
-                <button
-                  class="p-2 rounded-lg hover:bg-red-500/20 transition"
-                  title="Delete"
-                >
-                  <i data-lucide="trash-2" class="w-5 h-5 text-red-400"></i>
-                </button>
-              </div>
-            </div>
-
-            <div
-              class="backup-item flex items-center justify-between p-4 rounded-lg transition"
-            >
-              <div class="flex items-center gap-4">
-                <div class="bg-blue-500/10 p-3 rounded-lg">
-                  <i data-lucide="hard-drive" class="w-6 h-6 text-blue-400"></i>
-                </div>
-                <div>
-                  <h3 class="font-medium">Full Backup - 2023-11-12</h3>
-                  <p class="text-sm text-muted">Created 3 days ago • 498MB</p>
-                </div>
-              </div>
-              <div class="flex items-center gap-3">
-                <button
-                  class="p-2 rounded-lg hover:bg-gray-800/50 transition"
-                  title="Download"
-                >
-                  <i data-lucide="download" class="w-5 h-5"></i>
-                </button>
-                <button
-                  class="p-2 rounded-lg hover:bg-gray-800/50 transition"
-                  title="Restore"
-                >
-                  <i data-lucide="rotate-cw" class="w-5 h-5"></i>
-                </button>
-                <button
-                  class="p-2 rounded-lg hover:bg-red-500/20 transition"
-                  title="Delete"
-                >
-                  <i data-lucide="trash-2" class="w-5 h-5 text-red-400"></i>
-                </button>
-              </div>
-            </div>
+            <% } %>
           </div>
 
           <div
             class="mt-6 flex justify-between items-center text-sm text-muted"
           >
-            <div>Showing 4 of 12 backups</div>
+            <div>Showing 0 of 0 backups</div>
             <div class="flex items-center gap-2">
               <button
                 class="p-2 rounded-lg hover:bg-gray-800/50 transition disabled:opacity-50"
@@ -299,7 +206,7 @@
               >
                 <i data-lucide="chevron-left" class="w-4 h-4"></i>
               </button>
-              <span>Page 1 of 3</span>
+              <span>Page 1 of 1</span>
               <button class="p-2 rounded-lg hover:bg-gray-800/50 transition">
                 <i data-lucide="chevron-right" class="w-4 h-4"></i>
               </button>
