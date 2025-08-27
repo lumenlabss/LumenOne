@@ -89,7 +89,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <!-- Port Stat Card -->
           <div class="stat-card rounded-xl p-6">
-            <div class="text-sm text-blue-400 mb-2">Port</div>
+            <div class="text-sm text-gray-300 mb-2">IP</div>
             <div class="text-2xl font-semibold flex items-center space-x-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -106,11 +106,54 @@
                   d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 2a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z"
                 />
               </svg>
-
-              &nbsp;<%= website.port %>
+              &nbsp;
+              <span
+                id="network-ip-<%= website.uuid %>"
+                class="inline-block h-5 rounded-full animate-pulse bg-gradient-to-r from-blue-400 via-blue-500 to-blue-400 w-[8ch]"
+              ></span>
             </div>
           </div>
 
+          <script>
+            fetch("/web/get-ip")
+              .then((res) => res.json())
+              .then((data) => {
+                const ipSpan = document.getElementById(
+                  "network-ip-<%= website.uuid %>"
+                );
+                if (ipSpan) {
+                  ipSpan.textContent = data.ip;
+                  ipSpan.classList.remove(
+                    "w-20",
+                    "h-5",
+                    "rounded-full",
+                    "animate-pulse",
+                    "bg-gradient-to-r",
+                    "from-blue-400",
+                    "via-blue-500",
+                    "to-blue-400"
+                  );
+                }
+              })
+              .catch(() => {
+                const ipSpan = document.getElementById(
+                  "network-ip-<%= website.uuid %>"
+                );
+                if (ipSpan) {
+                  ipSpan.textContent = "Unknown";
+                  ipSpan.classList.remove(
+                    "w-20",
+                    "h-5",
+                    "rounded-full",
+                    "animate-pulse",
+                    "bg-gradient-to-r",
+                    "from-blue-400",
+                    "via-blue-500",
+                    "to-blue-400"
+                  );
+                }
+              });
+          </script>
           <!-- Disk Limit Stat Card -->
           <div class="stat-card rounded-xl p-6">
             <div class="text-sm text-blue-400 mb-2">Disk Limit</div>

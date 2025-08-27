@@ -87,18 +87,27 @@
               <h2 class="text-xl font-semibold"><%= site.name %></h2>
             </div>
             <div class="space-y-3">
-              <div
-                class="stat-badge rounded-lg px-3 py-2 flex items-center justify-between"
-              >
-                <span class="text-sm text-gray-300">Port</span>
-                <span class="font-medium"><%= site.port %></span>
-              </div>
+              <!--Disk Limit-->
               <div
                 class="stat-badge rounded-lg px-3 py-2 flex items-center justify-between"
               >
                 <span class="text-sm text-gray-300">Disk Limit</span>
                 <span class="font-medium"><%= site.disk_limit %> MB</span>
               </div>
+              <!--Disk Limit End-->
+              <!--IP-->
+              <div
+                class="stat-badge rounded-lg px-3 py-2 flex items-center justify-between"
+              >
+                <span class="text-sm text-gray-300">IP</span>
+                <span class="font-medium flex justify-end">
+                  <span
+                    id="network-ip-<%= site.uuid %>"
+                    class="inline-block w-20 h-5 rounded-full animate-pulse bg-gradient-to-r from-blue-400 via-blue-500 to-blue-400"
+                  ></span>
+                </span>
+              </div>
+              <!--IP End-->
             </div>
             <div class="mt-6 flex space-x-3">
               <button
@@ -125,6 +134,42 @@
               </button>
             </div>
           </div>
+          <script>
+            fetch("/web/get-ip")
+              .then((res) => res.json())
+              .then((data) => {
+                const ipSpan = document.getElementById(
+                  "network-ip-<%= site.uuid %>"
+                );
+                ipSpan.textContent = data.ip;
+                ipSpan.classList.remove(
+                  "w-20",
+                  "h-5",
+                  "rounded-full",
+                  "animate-pulse",
+                  "bg-gradient-to-r",
+                  "from-blue-400",
+                  "via-blue-500",
+                  "to-blue-400"
+                );
+              })
+              .catch(() => {
+                const ipSpan = document.getElementById(
+                  "network-ip-<%= site.uuid %>"
+                );
+                ipSpan.textContent = "Unknown";
+                ipSpan.classList.remove(
+                  "w-20",
+                  "h-5",
+                  "rounded-full",
+                  "animate-pulse",
+                  "bg-gradient-to-r",
+                  "from-blue-400",
+                  "via-blue-500",
+                  "to-blue-400"
+                );
+              });
+          </script>
           <% }) %>
         </div>
         <% } %>

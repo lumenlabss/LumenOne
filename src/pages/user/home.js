@@ -27,6 +27,7 @@ router.get("/web/list", isAuthenticated, (req, res) => {
           user: req.session.user,
           websites,
           rank: row ? row.rank : null,
+          NetworkIP: "Loading...", // placeholder
         });
       });
     }

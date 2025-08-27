@@ -63,6 +63,7 @@ router.get("/web/manage/:id", isAuthenticated, (req, res) => {
             rank: row ? row.rank : null,
             websiteUuid,
             files,
+            NetworkIP: "Loading...", // placeholder
           });
         });
       });

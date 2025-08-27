@@ -45,6 +45,7 @@ const apiV1Router = require("./src/api/official/v1.js");
 // Various Routes
 const loadRoutes = require("./src/pages/load.js");
 const { generateKey } = require("./src/utils/SecretKey-generator.js");
+const getIPRouter = require("./src/web/get-ip.js");
 
 // === APPLICATION INITIALIZATION ===
 const app = express();
@@ -103,6 +104,7 @@ app.use("/", settingsadminRoutes);
 
 //  Various Routes
 app.use("/", loadRoutes);
+app.use("/", getIPRouter);
 
 // === API ROUTES ===
 app.use("/api", require("./src/utils/create_api_key.js"));
