@@ -66,7 +66,12 @@
             <p class="text-3xl font-bold mb-2" id="totalBackups">
               <%= backups.length %> Backup<%= backups.length > 1 ? "s" : "" %>
             </p>
-            <p class="text-muted text-sm">5.4GB total storage</p>
+            <% let totalSize = 0; backups.forEach(b => { totalSize += b.size;
+            }); %>
+
+            <p class="text-muted text-sm">
+              Total size: <%= (totalSize / 1024 / 1024).toFixed(2) %> MB
+            </p>
           </div>
 
           <div class="stat-card rounded-xl p-6">
@@ -162,8 +167,12 @@
                   <h3 class="font-medium">
                     <%= backup.name %> - <%= backup.created_at.split(" ")[0] %>
                   </h3>
+                  <% let totalSize = 0; backups.forEach(b => { totalSize +=
+                  b.size; }); %>
+
                   <p class="text-sm text-muted">
-                    Created <%= backup.created_at %> • <%= backup.size %>
+                    Created <%= backup.created_at %> • <%= (totalSize / 1024 /
+                    1024).toFixed(2) %> MB
                   </p>
                 </div>
               </div>
