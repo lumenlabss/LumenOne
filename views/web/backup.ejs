@@ -66,11 +66,8 @@
             <p class="text-3xl font-bold mb-2" id="totalBackups">
               <%= backups.length %> Backup<%= backups.length > 1 ? "s" : "" %>
             </p>
-            <% let totalSize = 0; backups.forEach(b => { totalSize += b.size;
-            }); %>
-
             <p class="text-muted text-sm">
-              Total size: <%= (totalSize / 1024 / 1024).toFixed(2) %> MB
+              Total size: <%= totalSizeFormatted %>
             </p>
           </div>
 
@@ -81,8 +78,10 @@
               </div>
               <h3 class="text-lg font-medium">Last Backup</h3>
             </div>
-            <p class="text-3xl font-bold mb-2" id="lastBackup">2h ago</p>
-            <p class="text-muted text-sm">456MB</p>
+            <p class="text-3xl font-bold mb-2" id="lastBackup">
+              <%= lastBackupTime %>
+            </p>
+            <p class="text-muted text-sm">Time elapsed since the last backup</p>
           </div>
 
           <div class="stat-card rounded-xl p-6">
@@ -121,7 +120,12 @@
                 <select
                   class="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2"
                 >
-                  <option>test.fr</option>
+                  <% if (websites.length > 0) { %> <% websites.forEach(site => {
+                  %>
+                  <option><%= site.name %></option>
+                  <% }) %> <% } else { %>
+                  <option disabled>No website found</option>
+                  <% } %>
                 </select>
               </div>
             </div>
@@ -147,8 +151,6 @@
                 class="bg-gray-800 border border-gray-700 rounded-lg px-3 py-1 text-sm"
               >
                 <option>All Backups</option>
-                <option>Last 7 days</option>
-                <option>Last 30 days</option>
               </select>
             </div>
           </div>
@@ -167,12 +169,10 @@
                   <h3 class="font-medium">
                     <%= backup.name %> - <%= backup.created_at.split(" ")[0] %>
                   </h3>
-                  <% let totalSize = 0; backups.forEach(b => { totalSize +=
-                  b.size; }); %>
 
                   <p class="text-sm text-muted">
-                    Created <%= backup.created_at %> • <%= (totalSize / 1024 /
-                    1024).toFixed(2) %> MB
+                    Created <%= backup.created_at %> • <%=
+                    formatBytes(backup.size) %>
                   </p>
                 </div>
               </div>
