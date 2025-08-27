@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Backups - LumenOne</title>
+    <title>Backups - <%= appName %></title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link
@@ -63,7 +63,9 @@
               </div>
               <h3 class="text-lg font-medium">Total Backups</h3>
             </div>
-            <p class="text-3xl font-bold mb-2" id="totalBackups">12</p>
+            <p class="text-3xl font-bold mb-2" id="totalBackups">
+              <%= backups.length %> Backup<%= backups.length > 1 ? "s" : "" %>
+            </p>
             <p class="text-muted text-sm">5.4GB total storage</p>
           </div>
 
@@ -209,6 +211,8 @@
         </div>
       </div>
     </div>
+    <%- include('../components/footer') %>
+    <script src="/js/sidebar.js"></script>
 
     <script>
       lucide.createIcons();
