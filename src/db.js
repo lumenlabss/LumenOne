@@ -118,7 +118,7 @@ db.run(`
     user_id INTEGER NOT NULL,
     website_id INTEGER NOT NULL,
     name TEXT NOT NULL,
-    backup_size TEXT NOT NULL,
+    size TEXT NOT NULL,
     path TEXT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP)`);
 

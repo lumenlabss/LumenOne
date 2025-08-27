@@ -9,7 +9,7 @@ router.get("/web/backup", isAuthenticated, (req, res) => {
   const userId = req.session.user.id;
 
   db.all(
-    "SELECT id, name, created_at FROM backups WHERE user_id = ?",
+    "SELECT id, name, size, created_at FROM backups WHERE user_id = ?",
     [userId],
     (err, backups) => {
       if (err) {
