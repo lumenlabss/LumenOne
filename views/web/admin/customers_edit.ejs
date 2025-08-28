@@ -84,10 +84,11 @@
           method="POST"
           class="glass-card p-8 rounded-xl"
         >
+          <!-- Username -->
           <div class="mb-6">
-            <label for="username" class="block text-sm font-medium mb-2"
-              >Username</label
-            >
+            <label for="username" class="block text-sm font-medium mb-2">
+              Username
+            </label>
             <input
               type="text"
               id="username"
@@ -98,10 +99,11 @@
             />
           </div>
 
+          <!-- Password -->
           <div class="mb-6">
-            <label for="password" class="block text-sm font-medium mb-2"
-              >New password</label
-            >
+            <label for="password" class="block text-sm font-medium mb-2">
+              New password
+            </label>
             <input
               type="password"
               id="password"
@@ -111,20 +113,58 @@
             />
           </div>
 
+          <!-- Rank -->
           <div class="mb-6">
-            <label for="rank" class="block text-sm font-medium mb-2"
-              >Rank</label
+            <label
+              for="rank"
+              class="block text-sm font-medium mb-2 flex items-center gap-2"
             >
-            <input
-              type="text"
+              Rank
+              <span
+                class="text-gray-400 cursor-help"
+                title="Définitions :
+- admin → accès complet à tout
+- default → utilisateur normal"
+              >
+                <!-- SVG -->
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="w-4 h-4"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                  <path d="M12 17h.01" />
+                </svg>
+              </span>
+            </label>
+
+            <select
               id="rank"
               name="rank"
-              value="<%= userToEdit.rank %>"
               class="bg-gray-800 text-white border border-gray-600 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
-            />
+            >
+              <% if (userToEdit.rank === "admin") { %>
+              <option value="admin" selected>Admin</option>
+              <% } else { %>
+              <option value="admin">Admin</option>
+              <% } %> <% if (userToEdit.rank === "default") { %>
+              <option value="default" selected>Default</option>
+              <% } else { %>
+              <option value="default">Default</option>
+              <% } %>
+            </select>
           </div>
 
+          <!-- Buttons -->
           <div class="flex gap-4">
             <button
               type="submit"
