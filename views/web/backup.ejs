@@ -79,7 +79,8 @@
               <h3 class="text-lg font-medium">Last Backup</h3>
             </div>
             <p class="text-3xl font-bold mb-2" id="lastBackup">
-              <%= lastBackupTime %>
+              <% if (lastBackupTime) { %> <%= lastBackupTime %> <% } else { %> 0
+              <% } %>
             </p>
             <p class="text-muted text-sm">Time elapsed since the last backup</p>
           </div>
