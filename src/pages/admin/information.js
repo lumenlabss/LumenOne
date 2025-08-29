@@ -73,12 +73,20 @@ router.get("/web/admin/information", isAuthenticated, async (req, res) => {
       });
     });
 
+    const totalBackups = await new Promise((resolve, reject) => {
+      db.get("SELECT COUNT(*) AS count FROM backups", (err, row) => {
+        if (err) return reject(err);
+        resolve(row.count);
+      });
+    });
+
     res.render("web/admin/information.ejs", {
       user: req.session.user,
       rank: req.session.user.rank,
       websites: allWebsites,
       totalListWebsite: totalListWebsite,
       totalUsers: totalUsers,
+      totalBackups: totalBackups,
       appVersion: localVersion,
       newVersion: latestVersion,
       updateAvailable: updateAvailable
