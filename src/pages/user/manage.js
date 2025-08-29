@@ -8,7 +8,7 @@ const { isAuthenticated } = require("../../middleware/auth.js");
 const {
   protectSensitiveFiles,
 } = require("../../middleware/protect-sensitive-files.js");
-const { checkSizeBeforeCreate } = require("../../web/size-limit.js"); // <- ajout du size check
+const { checkSizeBeforeCreate } = require("../../web/size-limit.js");
 
 const filesPath = path.join(__dirname, "../../../storage/volumes");
 const filesProtect = protectSensitiveFiles(filesPath);
@@ -53,7 +53,7 @@ router.get("/web/manage/:id", isAuthenticated, (req, res) => {
             const stats = fs.statSync(fileFullPath);
             return {
               name: fileName,
-              size: (stats.size / 1024 / 1024).toFixed(2), // Taille en Mo
+              size: (stats.size / 1024 / 1024).toFixed(2), // Size in MB
             };
           });
 
@@ -107,7 +107,7 @@ router.post("/web/manage/:id/create-file", isAuthenticated, (req, res) => {
         filename
       );
 
-      // Vérifie la taille avant de créer
+      // Check the size before creating
       checkSizeBeforeCreate(websiteUuid, 0, (err) => {
         if (err) {
           console.error("Disk quota error:", err.message);
