@@ -38,6 +38,7 @@ const subscriptions_createRoute = require("./src/pages/admin/subscriptions/creat
 const subscriptionsRoute = require("./src/pages/admin/subscriptions.js");
 const createuserRoutes = require("./src/pages/admin/customers/create.js");
 const informationRoutes = require("./src/pages/admin/information.js");
+const modulesRoutes = require("./src/pages/admin/modules.js");
 
 // Api routes
 const apiV1Router = require("./src/api/official/v1.js");
@@ -101,6 +102,7 @@ app.use("/", subscriptionsRoute);
 app.use("/", createuserRoutes);
 app.use("/", informationRoutes);
 app.use("/", settingsadminRoutes);
+app.use("/", modulesRoutes);
 
 //  Various Routes
 app.use("/", loadRoutes);
