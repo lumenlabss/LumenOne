@@ -2,3 +2,5 @@ console.log("/utils/reset-website.js loaded"); // To confirm that the page has b
 const fs = require("fs");
 const path = require("path");
 const db = require("../db");
+
+async function resetWebsite() {}
