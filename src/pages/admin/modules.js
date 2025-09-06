@@ -46,7 +46,9 @@ try {
 
       modules.push({
         name: config.name || dir,
-        version: config.version || "1.0.0",
+        version: config.version || "no version",
+        description: config.description || "No description provided.",
+        author: config.author || "Unknown",
         icon: hasIcon ? `/modules/${dir}/icon.png` : null,
       });
     }

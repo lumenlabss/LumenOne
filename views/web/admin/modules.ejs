@@ -57,7 +57,7 @@
           class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
         >
           <div
-            class="module-card rounded-xl p-6 flex items-center justify-between"
+            class="module-card rounded-xl p-6 flex items-center justify-between cursor-pointer"
           >
             <div class="flex items-center">
               <div
@@ -105,7 +105,8 @@
           <% // Displaying other modules dynamically %> <%
           modules.forEach(module => { %>
           <div
-            class="module-card rounded-xl p-6 flex items-center justify-between"
+            class="module-card rounded-xl p-6 flex items-center justify-between cursor-pointer"
+            onclick="openModuleModal(<%= JSON.stringify(module) %>)"
           >
             <div class="flex items-center">
               <div
@@ -189,5 +190,61 @@
     </div>
     <%- include('../../components/footer') %>
     <script src="/js/sidebar.js"></script>
+    <script src="/js/modules_modal_script.js"></script>
+
+    <!--Modules Modal-->
+    <div
+      id="module-modal"
+      class="fixed inset-0 z-50 hidden flex items-center justify-center bg-gray-900 bg-opacity-75 backdrop-blur-sm"
+    >
+      <div
+        class="glass-card w-11/12 max-w-2xl rounded-xl p-8 transform transition-all duration-300 ease-out scale-95"
+      >
+        <div
+          class="flex items-center justify-between border-b pb-4 border-gray-700"
+        >
+          <div class="flex items-center">
+            <img
+              id="modal-icon"
+              class="h-12 w-12 rounded-lg mr-4"
+              alt="Module Icon"
+            />
+            <div>
+              <h2 id="modal-name" class="text-2xl font-bold gradient-text"></h2>
+              <p id="modal-version" class="text-sm text-gray-400"></p>
+            </div>
+          </div>
+          <button
+            onclick="closeModuleModal()"
+            class="text-gray-400 hover:text-white transition-colors"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="mt-6">
+          <p class="text-sm text-gray-400">
+            <span class="font-semibold text-white">Description :</span>
+            <span id="modal-description"></span>
+          </p>
+          <p class="mt-2 text-sm text-gray-400">
+            <span class="font-semibold text-white">Author :</span>
+            <span id="modal-author"></span>
+          </p>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
