@@ -3,4 +3,5 @@ lumenone.db
 package-lock.json
 .vscode
 storage/volumes/
-storage/statistics.json
+storage/backup/
+modules/
