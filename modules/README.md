@@ -17,10 +17,10 @@ modules/
 ├── config.json
 └── icon.png   (optional)
 
-````
+```
 
-- **index.js**: The main file of the module. It runs when the application starts.  
-- **config.json**: Contains module information.  
+- **index.js**: The main file of the module. It runs when the application starts.
+- **config.json**: Contains module information.
 - **icon.png**: Module icon (optional). If missing, a default SVG will be used.
 
 ---
@@ -31,13 +31,15 @@ modules/
 {
   "name": "My Awesome Module",
   "version": "1.0.0",
-  "description": "An example module for LumenOne."
+  "description": "An example module for LumenOne.",
+  "author": "LumenLabs"
 }
-````
+```
 
-* `name`: The name displayed in the interface.
-* `version`: Module version.
-* `description`: A short description of the module.
+- `name`: The name displayed in the interface.
+- `version`: Module version.
+- `description`: A short description of the module.
+- `author`: : The username, name, or other identifier of the person who created the module
 
 ---
 
@@ -53,8 +55,8 @@ console.log("My Awesome Module has been loaded!");
 
 ## Module Icon
 
-* Place an `icon.png` file inside the module folder.
-* If no icon is provided, the interface will automatically display a default SVG.
+- Place an `icon.png` file inside the module folder.
+- If no icon is provided, the interface will automatically display a default SVG.
 
 ---
 
@@ -69,9 +71,9 @@ console.log("My Awesome Module has been loaded!");
 
 ## Best Practices
 
-* Test your module locally before publishing.
-* Avoid blocking LumenOne startup: use `try/catch` for errors in `index.js`.
-* Use unique names to prevent conflicts with other modules.
+- Test your module locally before publishing.
+- Avoid blocking LumenOne startup: use `try/catch` for errors in `index.js`.
+- Use unique names to prevent conflicts with other modules.
 
 ---
 
