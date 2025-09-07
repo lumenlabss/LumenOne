@@ -25,8 +25,6 @@ const homeRoutes = require("./src/pages/user/home.js");
 const manageRoute = require("./src/pages/user/manage.js");
 const filesRoutes = require("./src/pages/user/edit/files.js");
 const accountRoutes = require("./src/pages/user/account.js");
-const statisticsdomainsRoutes = require("./src/pages/user/statistics/domains.js");
-const statisticsRoutes = require("./src/pages/user/statistics/statistics.js");
 const settingsadminRoutes = require("./src/pages/admin/settings.js");
 const DatabaseRoutes = require("./src/pages/user/database.js");
 const backupRoutes = require("./src/pages/user/backup.js");
@@ -90,8 +88,6 @@ app.use("/", homeRoutes);
 app.use("/", manageRoute);
 app.use("/", filesRoutes);
 app.use("/", accountRoutes);
-app.use("/", statisticsdomainsRoutes);
-app.use("/", statisticsRoutes);
 app.use("/", DatabaseRoutes);
 app.use("/", backupRoutes);
 
