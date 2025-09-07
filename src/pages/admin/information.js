@@ -95,7 +95,11 @@ router.get("/web/admin/information", isAuthenticated, async (req, res) => {
       KernelVersion: osInfo.kernel,
 
       NetworkIP: netData[0]?.ip4 || "Unknown",
-      NetworkSpeed: netData[0]?.speed || "1 Gbps",
+      NetworkSpeed: netData[0]?.speed
+        ? netData[0].speed >= 1000
+          ? netData[0].speed / 1000 + " Gbps"
+          : netData[0].speed + " Mbps"
+        : "Unknown",
 
       SystemUptime: `${Math.floor(uptime / 86400)} days, ${Math.floor(
         (uptime % 86400) / 3600
