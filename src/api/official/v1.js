@@ -217,4 +217,24 @@ router.post("/websites", checkApiKey, (req, res) => {
     }
   );
 });
+//
+//
+// Delete a website by ID
+router.delete("/websites/:id", checkApiKey, (req, res) => {
+  const id = req.params.id;
+
+  db.run("DELETE FROM websites WHERE id = ?", [id], function (err) {
+    if (err) {
+      console.error("DB error:", err);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+
+    if (this.changes === 0) {
+      return res.status(404).json({ error: "Website not found" });
+    }
+
+    res.json({ success: true, message: "Website deleted" });
+  });
+});
+
 module.exports = router;
