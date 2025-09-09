@@ -58,11 +58,17 @@ app.use(express.urlencoded({ extended: true, limit: "80mb" }));
 app.use(
   session({
     secret: config.session.secret,
-    resave: config.session.resave,
-    saveUninitialized: config.session.saveUninitialized,
-    cookie: config.session.cookie,
+    resave: false,
+    saveUninitialized: false, // evite de generer des sessions inutiles pour eviter les DoS par sessions vides
+    cookie: {
+      httpOnly: true, // pour empecher des failles du genre xss
+      secure: process.env.NODE_ENV === "production", // en gros tu met dans ta config un truc pour dire que t en mode dev pour rester en http et sinon tu use de l'https
+      sameSite: "lax", // limite l'envoie de cookie sur des requetes croos site et protege contre certaines attaques csrf (lax bloque les formulaires et requetes cross site)
+      maxAge: 1000 * 60 * 60 * 2 // durée de vie du cookie de 2h apres le cookie expire et l'user doit se reco
+    },
   })
 );
+
 
 // Global variables accessible in EJS templates
 app.use((req, res, next) => {
