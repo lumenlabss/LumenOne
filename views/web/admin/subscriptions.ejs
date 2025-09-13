@@ -13,44 +13,28 @@
       body {
         font-family: "Inter", sans-serif;
       }
-
+      .glass-card {
+        background: rgba(31, 41, 55, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
       .gradient-bg {
         background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
       }
-
       .gradient-text {
         background: linear-gradient(135deg, #60a5fa, #3b82f6);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
-
-      .glass-card {
-        background: rgba(31, 41, 55, 0.75);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 1rem;
-        overflow: hidden;
-        transition: all 0.3s ease;
-      }
-
-      .glass-card:hover {
-        transform: translateY(-4px);
-        border-color: rgba(59, 130, 246, 0.5);
-        box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
-      }
-
-      .table-header {
-        background: rgba(59, 130, 246, 0.1);
-        border-bottom: 1px solid rgba(59, 130, 246, 0.2);
-      }
-
       .table-row-hover:hover {
         background: rgba(59, 130, 246, 0.1);
+        transition: all 0.2s ease;
       }
 
       .btn-primary {
         background: rgba(59, 130, 246, 0.2);
         border: 1px solid rgba(59, 130, 246, 0.3);
+        border-radius: 0.5rem;
         transition: all 0.3s ease;
       }
 
@@ -59,22 +43,7 @@
         border-color: rgba(59, 130, 246, 0.4);
         transform: translateY(-1px);
       }
-
-      .btn-secondary {
-        background: rgba(59, 130, 246, 0.15);
-        border: 1px solid rgba(59, 130, 246, 0.25);
-        transition: all 0.3s ease;
-      }
-
-      .btn-secondary:hover {
-        background: rgba(59, 130, 246, 0.25);
-        border-color: rgba(59, 130, 246, 0.35);
-      }
-
-      .text-muted {
-        color: rgba(255, 255, 255, 0.6);
-      }
-
+      
       .btn-danger {
         background: rgba(239, 68, 68, 0.2);
         border: 1px solid rgba(239, 68, 68, 0.3);
@@ -90,73 +59,18 @@
     </style>
   </head>
 
-  <!-- Sidebar -->
   <%- include('../../components/sidebar') %>
 
   <body class="gradient-bg text-white min-h-screen flex flex-col sm:ml-64">
-    <!-- Main content -->
     <div class="flex-grow p-8">
       <div class="max-w-7xl mx-auto">
-        <h1 class="text-3xl font-bold gradient-text mb-8"></h1>
-
-        <!-- Stat card -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
-          <div class="glass-card p-6">
-            <p class="text-sm text-blue-400 mb-2">Total Sites</p>
-            <p class="text-2xl font-semibold text-white">
-              <%= totalListWebsite %>
-            </p>
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h1 class="text-3xl font-bold gradient-text mb-2">
+              Subscriptions Management
+            </h1>
+            <p class="text-gray-400">Manage and monitor website subscriptions</p>
           </div>
-        </div>
-
-        <!-- Table -->
-        <div class="glass-card p-6 mb-6 overflow-x-auto">
-          <table class="w-full">
-            <thead class="table-header">
-              <tr>
-                <th class="px-4 py-3 text-left text-sm font-semibold">
-                  Username
-                </th>
-                <th class="px-4 py-3 text-left text-sm font-semibold">UUID</th>
-                <th class="px-4 py-3 text-left text-sm font-semibold">
-                  Site Name
-                </th>
-                <th class="px-4 py-3 text-left text-sm font-semibold">Port</th>
-                <th class="px-4 py-3 text-left text-sm font-semibold">
-                  Disk Limit (MB)
-                </th>
-                <th class="px-4 py-3 text-left text-sm font-semibold">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <% websites.forEach(site => { %>
-              <tr
-                class="border-b border-gray-700/50 table-row-hover transition"
-              >
-                <td class="px-4 py-3"><%= site.username %></td>
-                <td class="px-4 py-3"><%= site.uuid %></td>
-                <td class="px-4 py-3"><%= site.name %></td>
-                <td class="px-4 py-3"><%= site.port %></td>
-                <td class="px-4 py-3"><%= site.disk_limit %></td>
-                <td class="px-4 py-3">
-                  <a
-                    href="/web/admin/subscriptions/delete/<%= site.uuid %>"
-                    class="btn-danger text-sm text-red-400 px-4 py-2 inline-block text-center"
-                    onclick="return confirm('Are you sure you want to delete this site?');"
-                  >
-                    Delete
-                  </a>
-                </td>
-              </tr>
-              <% }) %>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Add button -->
-        <div class="text-right">
           <button
             class="btn-primary px-6 py-3 rounded-lg text-blue-300 text-sm font-medium"
             onclick="window.location.href='/web/admin/subscriptions/create'"
@@ -164,10 +78,97 @@
             + Add Site
           </button>
         </div>
+
+        <div class="glass-card rounded-xl overflow-hidden">
+          <div class="overflow-x-auto custom-scrollbar">
+            <table class="w-full">
+              <thead>
+                <tr class="bg-gray-800/50">
+                  <th
+                    class="px-6 py-4 text-left text-sm font-semibold text-gray-300"
+                  >
+                    Site Name
+                  </th>
+                  <th
+                    class="px-6 py-4 text-left text-sm font-semibold text-gray-300"
+                  >
+                    Port
+                  </th>
+                  <th
+                    class="px-6 py-4 text-left text-sm font-semibold text-gray-300"
+                  >
+                    Disk Limit (MB)
+                  </th>
+                  <th
+                    class="px-6 py-4 text-left text-sm font-semibold text-gray-300"
+                  >
+                    Owner
+                  </th>
+                  <th
+                    class="px-6 py-4 text-right text-sm font-semibold text-gray-300"
+                  >
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-700/30">
+                <% websites.forEach(site => { %>
+                <tr class="table-row-hover">
+                  <td class="px-6 py-4 text-sm font-medium text-gray-300">
+                    <%= site.name %>
+                  </td>
+                  <td class="px-6 py-4 text-sm text-gray-300">
+                    <%= site.port %>
+                  </td>
+                  <td class="px-6 py-4 text-sm text-gray-300">
+                    <%= site.disk_limit %>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center">
+                      <div
+                        class="h-8 w-8 rounded-full bg-blue-600/20 flex items-center justify-center mr-3"
+                      >
+                        <span class="text-sm font-medium text-blue-400">
+                          <%= site.username.charAt(0).toUpperCase() %>
+                        </span>
+                      </div>
+                      <span class="text-sm font-medium"
+                        ><%= site.username %></span
+                      >
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex items-center justify-end">
+                      <a
+                        href="/web/admin/subscriptions/delete/<%= site.uuid %>"
+                        class="btn-danger text-sm text-red-400 px-3 py-1.5 inline-flex items-center"
+                        onclick="return confirm('Are you sure you want to delete this site?');"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="h-4 w-4 mr-1"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                        Delete
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Footer -->
     <%- include('../../components/footer') %>
     <script src="/js/sidebar.js"></script>
   </body>

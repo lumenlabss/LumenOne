@@ -20,11 +20,11 @@
         transition: all 0.3s ease;
       }
 
-      .glass-card:hover {
+      /*.glass-card:hover {
         transform: translateY(-4px);
         border-color: rgba(59, 130, 246, 0.5);
         box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
-      }
+      }*/
       .gradient-bg {
         background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
       }
@@ -58,7 +58,12 @@
     <div class="flex-grow p-8">
       <div class="max-w-7xl mx-auto">
         <div class="flex items-center justify-between mb-8">
-          <h1 class="text-3xl font-bold gradient-text">My Websites</h1>
+          <div>
+            <h1 class="text-3xl font-bold gradient-text mb-2">
+              My websites
+            </h1>
+            <p class="text-gray-400">View and manage your websites</p>
+          </div>
         </div>
 
         <% if (websites.length === 0) { %>
