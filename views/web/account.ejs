@@ -32,17 +32,6 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
-      .settings-card {
-        background: rgba(30, 41, 59, 0.5);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(71, 85, 105, 0.2);
-        transition: all 0.3s ease;
-      }
-
-      .settings-card:hover {
-        border-color: rgba(96, 165, 250, 0.5);
-        box-shadow: 0 0 20px rgba(96, 165, 250, 0.1);
-      }
       .btn-primary {
         background: rgba(59, 130, 246, 0.2);
         border: 1px solid rgba(59, 130, 246, 0.3);
@@ -96,8 +85,12 @@
   <body class="gradient-bg text-white min-h-screen flex flex-col sm:ml-64">
     <div class="flex-grow p-8">
       <div class="max-w-4xl mx-auto">
-        <h1 class="text-3xl font-bold gradient-text mb-8">Settings</h1>
-
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h1 class="text-3xl font-bold gradient-text mb-2">Account</h1>
+            <p class="text-gray-400">Manage your account</p>
+          </div>
+        </div>
         <!--Error message-->
         <% if (error) { %>
         <div
@@ -270,7 +263,7 @@
             </div>
           </div>
 
-          <div class="settings-card rounded-xl p-6">
+          <div class="glass-card rounded-xl p-6">
             <h2 class="text-xl font-semibold mb-6">Change language</h2>
             <div class="space-y-4">
               <span
@@ -309,46 +302,6 @@
                   data-lucide="chevron-right"
                   class="w-5 h-5 text-gray-400"
                 ></i>
-              </div>
-            </div>
-          </div>
-
-          <div class="glass-card rounded-xl p-6">
-            <h2 class="text-xl font-semibold mb-6">Recent logins</h2>
-            <div class="space-y-4">
-              <span
-                class="inline-flex items-center justify-center px-4 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300"
-                >Under development</span
-              >
-
-              <div
-                class="flex items-center justify-between p-4 bg-gray-800/30 rounded-lg"
-              >
-                <div class="flex items-center gap-4">
-                  <div class="bg-green-500/10 p-2 rounded-lg">
-                    <i data-lucide="monitor" class="w-5 h-5 text-green-400"></i>
-                  </div>
-                  <div>
-                    <h4 class="font-medium">Windows 11 · Chrome</h4>
-                    <p class="text-sm text-muted">Current session</p>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="flex items-center justify-between p-4 bg-gray-800/30 rounded-lg"
-              >
-                <div class="flex items-center gap-4">
-                  <div class="bg-blue-500/10 p-2 rounded-lg">
-                    <i
-                      data-lucide="smartphone"
-                      class="w-5 h-5 text-blue-400"
-                    ></i>
-                  </div>
-                  <div>
-                    <h4 class="font-medium">iPhone 13 · Safari</h4>
-                    <p class="text-sm text-muted">Last entry: 2 hours ago</p>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
