@@ -25,35 +25,6 @@ db.run(
       console.error("Error while creating the table: " + err.message);
     } else {
       console.log("Users table created or already exists.");
-
-      // Inserting the admin user after the table is created
-      db.run(
-        `INSERT OR IGNORE INTO users (username, password, rank) VALUES (?, ?, ?)`,
-        ["admin", "admin", "admin"],
-        (err) => {
-          if (err) {
-            console.error(
-              "Error while inserting the admin user: " + err.message
-            );
-          } else {
-            console.log("Admin user created or already exists.");
-          }
-        }
-      );
-
-      db.run(
-        `INSERT OR IGNORE INTO users (username, password) VALUES (?, ?)`,
-        ["user", "123"],
-        (err) => {
-          if (err) {
-            console.error(
-              "Error while inserting a default user: " + err.message
-            );
-          } else {
-            console.log("Default user created or already exists.");
-          }
-        }
-      );
     }
   }
 );

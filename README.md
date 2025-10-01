@@ -62,26 +62,50 @@
 
    ```json
    {
-     "hostname": "localhost",
+     "hostname": "0.0.0.0",
      "port": 3000,
      "name": "LumenOne",
-     "version": "Pre-Alpha"
+     "version": "v1.3.0-bêta",
+     "session": {
+       "secret": "secret-key",
+       "resave": false,
+       "saveUninitialized": false,
+       "cookie": {
+         "secure": false
+       }
+     },
+     "rateLimit": {
+       "global": {
+         "windowMinutes": 15,
+         "max": 100
+       },
+       "auth": {
+         "windowMinutes": 15,
+         "max": 5
+       }
+     }
    }
    ```
 
-4. Start the server:
+4. Create admin account:
+
+   ```bash
+   node create-admin.js
+   ```
+
+5. Start the server:
 
    ```bash
    node lumenone.js
    ```
 
-5. Access the web interface:
+6. Access the web interface:
 
    ```
    http://localhost:3000
    ```
 
-6. Nginx Config:
+7. Nginx Config:
 
    ```
    server {
