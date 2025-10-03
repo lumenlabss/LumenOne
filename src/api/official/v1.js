@@ -1,4 +1,4 @@
-console.log("src/api/official/v1.js loaded");
+// console.log("src/api/official/v1.js loaded");
 const express = require("express");
 const router = express.Router();
 const sqlite3 = require("sqlite3").verbose();

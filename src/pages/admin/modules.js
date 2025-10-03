@@ -1,4 +1,4 @@
-console.log("pages/admin/modules.js loaded");
+// console.log("pages/admin/modules.js loaded");
 
 const express = require("express");
 const db = require("../../db.js");

@@ -1,4 +1,4 @@
-console.log("db.js loaded"); // To confirm that the page has been loaded correctly
+// console.log("db.js loaded"); // To confirm that the page has been loaded correctly
 const sqlite = require("sqlite3").verbose();
 
 // Database initialization

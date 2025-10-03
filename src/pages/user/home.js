@@ -1,4 +1,4 @@
-console.log("pages/user/home.js loaded"); // To confirm that the page has been loaded correctly
+// console.log("pages/user/home.js loaded"); // To confirm that the page has been loaded correctly
 const express = require("express");
 const db = require("../../db.js");
 const { isAuthenticated } = require("../../middleware/auth.js");

@@ -1,4 +1,4 @@
-console.log("middleware/auth-admin.js"); // To confirm that the page has been loaded correctly
+// console.log("middleware/auth-admin.js"); // To confirm that the page has been loaded correctly
 const db = require("../db.js");
 
 // Middleware to check if the user is authenticated and has admin rank

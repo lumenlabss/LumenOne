@@ -1,4 +1,4 @@
-console.log("pages/user/edit/files.js loaded"); // To confirm that the page has been loaded correctly
+// console.log("pages/user/edit/files.js loaded"); // To confirm that the page has been loaded correctly
 const express = require("express");
 const fs = require("fs");
 const path = require("path");

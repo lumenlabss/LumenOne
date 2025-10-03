@@ -1,4 +1,4 @@
-console.log("start-webserver.js loaded");
+// console.log("start-webserver.js loaded");
 
 const express = require("express");
 const fs = require("fs");

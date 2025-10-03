@@ -1,4 +1,4 @@
-console.log("utils/SecretKey-generator.js loaded"); // To confirm that the page has been loaded correctly
+// console.log("utils/SecretKey-generator.js loaded"); // To confirm that the page has been loaded correctly
 const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");

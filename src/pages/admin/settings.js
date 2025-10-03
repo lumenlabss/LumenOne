@@ -1,4 +1,4 @@
-console.log("pages/admin/settings.js loaded");
+// console.log("pages/admin/settings.js loaded");
 
 const express = require("express");
 const db = require("../../db.js");

@@ -1,4 +1,4 @@
-console.log("pages/admin/subscriptions/create.js loaded"); // To confirm that the page has been loaded correctly
+// console.log("pages/admin/subscriptions/create.js loaded"); // To confirm that the page has been loaded correctly
 const path = require("path");
 const fs = require("fs");
 const crypto = require("crypto");

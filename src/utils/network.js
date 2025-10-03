@@ -1,4 +1,4 @@
-console.log("utils/network.js loaded"); // To confirm that the page has been loaded correctly
+// console.log("utils/network.js loaded"); // To confirm that the page has been loaded correctly
 const si = require("systeminformation");
 
 async function getNetworkIP() {

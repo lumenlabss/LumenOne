@@ -1,4 +1,4 @@
-console.log("protect-sensitive-files.js loaded");
+// console.log("protect-sensitive-files.js loaded");
 const path = require("path");
 const fs = require("fs");
 

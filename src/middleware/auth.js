@@ -1,4 +1,4 @@
-console.log("middleware/auth.js"); // To confirm that the page has been loaded correctly
+// console.log("middleware/auth.js"); // To confirm that the page has been loaded correctly
 const db = require("../db.js");
 
 function isAuthenticated(req, res, next) {
