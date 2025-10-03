@@ -26,13 +26,24 @@ router.get("/web/account", isAuthenticated, (req, res) => {
         id: userId,
       };
 
-      res.render("web/account.ejs", {
-        user: fullUser,
-        rank: userInfo.rank,
-        rank: userInfo.rank, // Ensure rank is passed here
-        error: null,
-        succes: null,
-      });
+      db.all(
+        "SELECT id, user_id, activity, browser, ip, os, activity_at FROM users_activity WHERE user_id = ? ORDER BY activity_at DESC",
+        [userId],
+        (err2, activity) => {
+          if (err2) {
+            console.error("Error retrieving user activities:", err2.message);
+            return res.status(500).send("Internal server error");
+          }
+
+          res.render("web/account.ejs", {
+            user: fullUser,
+            rank: userInfo.rank,
+            error: null,
+            succes: null,
+            activity: activity || [],
+          });
+        }
+      );
     }
   );
 });

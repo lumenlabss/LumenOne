@@ -29,6 +29,7 @@ db.run(
   }
 );
 
+// Website table
 db.run(
   `CREATE TABLE IF NOT EXISTS websites (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -49,6 +50,7 @@ db.run(
   }
 );
 
+// Databases table (not using now)
 db.run(
   `CREATE TABLE IF NOT EXISTS Databases (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -64,6 +66,7 @@ db.run(
   )`
 );
 
+// statistic table (not using now)
 db.run(
   `CREATE TABLE IF NOT EXISTS statistic (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -75,6 +78,7 @@ db.run(
   )`
 );
 
+// api key table
 db.run(`
   CREATE TABLE IF NOT EXISTS apikey (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -83,6 +87,7 @@ db.run(`
   )
 `);
 
+// Backup table
 db.run(`
   CREATE TABLE IF NOT EXISTS backups (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -92,5 +97,16 @@ db.run(`
     size TEXT NOT NULL,
     path TEXT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP)`);
+
+// User-activity table
+db.run(`
+CREATE TABLE IF NOT EXISTS users_activity (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  activity TEXT NOT NULL,
+  browser TEXT,
+  ip TEXT,
+  os TEXT,
+  activity_at DATETIME DEFAULT CURRENT_TIMESTAMP)`);
 
 module.exports = db;

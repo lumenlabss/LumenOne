@@ -314,34 +314,30 @@
                 >Under development</span
               >
 
-              <!-- Failed Login -->
+              <% activity.slice(0, 2).forEach(act => { %>
               <div
                 class="flex items-center gap-4 p-4 bg-gray-800/30 rounded-lg hover:bg-gray-700/40 transition"
               >
-                <div class="bg-red-500/20 p-2 rounded-lg">
+                <div
+                  class="<%= act.activity.includes('Failed') ? 'bg-red-500/20' : 'bg-green-500/20' %> p-2 rounded-lg"
+                >
                   <i
-                    data-lucide="lock-keyhole"
-                    class="w-5 h-5 text-red-400"
+                    class="w-5 h-5 <%= act.activity.includes('Failed') ? 'text-red-400' : 'text-green-400' %>"
+                    data-lucide="<%= act.activity.includes('Login') ? (act.activity.includes('Failed') ? 'lock-keyhole' : 'log-in') : 'circle-check' %>"
                   ></i>
                 </div>
                 <div>
-                  <h4 class="font-medium text-red-300">Failed Login</h4>
-                  <p class="text-sm text-gray-400">Browser • IP • OS</p>
+                  <h4
+                    class="font-medium <%= act.activity.includes('Failed') ? 'text-red-300' : 'text-green-300' %>"
+                  >
+                    <%= act.activity %>
+                  </h4>
+                  <p class="text-sm text-gray-400">
+                    <%= act.browser %> • <%= act.ip %> • <%= act.os %>
+                  </p>
                 </div>
               </div>
-
-              <!-- Success Login -->
-              <div
-                class="flex items-center gap-4 p-4 bg-gray-800/30 rounded-lg hover:bg-gray-700/40 transition"
-              >
-                <div class="bg-green-500/20 p-2 rounded-lg">
-                  <i data-lucide="log-in" class="w-5 h-5 text-green-400"></i>
-                </div>
-                <div>
-                  <h4 class="font-medium text-green-300">Successful Login</h4>
-                  <p class="text-sm text-gray-400">Browser • IP • OS</p>
-                </div>
-              </div>
+              <% }) %>
 
               <!-- More Activity (trigger modal) -->
               <div
