@@ -1,5 +1,6 @@
 // console.log("pages/user/account.js loaded"); // To confirm that the page has been loaded correctly
 const express = require("express");
+const useragent = require("useragent");
 const db = require("../../db.js");
 const router = express.Router();
 const { isAuthenticated } = require("../../middleware/auth.js");
@@ -56,8 +57,10 @@ router.post("/web/account/username/save", isAuthenticated, (req, res) => {
   if (!newUsername) {
     return res.render("web/account", {
       error: "Username cannot be empty",
-      rank: req.session.user.rank, // Pass rank to the view
+      succes: false,
+      rank: req.session.user.rank,
       user: req.session.user,
+      activity: [],
     });
   }
 
@@ -70,18 +73,75 @@ router.post("/web/account/username/save", isAuthenticated, (req, res) => {
         return res.render("web/account", {
           error: "Server Error",
           succes: false,
-          rank: req.session.user.rank, // Pass rank to the view
+          rank: req.session.user.rank,
           user: req.session.user,
+          activity: [],
         });
       }
 
+      // Session update
       req.session.user.username = newUsername;
-      res.render("web/account", {
-        succes: "Username updated successfully",
-        error: null,
-        rank: req.session.user.rank, // Pass rank to the view
-        user: req.session.user,
-      });
+
+      // Addition to users_activity
+      const agent = useragent.parse(req.headers["user-agent"]);
+      const browser = agent.family || "Unknown";
+
+      let os = "Unknown";
+      if (agent.os) {
+        const { family, major, minor, patch } = agent.os;
+        os = family || "Unknown";
+        if (major) os += ` ${major}`;
+        if (minor) os += `.${minor}`;
+        if (patch) os += `.${patch}`;
+      }
+
+      const now = new Date();
+      const pad = (n) => n.toString().padStart(2, "0");
+      const activity_at = `${now.getFullYear()}-${pad(
+        now.getMonth() + 1
+      )}-${pad(now.getDate())} ${pad(now.getHours())}:${pad(
+        now.getMinutes()
+      )}:${pad(now.getSeconds())}`;
+
+      db.run(
+        `INSERT INTO users_activity (user_id, activity, browser, ip, os, activity_at)
+         VALUES (?, ?, ?, ?, ?, ?)`,
+        [
+          userId,
+          "Username Changed",
+          browser,
+          req.ip || req.connection.remoteAddress || "Unknown",
+          os,
+          activity_at,
+        ],
+        function (err) {
+          if (err) console.error("Error logging activity:", err.message);
+
+          // Recovery of recent activities
+          db.all(
+            "SELECT id, user_id, activity, browser, ip, os, activity_at FROM users_activity WHERE user_id = ? ORDER BY activity_at DESC",
+            [userId],
+            (err2, activity) => {
+              if (err2) {
+                console.error(
+                  "Error retrieving user activities:",
+                  err2.message
+                );
+                return res.status(500).send("Internal server error");
+              }
+
+              // Success response
+              res.render("web/account", {
+                succes: "Username updated successfully",
+                error: null,
+                rank: req.session.user.rank,
+                user: req.session.user,
+                activity: activity || [],
+              });
+            }
+          );
+        }
+      );
     }
   );
 });
