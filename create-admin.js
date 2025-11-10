@@ -1,18 +1,6 @@
 const readline = require("readline");
 const db = require("./src/db");
-
-// Check if an admin already exists
-db.get(`SELECT * FROM users WHERE rank = 'admin' LIMIT 1`, (err, row) => {
-  if (err) {
-    process.exit(1);
-  }
-
-  if (row) {
-    process.exit(0);
-  } else {
-    createAdminPrompt();
-  }
-});
+const bcrypt = require('bcrypt');
 
 function createAdminPrompt() {
   const rl = readline.createInterface({
@@ -22,19 +10,30 @@ function createAdminPrompt() {
 
   rl.question("Username admin : ", (username) => {
     rl.question("Admin password : ", (password) => {
-      db.run(
-        `INSERT INTO users (username, password, rank) VALUES (?, ?, 'admin')`,
-        [username, password],
-        (err) => {
-          if (err) {
-            console.error("Error while creating the admin:", err.message);
-          } else {
-            console.log(`Admin account ‘${username}’ successfully created!`);
-          }
+      const saltRounds = 10;
+      bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
+        if (err) {
+          console.error("Error while hashing password:", err);
           rl.close();
-          process.exit(0);
+          process.exit(1);
         }
-      );
+
+        db.run(
+          `INSERT INTO users (username, password, rank) VALUES (?, ?, 'admin')`,
+          [username, hashedPassword],
+          (dbErr) => {
+            if (dbErr) {
+              console.error("Error while creating the admin:", dbErr.message);
+            } else {
+              console.log(`Admin account ‘${username}’ successfully created!`);
+            }
+            rl.close();
+            process.exit(0);
+          }
+        );
+      });
     });
   });
 }
+createAdminPrompt();
+module.exports = { createAdminPrompt };

@@ -3,6 +3,7 @@ const express = require("express");
 const db = require("../../../db.js");
 const router = express.Router();
 const { isAuthenticated } = require("../../../middleware/auth-admin.js");
+const bcrypt = require('bcrypt');
 
 // Route GET : display registration form
 router.get("/web/admin/customers/create", isAuthenticated, (req, res) => {
@@ -13,16 +14,17 @@ router.get("/web/admin/customers/create", isAuthenticated, (req, res) => {
 });
 
 // Route POST : register a new user in the database
-router.post("/web/admin/customers/create", isAuthenticated, (req, res) => {
+router.post("/web/admin/customers/create", isAuthenticated, async (req, res) => {
   const { username, password, rank } = req.body;
 
   if (!username || !password || !rank) {
     return res.status(400).send("All fields are required.");
   }
-
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
   const sql = `INSERT INTO users (username, password, rank) VALUES (?, ?, ?)`;
 
-  db.run(sql, [username, password, rank], function (err) {
+  db.run(sql, [username, hashedPassword, rank], function (err) {
     if (err) {
       console.error("User registration error :", err.message);
       return res.status(500).send("Server error during user creation.");
