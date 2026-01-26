@@ -19,7 +19,7 @@
 | :dolphin: **Database Management**            | Database Management (SQLite)                 | 📝 **Planned**            |
 | :outbox_tray: **FTP Account Management**     | Create/Manage user FTP                       | 📝 **Planned**            |
 | 📧 **Email Management**                      | Management of mail server                    | 📝 **Planned**            |
-| :whale: **Docker Integration**               | Container-based isolation                    | 🛠️ **In development**     |
+| :whale: **Docker Integration**               | Container-based isolation                    | 📝 **Planned**      |
 | :closed_lock_with_key: **SSL Certificates**  | Let's Encrypt SSL Certificates support       | 📝 **Planned**            |
 | :jigsaw: **Module System**                   | Extensions for customization                 | ✅ **Implemented**        |
 | :arrows_counterclockwise: **REST API**       | API for automate and integrate LumenOne      | 🛠️ **In development**     |
