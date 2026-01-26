@@ -9,18 +9,20 @@
 
 ---
 
-## :sparkles: Key Features (some feature not available now)
+## :sparkles: Key Features
 
-- :control_knobs: **Simple, responsive, and modern web interface**
-- :globe_with_meridians: **Domain & subdomain management**
-- :file_folder: **File management** (via SFTP/WebFTP)
-- :dolphin: **Database management** (SQLite)
-- :outbox_tray: **FTP account management**
-- 📧 **Email management** (optional)
-- :whale: **Docker integration** (optional for service isolation)
-- :closed_lock_with_key: **Let's Encrypt SSL certificates**
-- :jigsaw: **Module/extension system** for customization
-- :arrows_counterclockwise: **REST API** for automation and integration
+| Features                                     | Description                                  | Status                    |
+| -------------------------------------------- | -------------------------------------------- | ------------------------- |
+| :control_knobs: **Modern UI**                | Simple, responsive, and modern web interface | ✅ **Implemented**        |
+| :globe_with_meridians: **Domain Management** | Allow to manage domains & subdomains         | 🛠️ **In development**     |
+| :file_folder: **Files Management**           | WebFTP/SFTP access                           | 🛠️ **Partial** _(WebFTP)_ |
+| :dolphin: **Database Management**            | Database Management (SQLite)                 | 📝 **Planned**            |
+| :outbox_tray: **FTP Account Management**     | Create/Manage user FTP                       | 📝 **Planned**            |
+| 📧 **Email Management**                      | Management of mail server                    | 📝 **Planned**            |
+| :whale: **Docker Integration**               | Container-based isolation                    | 🛠️ **In development**     |
+| :closed_lock_with_key: **SSL Certificates**  | Let's Encrypt SSL Certificates support       | 📝 **Planned**            |
+| :jigsaw: **Module System**                   | Extensions for customization                 | ✅ **Implemented**        |
+| :arrows_counterclockwise: **REST API**       | API for automate and integrate LumenOne      | 🛠️ **In development**     |
 
 | ⚠️ LumenOne currently doesn't encrypt user passwords. This will be fixed in V.1.0.0, but for now, just don't leak your "lumenone.db". |
 | ------------------------------------------------------------------------------------------------------------------------------------- |
