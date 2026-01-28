@@ -21,9 +21,6 @@
 | :jigsaw: **Module System**                   | Extensions for customization                 | ✅ **Implemented**        |
 | :arrows_counterclockwise: **REST API**       | API for automate and integrate LumenOne      | 🛠️ **In development**     |
 
-
-| ------------------------------------------------------------------------------------------------------------------------------------- |
-
 ---
 
 ## :rocket: Installation
