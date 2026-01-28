@@ -21,7 +21,7 @@
 | :jigsaw: **Module System**                   | Extensions for customization                 | ✅ **Implemented**        |
 | :arrows_counterclockwise: **REST API**       | API for automate and integrate LumenOne      | 🛠️ **In development**     |
 
-| ⚠️ LumenOne currently doesn't encrypt user passwords. This will be fixed in V.1.0.0, but for now, just don't leak your "lumenone.db". |
+
 | ------------------------------------------------------------------------------------------------------------------------------------- |
 
 ---
