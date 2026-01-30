@@ -1,6 +1,8 @@
 const os = require("os");
 const systeminformation = require("systeminformation");
-const { modules } = require("../utils/moduleLoader.js"); // We use the pre-loaded modules
+const db = require("../db.js");
+const { modules } = require("../utils/moduleLoader.js");
+const { getNetworkIP } = require("../utils/network.js");
 
 function formatBytes(bytes) {
     if (bytes < 1024) return bytes + " B";
@@ -15,21 +17,43 @@ exports.getInformation = async (req, res) => {
         const cpu = await systeminformation.cpu();
         const mem = await systeminformation.mem();
         const osInfo = await systeminformation.osInfo();
-        const currentLoad = await systeminformation.currentLoad();
+        const time = await systeminformation.time();
+        const diskLayout = await systeminformation.diskLayout();
+        const networkIP = await getNetworkIP();
+
+        // Database stats
+        const usersCount = await new Promise((resolve) => db.get("SELECT COUNT(*) as count FROM users", (err, row) => resolve(row ? row.count : 0)));
+        const websitesCount = await new Promise((resolve) => db.get("SELECT COUNT(*) as count FROM websites", (err, row) => resolve(row ? row.count : 0)));
+        const backupsCount = await new Promise((resolve) => db.get("SELECT COUNT(*) as count FROM backups", (err, row) => resolve(row ? row.count : 0)));
 
         res.render("web/admin/information.ejs", {
             user: req.session.user,
             rank: req.session.user.rank,
-            systemInfo: {
-                cpu: `${cpu.manufacturer} ${cpu.brand}`,
-                cores: `${cpu.cores} Cores`,
-                ramTotal: formatBytes(mem.total),
-                ramUsed: formatBytes(mem.active),
-                ramFree: formatBytes(mem.available),
-                os: `${osInfo.distro} ${osInfo.release}`,
-                uptime: (os.uptime() / 3600).toFixed(2) + " Hours",
-                cpuLoad: currentLoad.currentLoad.toFixed(2) + "%",
-            },
+            // CPU
+            CPUname: `${cpu.manufacturer} ${cpu.brand}`,
+            CPUfrequence: `${cpu.speed} GHz`,
+            CPUCores: cpu.cores,
+            // RAM
+            RAMsize: formatBytes(mem.total),
+            RAMtype: "DDR", // systeminformation.memLayout() could give more but this is fine
+            RAMspeed: "",
+            // Storage
+            StorageSize: diskLayout.length > 0 ? formatBytes(diskLayout[0].size) : "Unknown",
+            StorageType: diskLayout.length > 0 ? diskLayout[0].type : "Unknown",
+            // OS
+            OSname: osInfo.distro,
+            Osversion: osInfo.release,
+            // Network
+            NetworkIP: networkIP,
+            NetworkSpeed: "N/A",
+            // System
+            SystemUptime: (os.uptime() / 3600).toFixed(2) + " Hours",
+            LastBoot: new Date(time.uptime * 1000).toLocaleString(),
+            // Overview
+            updateAvailable: "None",
+            totalUsers: usersCount,
+            totalListWebsite: websitesCount,
+            totalBackups: backupsCount,
             error: null,
         });
     } catch (error) {
@@ -37,16 +61,23 @@ exports.getInformation = async (req, res) => {
         res.render("web/admin/information.ejs", {
             user: req.session.user,
             rank: req.session.user.rank,
-            systemInfo: null,
             error: "Error retrieving system information.",
         });
     }
 };
 
 exports.getSettings = (req, res) => {
-    res.render("web/admin/settings.ejs", {
-        user: req.session.user,
-        rank: req.session.user.rank,
+    db.all("SELECT * FROM apikey", (err, apiKeys) => {
+        if (err) {
+            console.error("Error retrieving API keys:", err.message);
+            apiKeys = [];
+        }
+
+        res.render("web/admin/settings.ejs", {
+            user: req.session.user,
+            rank: req.session.user.rank,
+            apiKeys: apiKeys || [],
+        });
     });
 };
 
