@@ -4,7 +4,7 @@
   "name": "LumenOne",
   "version": "v1.3.0-bêta",
   "session": {
-    "secret": "secret-key",
+    "secret": "a30d5f50-10f1-4c19-b1bc-5cb6fb6d3179",
     "resave": false,
     "saveUninitialized": false,
     "cookie": {

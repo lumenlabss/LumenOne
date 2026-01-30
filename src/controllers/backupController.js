@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const archiver = require("archiver");
-const db = require("../../db.js");
+const db = require("../db.js");
 
 const getStorageDir = () => path.join(__dirname, "../../storage");
 

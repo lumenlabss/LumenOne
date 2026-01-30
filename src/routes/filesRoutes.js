@@ -5,7 +5,7 @@ const { isAuthenticated } = require("../middleware/auth.js");
 const { protectSensitiveFiles } = require("../middleware/protect-sensitive-files.js");
 const path = require("path");
 
-const getVolumesDir = () => path.join(__dirname, "../../../storage/volumes");
+const getVolumesDir = () => path.join(__dirname, "../../storage/volumes");
 
 router.get(
     "/web/manage/:id/edit/:file",

@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
-const db = require("../../db.js");
-const { checkSizeBeforeCreate } = require("../../web/size-limit.js");
+const db = require("../db.js");
+const { checkSizeBeforeCreate } = require("../web/size-limit.js");
 
 // Helper function to calculate the total size of a folder
 function getFolderSize(folderPath, callback) {
@@ -32,7 +32,7 @@ function getFolderSize(folderPath, callback) {
 }
 
 // Helper function to get the volume directory path
-const getVolumesDir = () => path.join(__dirname, "../../../storage/volumes");
+const getVolumesDir = () => path.join(__dirname, "../../storage/volumes");
 
 exports.getEditFile = (req, res) => {
     const userId = req.session.user.id;

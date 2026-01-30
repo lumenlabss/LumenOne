@@ -32,7 +32,6 @@ const utilRoutes = require("./src/routes/utilRoutes.js");
 
 // Api routes
 const apiV1Router = require("./src/api/official/v1.js");
-const getIPRouter = require("./src/web/get-ip.js"); // Keeping original file for now if not fully migrated to utilRoutes
 
 // === APPLICATION INITIALIZATION ===
 const app = express();
@@ -82,9 +81,9 @@ app.use("/", userRoutes);
 app.use("/", websiteRoutes);
 app.use("/", filesRoutes);
 app.use("/", databaseRoutes);
-app.use("/", backupRoutes);
 
 // Admin Features
+app.use("/", backupRoutes);
 app.use("/", adminRoutes);
 
 // === API ROUTES ===

@@ -1,4 +1,4 @@
-const db = require("../../db.js");
+const db = require("../db.js");
 const { v4: uuidv4 } = require("uuid");
 
 exports.getDatabases = (req, res) => {
