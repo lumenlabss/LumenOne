@@ -1,15 +1,12 @@
-const express = require("express");
 const bcrypt = require("bcrypt");
-const db = require("../../db.js");
-const { authLimiter } = require("../../middleware/rate-limiter.js");
-const { loginActivity } = require("../../middleware/activity/loginActivity.js");
-const router = express.Router();
+const db = require("../db.js");
+const { loginActivity } = require("../middleware/activity/loginActivity.js");
 
-router.get("/", (req, res) => {
+exports.getLoginPage = (req, res) => {
   res.render("auth/login.ejs", { error: null });
-});
+};
 
-router.post("/login", authLimiter, (req, res) => {
+exports.login = (req, res) => {
   if (!req.body || !req.body.username || !req.body.password) {
     return res
       .status(400)
@@ -49,6 +46,13 @@ router.post("/login", authLimiter, (req, res) => {
       res.status(500).send("Internal server error");
     }
   });
-});
+};
 
-module.exports = router;
+exports.logout = (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Error while destroying the session: " + err.message);
+    }
+    res.redirect("/");
+  });
+};

@@ -12,44 +12,38 @@ console.log("lumenone.js loaded");
 const express = require("express");
 const session = require("express-session");
 const path = require("path");
+const helmet = require("helmet");
+const cors = require("cors");
+const compression = require("compression");
 
 // === INTERNAL MODULES ===
 const config = require("./src/config/config.js");
+const { generateKey } = require("./src/utils/SecretKey-generator.js");
 
-// Auth Routes
-const loginRoutes = require("./src/pages/auth/login.js");
-const logoutRoutes = require("./src/pages/auth/logout.js");
-
-// Users Routes
-const homeRoutes = require("./src/pages/user/home.js");
-const manageRoute = require("./src/pages/user/manage.js");
-const filesRoutes = require("./src/pages/user/edit/files.js");
-const accountRoutes = require("./src/pages/user/account.js");
-const settingsadminRoutes = require("./src/pages/admin/settings.js");
-const DatabaseRoutes = require("./src/pages/user/database.js");
-const backupRoutes = require("./src/pages/user/backup.js");
-
-// Admin Routes
-const customersRoutes = require("./src/pages/admin/customers.js");
-const customersEditRoutes = require("./src/pages/admin/customers_edit.js");
-const subscriptions_createRoute = require("./src/pages/admin/subscriptions/create.js");
-const subscriptionsRoute = require("./src/pages/admin/subscriptions.js");
-const createuserRoutes = require("./src/pages/admin/customers/create.js");
-const informationRoutes = require("./src/pages/admin/information.js");
-const modulesRoutes = require("./src/pages/admin/modules.js");
+// Routes
+const authRoutes = require("./src/routes/authRoutes.js");
+const userRoutes = require("./src/routes/userRoutes.js");
+const websiteRoutes = require("./src/routes/websiteRoutes.js");
+const filesRoutes = require("./src/routes/filesRoutes.js");
+const databaseRoutes = require("./src/routes/databaseRoutes.js");
+const backupRoutes = require("./src/routes/backupRoutes.js");
+const adminRoutes = require("./src/routes/adminRoutes.js");
+const utilRoutes = require("./src/routes/utilRoutes.js");
 
 // Api routes
 const apiV1Router = require("./src/api/official/v1.js");
-
-// Various Routes
-const loadRoutes = require("./src/pages/load.js");
-const { generateKey } = require("./src/utils/SecretKey-generator.js");
-const getIPRouter = require("./src/web/get-ip.js");
+const getIPRouter = require("./src/web/get-ip.js"); // Keeping original file for now if not fully migrated to utilRoutes
 
 // === APPLICATION INITIALIZATION ===
 const app = express();
 
 // === GLOBAL MIDDLEWARE ===
+app.use(helmet({
+  contentSecurityPolicy: false, // Disable CSP for now to avoid breaking inline scripts/styles if any
+}));
+app.use(cors());
+app.use(compression());
+
 // Body parsing JSON and URL-encoded, with adapted limits
 app.use(express.json({ limit: "80mb" }));
 app.use(express.urlencoded({ extended: true, limit: "80mb" }));
@@ -79,31 +73,19 @@ app.use("/modules", express.static(path.join(__dirname, "modules")));
 
 // === ROUTES REGISTRATION ===
 
-// Auth Routes
-app.use("/", loginRoutes);
-app.use("/", logoutRoutes);
+// Auth & Utilities
+app.use("/", authRoutes);
+app.use("/", utilRoutes);
 
-// Users Routes
-app.use("/", homeRoutes);
-app.use("/", manageRoute);
+// User Features
+app.use("/", userRoutes);
+app.use("/", websiteRoutes);
 app.use("/", filesRoutes);
-app.use("/", accountRoutes);
-app.use("/", DatabaseRoutes);
+app.use("/", databaseRoutes);
 app.use("/", backupRoutes);
 
-// Admin Routes
-app.use("/", customersRoutes);
-app.use("/", customersEditRoutes);
-app.use("/", subscriptions_createRoute);
-app.use("/", subscriptionsRoute);
-app.use("/", createuserRoutes);
-app.use("/", informationRoutes);
-app.use("/", settingsadminRoutes);
-app.use("/", modulesRoutes);
-
-//  Various Routes
-app.use("/", loadRoutes);
-app.use("/", getIPRouter);
+// Admin Features
+app.use("/", adminRoutes);
 
 // === API ROUTES ===
 app.use("/api", require("./src/utils/create_api_key.js"));
