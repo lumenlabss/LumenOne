@@ -1,6 +1,5 @@
 node_modules
 lumenone.db
-package-lock.json
 .vscode
 storage/volumes/
 storage/backup/
