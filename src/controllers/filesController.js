@@ -54,79 +54,116 @@ exports.getEditFile = (req, res) => {
 
             const websiteDir = path.join(getVolumesDir(), websiteUuid);
 
-            db.get("SELECT rank FROM users WHERE id = ?", [userId], (err, row) => {
-                if (err) {
-                    console.error("Error recovering rank:", err.message);
-                    return res.status(500).render("error/500.ejs");
-                }
-
-                fs.mkdir(websiteDir, { recursive: true }, (err) => {
-                    if (err && err.code !== "EEXIST") {
-                        console.error(`Error creating directory: ${websiteDir}`, err);
+            db.get(
+                "SELECT rank FROM users WHERE id = ?",
+                [userId],
+                (err, row) => {
+                    if (err) {
+                        console.error("Error recovering rank:", err.message);
                         return res.status(500).render("error/500.ejs");
                     }
 
-                    const filePath = path.join(websiteDir, fileName);
-
-                    fs.access(filePath, fs.constants.F_OK, (err) => {
-                        if (err) {
-                            if (req.query.new === "true") {
-                                const fileSize = 0;
-                                checkSizeBeforeCreate(websiteUuid, fileSize, (err) => {
-                                    if (err) {
-                                        return res.render("web/edit/files.ejs", {
-                                            user: req.session.user,
-                                            error: err.message,
-                                            websiteUuid,
-                                            fileName,
-                                            fileContent: "",
-                                            website,
-                                        });
-                                    }
-
-                                    fs.writeFile(filePath, "", "utf8", (err) => {
-                                        if (err) {
-                                            return res.status(500).render("error/500.ejs");
-                                        }
-
-                                        return res.render("web/edit/files.ejs", {
-                                            user: req.session.user,
-                                            rank: row ? row.rank : null,
-                                            error: null,
-                                            websiteUuid,
-                                            fileName,
-                                            fileContent: "",
-                                            website,
-                                        });
-                                    });
-                                });
-                            } else {
-                                return res.status(404).render("error/404.ejs", {
-                                    message: `File '${fileName}' not found`,
-                                });
-                            }
-                            return;
+                    fs.mkdir(websiteDir, { recursive: true }, (err) => {
+                        if (err && err.code !== "EEXIST") {
+                            console.error(
+                                `Error creating directory: ${websiteDir}`,
+                                err,
+                            );
+                            return res.status(500).render("error/500.ejs");
                         }
 
-                        fs.readFile(filePath, "utf8", (err, fileContent) => {
+                        const filePath = path.join(websiteDir, fileName);
+
+                        fs.access(filePath, fs.constants.F_OK, (err) => {
                             if (err) {
-                                return res.status(500).render("error/500.ejs");
+                                if (req.query.new === "true") {
+                                    const fileSize = 0;
+                                    checkSizeBeforeCreate(
+                                        websiteUuid,
+                                        fileSize,
+                                        (err) => {
+                                            if (err) {
+                                                return res.render(
+                                                    "web/edit/files.ejs",
+                                                    {
+                                                        user: req.session.user,
+                                                        error: err.message,
+                                                        websiteUuid,
+                                                        fileName,
+                                                        fileContent: "",
+                                                        website,
+                                                    },
+                                                );
+                                            }
+
+                                            fs.writeFile(
+                                                filePath,
+                                                "",
+                                                "utf8",
+                                                (err) => {
+                                                    if (err) {
+                                                        return res
+                                                            .status(500)
+                                                            .render(
+                                                                "error/500.ejs",
+                                                            );
+                                                    }
+
+                                                    return res.render(
+                                                        "web/edit/files.ejs",
+                                                        {
+                                                            user: req.session
+                                                                .user,
+                                                            rank: row
+                                                                ? row.rank
+                                                                : null,
+                                                            error: null,
+                                                            websiteUuid,
+                                                            fileName,
+                                                            fileContent: "",
+                                                            website,
+                                                        },
+                                                    );
+                                                },
+                                            );
+                                        },
+                                    );
+                                } else {
+                                    return res
+                                        .status(404)
+                                        .render("error/404.ejs", {
+                                            message: `File '${fileName}' not found`,
+                                        });
+                                }
+                                return;
                             }
 
-                            res.render("web/edit/files.ejs", {
-                                user: req.session.user,
-                                rank: row ? row.rank : null,
-                                error: null,
-                                websiteUuid: websiteUuid,
-                                fileName: fileName,
-                                fileContent: fileContent,
-                                website: website,
-                            });
+                            fs.readFile(
+                                filePath,
+                                "utf8",
+                                (err, fileContent) => {
+                                    if (err) {
+                                        return res
+                                            .status(500)
+                                            .render("error/500.ejs");
+                                    }
+
+                                    res.render("web/edit/files.ejs", {
+                                        user: req.session.user,
+                                        rank: row ? row.rank : null,
+                                        error: null,
+                                        websiteUuid: websiteUuid,
+                                        fileName: fileName,
+                                        fileContent: fileContent,
+                                        website: website,
+                                    });
+                                },
+                            );
                         });
                     });
-                });
-            });
-        }
+                },
+            );
+        },
     );
 };
 
@@ -182,7 +219,7 @@ exports.saveFile = (req, res) => {
                     });
                 });
             });
-        }
+        },
     );
 };
 
@@ -206,11 +243,13 @@ exports.getFolderSize = (req, res) => {
 
             getFolderSize(websiteDir, (err, size) => {
                 if (err) {
-                    return res.status(500).json({ error: "Failed to get folder size" });
+                    return res
+                        .status(500)
+                        .json({ error: "Failed to get folder size" });
                 }
 
                 res.json({ size });
             });
-        }
+        },
     );
 };

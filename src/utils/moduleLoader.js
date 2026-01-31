@@ -4,7 +4,7 @@ const path = require("path");
 const modulesDir = path.join(__dirname, "../../modules");
 
 function loadModules() {
-    let modules = [];
+    const modules = [];
 
     try {
         if (!fs.existsSync(modulesDir)) return modules;
@@ -31,9 +31,14 @@ function loadModules() {
                 let config = {};
                 if (fs.existsSync(configPath)) {
                     try {
-                        config = JSON.parse(fs.readFileSync(configPath, "utf8"));
+                        config = JSON.parse(
+                            fs.readFileSync(configPath, "utf8"),
+                        );
                     } catch (err) {
-                        console.error(`Error parsing config.json for ${dir}`, err);
+                        console.error(
+                            `Error parsing config.json for ${dir}`,
+                            err,
+                        );
                     }
                 }
 
@@ -43,7 +48,8 @@ function loadModules() {
                 modules.push({
                     name: config.name || dir,
                     version: config.version || "no version",
-                    description: config.description || "No description provided.",
+                    description:
+                        config.description || "No description provided.",
                     author: config.author || "Unknown",
                     icon: hasIcon ? `/modules/${dir}/icon.png` : null,
                 });
@@ -59,5 +65,5 @@ const modules = loadModules();
 
 module.exports = {
     modules,
-    loadModules
+    loadModules,
 };

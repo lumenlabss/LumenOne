@@ -62,7 +62,7 @@ exports.getEditCustomer = (req, res) => {
                 rank: req.session.user.rank,
                 userToEdit: row,
             });
-        }
+        },
     );
 };
 
@@ -100,14 +100,17 @@ exports.updateCustomer = (req, res) => {
                     [username, rank, hashedPassword, userId],
                     function (err) {
                         if (err) {
-                            console.error("Error updating user with password: " + err.message);
+                            console.error(
+                                "Error updating user with password: " +
+                                    err.message,
+                            );
                             return res.status(500).render("error/500.ejs", {
                                 message: "Internal server error",
                             });
                         }
 
                         res.redirect("/web/admin/customers");
-                    }
+                    },
                 );
             } catch (e) {
                 console.error("Error hashing password: ", e);
@@ -128,7 +131,7 @@ exports.updateCustomer = (req, res) => {
                     }
 
                     res.redirect("/web/admin/customers");
-                }
+                },
             );
         }
     });
@@ -156,7 +159,9 @@ exports.createCustomer = async (req, res) => {
         db.run(sql, [username, hashedPassword, rank], function (err) {
             if (err) {
                 console.error("User registration error :", err.message);
-                return res.status(500).send("Server error during user creation.");
+                return res
+                    .status(500)
+                    .send("Server error during user creation.");
             }
 
             console.log("New user registered with ID :", this.lastID);

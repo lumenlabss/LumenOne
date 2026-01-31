@@ -36,6 +36,7 @@ LumenOne follows a clear separation of concerns:
 4.  **Middleware (`src/middleware/`)**: Functions that run before the controller (e.g., checking if a user is logged in).
 
 ### Example: Accessing the website list
+
 `URL: /web/list` -> `lumenone.js` -> `src/routes/userRoutes.js` -> `src/controllers/userController.js (getWebList)` -> `views/web/list.ejs`
 
 ## Data Management

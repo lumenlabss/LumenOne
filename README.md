@@ -16,7 +16,7 @@
 | :dolphin: **Database Management**            | Database Management (SQLite)                 | 📝 **Planned**            |
 | :outbox_tray: **FTP Account Management**     | Create/Manage user FTP                       | 📝 **Planned**            |
 | 📧 **Email Management**                      | Management of mail server                    | 📝 **Planned**            |
-| :whale: **Docker Integration**               | Container-based isolation                    | 📝 **Planned**      |
+| :whale: **Docker Integration**               | Container-based isolation                    | 📝 **Planned**            |
 | :closed_lock_with_key: **SSL Certificates**  | Let's Encrypt SSL Certificates support       | 📝 **Planned**            |
 | :jigsaw: **Module System**                   | Extensions for customization                 | ✅ **Implemented**        |
 | :arrows_counterclockwise: **REST API**       | API for automate and integrate LumenOne      | 🛠️ **In development**     |
@@ -37,88 +37,88 @@
 
 0. Go to :
 
-   ```bash
-   cd var/www/
-   ```
+    ```bash
+    cd var/www/
+    ```
 
 1. Clone the repository:
 
-   ```bash
-   git clone --branch v1.3.0-bêta https://github.com/lumenlabss/LumenOne.git
-   cd LumenOne
-   ```
+    ```bash
+    git clone --branch v1.3.0-bêta https://github.com/lumenlabss/LumenOne.git
+    cd LumenOne
+    ```
 
 2. Install dependencies:
 
-   ```bash
-   npm install
-   ```
+    ```bash
+    npm install
+    ```
 
 3. Configure the `config/config.json` file:
 
-   ```json
-   {
-     "hostname": "0.0.0.0",
-     "port": 3000,
-     "name": "LumenOne",
-     "version": "v1.3.0-bêta",
-     "session": {
-       "secret": "secret-key",
-       "resave": false,
-       "saveUninitialized": false,
-       "cookie": {
-         "secure": false
-       }
-     },
-     "rateLimit": {
-       "global": {
-         "windowMinutes": 15,
-         "max": 100
-       },
-       "auth": {
-         "windowMinutes": 15,
-         "max": 5
-       }
-     }
-   }
-   ```
+    ```json
+    {
+        "hostname": "0.0.0.0",
+        "port": 3000,
+        "name": "LumenOne",
+        "version": "v1.3.0-bêta",
+        "session": {
+            "secret": "secret-key",
+            "resave": false,
+            "saveUninitialized": false,
+            "cookie": {
+                "secure": false
+            }
+        },
+        "rateLimit": {
+            "global": {
+                "windowMinutes": 15,
+                "max": 100
+            },
+            "auth": {
+                "windowMinutes": 15,
+                "max": 5
+            }
+        }
+    }
+    ```
 
 4. Create admin account:
 
-   ```bash
-   node create-admin.js
-   ```
+    ```bash
+    node create-admin.js
+    ```
 
 5. Start the server:
 
-   ```bash
-   node lumenone.js
-   ```
+    ```bash
+    node lumenone.js
+    ```
 
 6. Access the web interface:
 
-   ```
-   http://localhost:3000
-   ```
+    ```
+    http://localhost:3000
+    ```
 
 7. Nginx Config:
 
-   ```
-   server {
-    listen 80;
-    server_name example.com;  # Replace with your domain
+    ```
+    server {
+     listen 80;
+     server_name example.com;  # Replace with your domain
 
-    # Redirect all HTTP requests to your Node.js application
-        location / {
-        proxy_pass http://localhost:3000;  # Replace with the port on which your Node.js app is listening
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
+     # Redirect all HTTP requests to your Node.js application
+         location / {
+         proxy_pass http://localhost:3000;  # Replace with the port on which your Node.js app is listening
+         proxy_http_version 1.1;
+         proxy_set_header Upgrade $http_upgrade;
+         proxy_set_header Connection 'upgrade';
+         proxy_set_header Host $host;
+         proxy_cache_bypass $http_upgrade;
+     }
     }
-   }
-   ```
+    ```
 
 ---
 

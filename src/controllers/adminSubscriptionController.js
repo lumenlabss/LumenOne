@@ -45,7 +45,7 @@ exports.deleteSubscription = (req, res) => {
             const filePath = path.join(
                 __dirname,
                 "../../storage/volumes",
-                websiteUuid
+                websiteUuid,
             );
 
             // Corrected path for Nginx config file
@@ -53,45 +53,61 @@ exports.deleteSubscription = (req, res) => {
                 "/etc",
                 "nginx",
                 "sites-enabled",
-                website.name + ".conf"
+                website.name + ".conf",
             );
 
             // Delete from DB
-            db.run("DELETE FROM websites WHERE uuid = ?", [websiteUuid], (err) => {
-                if (err) {
-                    console.error("Error deleting website:", err.message);
-                    return res.status(500).render("error/500.ejs");
-                }
-
-                // Delete folder (optional)
-                fs.rm(filePath, { recursive: true, force: true }, (err) => {
+            db.run(
+                "DELETE FROM websites WHERE uuid = ?",
+                [websiteUuid],
+                (err) => {
                     if (err) {
-                        console.error("Error deleting files:", err.message);
+                        console.error("Error deleting website:", err.message);
+                        return res.status(500).render("error/500.ejs");
                     }
 
-                    // Delete Nginx config file
-                    fs.rm(nginxConfigPath, (err) => {
+                    // Delete folder (optional)
+                    fs.rm(filePath, { recursive: true, force: true }, (err) => {
                         if (err) {
-                            console.error("Error deleting Nginx config:", err.message);
-                        } else {
-                            console.log(`Deleted Nginx config for ${website.name}`);
+                            console.error("Error deleting files:", err.message);
                         }
 
-                        // After deletion of config, restart Nginx
-                        const { exec } = require("child_process");
-                        exec("sudo systemctl restart nginx", (err, stdout, stderr) => {
+                        // Delete Nginx config file
+                        fs.rm(nginxConfigPath, (err) => {
                             if (err) {
-                                console.error(`Error restarting Nginx: ${stderr}`);
+                                console.error(
+                                    "Error deleting Nginx config:",
+                                    err.message,
+                                );
                             } else {
-                                console.log("Nginx restarted successfully");
+                                console.log(
+                                    `Deleted Nginx config for ${website.name}`,
+                                );
                             }
-                        });
 
-                        res.redirect("/web/admin/subscriptions");
+                            // After deletion of config, restart Nginx
+                            const { exec } = require("child_process");
+                            exec(
+                                "sudo systemctl restart nginx",
+                                (err, stdout, stderr) => {
+                                    if (err) {
+                                        console.error(
+                                            `Error restarting Nginx: ${stderr}`,
+                                        );
+                                    } else {
+                                        console.log(
+                                            "Nginx restarted successfully",
+                                        );
+                                    }
+                                },
+                            );
+
+                            res.redirect("/web/admin/subscriptions");
+                        });
                     });
-                });
-            });
-        }
+                },
+            );
+        },
     );
 };
 
@@ -130,11 +146,7 @@ exports.createSubscription = (req, res) => {
             return res.status(500).send("Database error.");
         }
 
-        const folderPath = path.join(
-            __dirname,
-            "../../storage/volumes",
-            uuid
-        );
+        const folderPath = path.join(__dirname, "../../storage/volumes", uuid);
 
         fs.mkdir(folderPath, { recursive: true }, (err) => {
             if (err) {
@@ -199,8 +211,13 @@ exports.createSubscription = (req, res) => {
 
                     fs.writeFile(filePath, defaultHtml, (err) => {
                         if (err) {
-                            console.error("Error creating index.html:", err.message);
-                            return res.status(500).send("Error creating index.html.");
+                            console.error(
+                                "Error creating index.html:",
+                                err.message,
+                            );
+                            return res
+                                .status(500)
+                                .send("Error creating index.html.");
                         }
                         console.log(`Created default index.html for ${name}`);
                     });
@@ -221,18 +238,25 @@ post_max_size = 100M
                 fs.writeFile(phpIniPath, phpIniContent, (err) => {
                     if (err) {
                         console.error("Error writing php.ini:", err.message);
-                        return res.status(500).send("Failed to create php.ini.");
+                        return res
+                            .status(500)
+                            .send("Failed to create php.ini.");
                     }
 
                     // Ajout du domaine nginx
                     addDomain(name, folderPath, (err) => {
                         if (err) {
-                            console.error(`Error adding domain for ${name}:`, err);
-                            return res.status(500).send("Failed to add domain.");
+                            console.error(
+                                `Error adding domain for ${name}:`,
+                                err,
+                            );
+                            return res
+                                .status(500)
+                                .send("Failed to add domain.");
                         }
 
                         console.log(
-                            `New website : UUID=${uuid}, Domaine=${name}, Port=${port}, Disk=${diskLimit}MB`
+                            `New website : UUID=${uuid}, Domaine=${name}, Port=${port}, Disk=${diskLimit}MB`,
                         );
                         return res.redirect("/web/admin/subscriptions");
                     });

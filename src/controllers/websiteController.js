@@ -21,46 +21,56 @@ exports.getManageWebsite = (req, res) => {
                 return res.status(404).render("error/404.ejs");
             }
 
-            db.get("SELECT rank FROM users WHERE id = ?", [userId], (err, row) => {
-                if (err) {
-                    console.error("Error retrieving rank:", err.message);
-                    return res.status(500).render("error/500.ejs");
-                }
-
-                const filesPath = path.join(getVolumesDir(), websiteUuid);
-
-                fs.readdir(filesPath, (err, fileList) => {
+            db.get(
+                "SELECT rank FROM users WHERE id = ?",
+                [userId],
+                (err, row) => {
                     if (err) {
-                        console.error("Error reading directory:", err.message);
+                        console.error("Error retrieving rank:", err.message);
                         return res.status(500).render("error/500.ejs");
                     }
 
-                    const files = fileList.map((fileName) => {
-                        const fileFullPath = path.join(filesPath, fileName);
-                        let size = 0;
-                        try {
-                            const stats = fs.statSync(fileFullPath);
-                            size = (stats.size / 1024 / 1024).toFixed(2);
-                        } catch (e) {
-                            console.error(`Error reading stats for file ${fileFullPath}:`, e);
-                        }
-                        return {
-                            name: fileName,
-                            size: size, // Size in MB
-                        };
-                    });
+                    const filesPath = path.join(getVolumesDir(), websiteUuid);
 
-                    res.render("web/manage.ejs", {
-                        user: req.session.user,
-                        website,
-                        rank: row ? row.rank : null,
-                        websiteUuid,
-                        files,
-                        NetworkIP: "Loading...", // placeholder
+                    fs.readdir(filesPath, (err, fileList) => {
+                        if (err) {
+                            console.error(
+                                "Error reading directory:",
+                                err.message,
+                            );
+                            return res.status(500).render("error/500.ejs");
+                        }
+
+                        const files = fileList.map((fileName) => {
+                            const fileFullPath = path.join(filesPath, fileName);
+                            let size = 0;
+                            try {
+                                const stats = fs.statSync(fileFullPath);
+                                size = (stats.size / 1024 / 1024).toFixed(2);
+                            } catch (e) {
+                                console.error(
+                                    `Error reading stats for file ${fileFullPath}:`,
+                                    e,
+                                );
+                            }
+                            return {
+                                name: fileName,
+                                size: size, // Size in MB
+                            };
+                        });
+
+                        res.render("web/manage.ejs", {
+                            user: req.session.user,
+                            website,
+                            rank: row ? row.rank : null,
+                            websiteUuid,
+                            files,
+                            NetworkIP: "Loading...", // placeholder
+                        });
                     });
-                });
-            });
-        }
+                },
+            );
+        },
     );
 };
 
@@ -112,7 +122,7 @@ exports.createFile = (req, res) => {
                     res.redirect(`/web/manage/${websiteUuid}`);
                 });
             });
-        }
+        },
     );
 };
 
@@ -142,7 +152,11 @@ exports.deleteFile = (req, res) => {
                 return res.status(404).render("error/404.ejs");
             }
 
-            const filePath = path.join(getVolumesDir(), websiteUuid, fileToDelete);
+            const filePath = path.join(
+                getVolumesDir(),
+                websiteUuid,
+                fileToDelete,
+            );
 
             fs.unlink(filePath, (err) => {
                 if (err) {
@@ -152,6 +166,6 @@ exports.deleteFile = (req, res) => {
 
                 res.redirect(`/web/manage/${websiteUuid}`);
             });
-        }
+        },
     );
 };
