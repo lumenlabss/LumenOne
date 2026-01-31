@@ -1,22 +1,22 @@
 #version: '3.8'
 services:
-  lumenone: # Renamed for clarity
-    build: .
-    volumes:
-      - ./config:/app/config # Persist your configuration
-      - ./storage:/app/storage # Persist your website data
-    ports:
-      - "3000:3000" # Expose the LumenOne port
-    restart: unless-stopped # Automatically restart on failure
-  nginx:
-    image: nginx:alpine
-    depends_on:
-      - lumenone # Ensure LumenOne starts first
-    ports:
-      - "80:80"   # Standard HTTP port
-      - "443:443" # Standard HTTPS port (configure your SSL certificates)
-    volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d:ro # Your Nginx configuration
-      - ./storage/volumes:/var/www/html:ro # Your website files served by Nginx
-      - ./nginx/ssl:/etc/nginx/ssl # For your SSL certificates
-    restart: unless-stopped
+    lumenone: # Renamed for clarity
+        build: .
+        volumes:
+            - ./config:/app/config # Persist your configuration
+            - ./storage:/app/storage # Persist your website data
+        ports:
+            - "3000:3000" # Expose the LumenOne port
+        restart: unless-stopped # Automatically restart on failure
+    nginx:
+        image: nginx:alpine
+        depends_on:
+            - lumenone # Ensure LumenOne starts first
+        ports:
+            - "80:80" # Standard HTTP port
+            - "443:443" # Standard HTTPS port (configure your SSL certificates)
+        volumes:
+            - ./nginx/conf.d:/etc/nginx/conf.d:ro # Your Nginx configuration
+            - ./storage/volumes:/var/www/html:ro # Your website files served by Nginx
+            - ./nginx/ssl:/etc/nginx/ssl # For your SSL certificates
+        restart: unless-stopped

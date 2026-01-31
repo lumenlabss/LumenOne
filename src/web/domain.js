@@ -2,17 +2,17 @@ const fs = require("fs");
 const { exec } = require("child_process");
 
 function addDomain(name, filepath, callback) {
-  // Checks if PHP is installed
-  exec("php -v", (phpErr, stdout, stderr) => {
-    const phpInstalled = !phpErr;
-    let phpBlock = "";
+    // Checks if PHP is installed
+    exec("php -v", (phpErr, stdout, stderr) => {
+        const phpInstalled = !phpErr;
+        let phpBlock = "";
 
-    if (phpInstalled) {
-      // Extract installed PHP version
-      const match = stdout.match(/PHP (\d+\.\d+)/);
-      const version = match ? match[1] : "8.1"; // fallback to 8.1 if not detected
+        if (phpInstalled) {
+            // Extract installed PHP version
+            const match = stdout.match(/PHP (\d+\.\d+)/);
+            const version = match ? match[1] : "8.1"; // fallback to 8.1 if not detected
 
-      phpBlock = `
+            phpBlock = `
     location ~ \\.php$ {
         fastcgi_split_path_info ^(.+\\.php)(/.+)$;
         fastcgi_pass unix:/run/php/php${version}-fpm.sock;
@@ -28,9 +28,9 @@ function addDomain(name, filepath, callback) {
         fastcgi_send_timeout 300;
         fastcgi_read_timeout 300;
     }`;
-    }
+        }
 
-    const nginxConfig = `
+        const nginxConfig = `
 server {
     listen 80;
     server_name ${name};
@@ -43,29 +43,31 @@ server {
     }${phpBlock}
 }`;
 
-    const configPath = `/etc/nginx/sites-enabled/${name}.conf`;
+        const configPath = `/etc/nginx/sites-enabled/${name}.conf`;
 
-    fs.writeFile(configPath, nginxConfig, (err) => {
-      if (err) {
-        console.error("Failed to create nginx config:", err);
-        if (callback) callback(err);
-        return;
-      }
+        fs.writeFile(configPath, nginxConfig, (err) => {
+            if (err) {
+                console.error("Failed to create nginx config:", err);
+                if (callback) callback(err);
+                return;
+            }
 
-      console.log(`Nginx config written to ${configPath}. Reloading Nginx...`);
+            console.log(
+                `Nginx config written to ${configPath}. Reloading Nginx...`,
+            );
 
-      exec("nginx -s reload", (reloadErr, stdout, stderr) => {
-        if (reloadErr) {
-          console.error(`Reload error: ${reloadErr.message}`);
-          if (callback) callback(reloadErr);
-          return;
-        }
-        if (stderr) console.error(`Reload stderr: ${stderr}`);
-        console.log("Nginx reloaded successfully.");
-        if (callback) callback(null);
-      });
+            exec("nginx -s reload", (reloadErr, stdout, stderr) => {
+                if (reloadErr) {
+                    console.error(`Reload error: ${reloadErr.message}`);
+                    if (callback) callback(reloadErr);
+                    return;
+                }
+                if (stderr) console.error(`Reload stderr: ${stderr}`);
+                console.log("Nginx reloaded successfully.");
+                if (callback) callback(null);
+            });
+        });
     });
-  });
 }
 
 module.exports = { addDomain };

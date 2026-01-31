@@ -22,9 +22,21 @@ exports.getInformation = async (req, res) => {
         const networkIP = await getNetworkIP();
 
         // Database stats
-        const usersCount = await new Promise((resolve) => db.get("SELECT COUNT(*) as count FROM users", (err, row) => resolve(row ? row.count : 0)));
-        const websitesCount = await new Promise((resolve) => db.get("SELECT COUNT(*) as count FROM websites", (err, row) => resolve(row ? row.count : 0)));
-        const backupsCount = await new Promise((resolve) => db.get("SELECT COUNT(*) as count FROM backups", (err, row) => resolve(row ? row.count : 0)));
+        const usersCount = await new Promise((resolve) =>
+            db.get("SELECT COUNT(*) as count FROM users", (err, row) =>
+                resolve(row ? row.count : 0),
+            ),
+        );
+        const websitesCount = await new Promise((resolve) =>
+            db.get("SELECT COUNT(*) as count FROM websites", (err, row) =>
+                resolve(row ? row.count : 0),
+            ),
+        );
+        const backupsCount = await new Promise((resolve) =>
+            db.get("SELECT COUNT(*) as count FROM backups", (err, row) =>
+                resolve(row ? row.count : 0),
+            ),
+        );
 
         res.render("web/admin/information.ejs", {
             user: req.session.user,
@@ -38,7 +50,10 @@ exports.getInformation = async (req, res) => {
             RAMtype: "DDR", // systeminformation.memLayout() could give more but this is fine
             RAMspeed: "",
             // Storage
-            StorageSize: diskLayout.length > 0 ? formatBytes(diskLayout[0].size) : "Unknown",
+            StorageSize:
+                diskLayout.length > 0
+                    ? formatBytes(diskLayout[0].size)
+                    : "Unknown",
             StorageType: diskLayout.length > 0 ? diskLayout[0].type : "Unknown",
             // OS
             OSname: osInfo.distro,

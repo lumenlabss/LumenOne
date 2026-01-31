@@ -1,24 +1,24 @@
 {
-  "hostname": "0.0.0.0",
-  "port": 3000,
-  "name": "LumenOne",
-  "version": "v1.3.0-bêta",
-  "session": {
-    "secret": "a30d5f50-10f1-4c19-b1bc-5cb6fb6d3179",
-    "resave": false,
-    "saveUninitialized": false,
-    "cookie": {
-      "secure": false
-    }
-  },
-  "rateLimit": {
-    "global": {
-      "windowMinutes": 15,
-      "max": 100
+    "hostname": "0.0.0.0",
+    "port": 3000,
+    "name": "LumenOne",
+    "version": "v1.3.0-bêta",
+    "session": {
+        "secret": "secret-key",
+        "resave": false,
+        "saveUninitialized": false,
+        "cookie": {
+            "secure": false
+        }
     },
-    "auth": {
-      "windowMinutes": 15,
-      "max": 5
+    "rateLimit": {
+        "global": {
+            "windowMinutes": 15,
+            "max": 100
+        },
+        "auth": {
+            "windowMinutes": 15,
+            "max": 5
+        }
     }
-  }
 }

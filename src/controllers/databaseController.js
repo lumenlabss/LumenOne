@@ -15,19 +15,26 @@ exports.getDatabases = (req, res) => {
                 return res.status(500).send("Internal server error");
             }
 
-            db.get("SELECT rank FROM users WHERE id = ?", [userId], (err, row) => {
-                if (err) {
-                    console.error("Error while retrieving the rank:", err.message);
-                    return res.status(500).send("Internal server error");
-                }
+            db.get(
+                "SELECT rank FROM users WHERE id = ?",
+                [userId],
+                (err, row) => {
+                    if (err) {
+                        console.error(
+                            "Error while retrieving the rank:",
+                            err.message,
+                        );
+                        return res.status(500).send("Internal server error");
+                    }
 
-                res.render("web/database.ejs", {
-                    user: req.session.user,
-                    Databases,
-                    rank: row ? row.rank : null,
-                });
-            });
-        }
+                    res.render("web/database.ejs", {
+                        user: req.session.user,
+                        Databases,
+                        rank: row ? row.rank : null,
+                    });
+                },
+            );
+        },
     );
 };
 
@@ -60,6 +67,6 @@ exports.createDatabase = (req, res) => {
         function (err) {
             if (err) return res.status(500).json({ error: err.message });
             return res.json({ success: true, id: this.lastID });
-        }
+        },
     );
 };

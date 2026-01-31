@@ -37,9 +37,11 @@ const apiV1Router = require("./src/api/official/v1.js");
 const app = express();
 
 // === GLOBAL MIDDLEWARE ===
-app.use(helmet({
-  contentSecurityPolicy: false, // Disable CSP for now to avoid breaking inline scripts/styles if any
-}));
+app.use(
+    helmet({
+        contentSecurityPolicy: false, // Disable CSP for now to avoid breaking inline scripts/styles if any
+    }),
+);
 app.use(cors());
 app.use(compression());
 
@@ -49,19 +51,19 @@ app.use(express.urlencoded({ extended: true, limit: "80mb" }));
 
 // Sessions with configuration from config.js
 app.use(
-  session({
-    secret: config.session.secret,
-    resave: config.session.resave,
-    saveUninitialized: config.session.saveUninitialized,
-    cookie: config.session.cookie,
-  })
+    session({
+        secret: config.session.secret,
+        resave: config.session.resave,
+        saveUninitialized: config.session.saveUninitialized,
+        cookie: config.session.cookie,
+    }),
 );
 
 // Global variables accessible in EJS templates
 app.use((req, res, next) => {
-  res.locals.appName = config.name;
-  res.locals.appVersion = config.version;
-  next();
+    res.locals.appName = config.name;
+    res.locals.appVersion = config.version;
+    next();
 });
 
 // Configuring views and static files
@@ -93,41 +95,41 @@ app.use("/api/v1", apiV1Router);
 // === ERROR MANAGEMENT ===
 
 // 404 - Page not found
-app.use((req, res, next) => {
-  res.status(404).render("error/404.ejs");
+app.use((req, res, _next) => {
+    res.status(404).render("error/404.ejs");
 });
 
 // Error middleware (500, etc.)
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  if (res.headersSent) {
-    return next(err);
-  }
-  res.status(500).render("error/500.ejs", {
-    message: err.message || "Internal server error",
-  });
+    console.error(err.stack);
+    if (res.headersSent) {
+        return next(err);
+    }
+    res.status(500).render("error/500.ejs", {
+        message: err.message || "Internal server error",
+    });
 });
 
 // 403 - Access denied
 app.use((req, res, next) => {
-  if (res.statusCode === 403) {
-    res.render("error/403.ejs", {
-      message: "Access denied.",
-    });
-  } else {
-    next();
-  }
+    if (res.statusCode === 403) {
+        res.render("error/403.ejs", {
+            message: "Access denied.",
+        });
+    } else {
+        next();
+    }
 });
 
 // 400 - Wrong request
 app.use((req, res, next) => {
-  if (res.statusCode === 400) {
-    res.render("error/400.ejs", {
-      message: "Bad request.",
-    });
-  } else {
-    next();
-  }
+    if (res.statusCode === 400) {
+        res.render("error/400.ejs", {
+            message: "Bad request.",
+        });
+    } else {
+        next();
+    }
 });
 
 // === SERVER LAUNCH ===
@@ -137,5 +139,5 @@ const hostname = config.hostname || "localhost";
 generateKey();
 
 app.listen(port, hostname, () => {
-  console.log(`LumenOne successfully started: http://${hostname}:${port}`);
+    console.log(`LumenOne successfully started: http://${hostname}:${port}`);
 });
