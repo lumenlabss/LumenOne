@@ -40,16 +40,22 @@ exports.getBackups = (req, res) => {
                 "SELECT id, name, uuid FROM websites WHERE user_id = ?",
                 [userId],
                 (err, websites) => {
-                    if (err) return res.status(500).send("Internal server error");
+                    if (err)
+                        return res.status(500).send("Internal server error");
 
                     db.get(
                         "SELECT rank FROM users WHERE id = ?",
                         [userId],
                         (err, row) => {
-                            if (err) return res.status(500).send("Internal server error");
+                            if (err)
+                                return res
+                                    .status(500)
+                                    .send("Internal server error");
 
                             const lastBackupTime =
-                                backups.length > 0 ? timeAgo(backups[0].created_at) : null;
+                                backups.length > 0
+                                    ? timeAgo(backups[0].created_at)
+                                    : null;
 
                             let totalSize = 0;
                             backups.forEach((b) => (totalSize += b.size));
@@ -64,11 +70,11 @@ exports.getBackups = (req, res) => {
                                 totalSizeFormatted,
                                 formatBytes,
                             });
-                        }
+                        },
                     );
-                }
+                },
             );
-        }
+        },
     );
 };
 
@@ -84,7 +90,8 @@ exports.createBackup = (req, res) => {
         "SELECT uuid FROM websites WHERE uuid = ? AND user_id = ?",
         [websiteId, userId],
         (err, website) => {
-            if (err || !website) return res.status(400).send("Website not found");
+            if (err || !website)
+                return res.status(400).send("Website not found");
 
             const siteUUID = website.uuid;
             const timestamp = Date.now();
@@ -108,15 +115,15 @@ exports.createBackup = (req, res) => {
                 const size = archive.pointer();
 
                 db.run(
-                    "INSERT INTO backups (user_id, website_id, name, size, created_at) VALUES (?, ?, ?, ?, datetime('now'))",
-                    [userId, websiteId, filename, size],
+                    "INSERT INTO backups (user_id, website_id, name, size, path, created_at) VALUES (?, ?, ?, ?, ?, datetime('now'))",
+                    [userId, websiteId, filename, size, outputPath],
                     (err) => {
                         if (err) {
                             console.error("Error saving backup:", err.message);
                             return res.status(500).send("Error saving backup");
                         }
                         res.redirect("/web/backup");
-                    }
+                    },
                 );
             });
 
@@ -128,7 +135,7 @@ exports.createBackup = (req, res) => {
             archive.pipe(output);
             archive.directory(sitePath, false);
             archive.finalize();
-        }
+        },
     );
 };
 
@@ -147,7 +154,7 @@ exports.downloadBackup = (req, res) => {
                 return res.status(404).send("Backup file not found");
 
             res.download(filePath, backup.name);
-        }
+        },
     );
 };
 
@@ -168,10 +175,11 @@ exports.deleteBackup = (req, res) => {
                 "DELETE FROM backups WHERE id = ? AND user_id = ?",
                 [backupId, userId],
                 (err) => {
-                    if (err) return res.status(500).send("Error deleting backup");
+                    if (err)
+                        return res.status(500).send("Error deleting backup");
                     res.redirect("/web/backup");
-                }
+                },
             );
-        }
+        },
     );
 };
