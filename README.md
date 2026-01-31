@@ -54,34 +54,11 @@
     npm install
     ```
 
-3. Configure the `config/config.json` file:
+3. Configure the `.env` file:
 
-    ```json
-    {
-        "hostname": "0.0.0.0",
-        "port": 3000,
-        "name": "LumenOne",
-        "version": "v1.3.0-bêta",
-        "session": {
-            "secret": "secret-key",
-            "resave": false,
-            "saveUninitialized": false,
-            "cookie": {
-                "secure": false
-            }
-        },
-        "rateLimit": {
-            "global": {
-                "windowMinutes": 15,
-                "max": 100
-            },
-            "auth": {
-                "windowMinutes": 15,
-                "max": 5
-            }
-        }
-    }
-    ```
+> [!NOTE]\
+> `.env` file is automaticly generated in first startup when the file doesn't exist and your project doesn't have `config/config.json` too.
+> You still can manually create it and configured it with the `.env.example`.
 
 4. Create admin account:
 
@@ -92,7 +69,7 @@
 5. Start the server:
 
     ```bash
-    node lumenone.js
+    npm run start
     ```
 
 6. Access the web interface:
