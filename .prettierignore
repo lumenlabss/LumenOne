@@ -1,0 +1,5 @@
+node_modules/
+storage/
+public/dist/
+*.min.js
+package-lock.json
