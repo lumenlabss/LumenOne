@@ -133,10 +133,8 @@ app.use((req, res, next) => {
 });
 
 // === SERVER LAUNCH ===
-const port = config.port || 3000;
-const hostname = config.hostname || "localhost";
-
-generateKey();
+const port = config.port; // Fallback already handled in config.js
+const hostname = config.hostname; // Fallback already handled in config.js
 
 app.listen(port, hostname, () => {
     console.log(`LumenOne successfully started: http://${hostname}:${port}`);

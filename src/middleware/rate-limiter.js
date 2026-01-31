@@ -1,5 +1,6 @@
 const rateLimit = require("express-rate-limit");
-const config = require("../../config/config.json");
+//const config = require("../../config/config.json");
+const config = require("../config/config.js");
 
 // Global limiter
 const globalLimiter = rateLimit({
