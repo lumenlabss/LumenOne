@@ -4,3 +4,7 @@ lumenone.db
 storage/volumes/
 storage/backup/
 modules/
+
+.env
+.env.*
+!.env.example
