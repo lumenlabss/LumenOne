@@ -1,62 +1,38 @@
 <!-- button for open sidebar -->
-<button
-  data-drawer-target="separator-sidebar"
-  data-drawer-toggle="separator-sidebar"
-  aria-controls="separator-sidebar"
+<button data-drawer-target="separator-sidebar" data-drawer-toggle="separator-sidebar" aria-controls="separator-sidebar"
   type="button"
-  class="absolute top-4 left-4 inline-flex items-center p-2 text-sm text-gray-400 rounded-lg sm:hidden hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600"
->
+  class="absolute top-4 left-4 inline-flex items-center p-2 text-sm text-gray-400 rounded-lg sm:hidden hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600">
   <span class="sr-only">Open sidebar</span>
-  <svg
-    class="w-6 h-6"
-    aria-hidden="true"
-    fill="currentColor"
-    viewBox="0 0 20 20"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      clip-rule="evenodd"
-      fill-rule="evenodd"
-      d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-    ></path>
+  <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+    <path clip-rule="evenodd" fill-rule="evenodd"
+      d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z">
+    </path>
   </svg>
 </button>
 
 <!-- Sidebar -->
-<aside
-  id="separator-sidebar"
+<aside id="separator-sidebar"
   class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
-  aria-label="Sidebar"
->
+  aria-label="Sidebar">
   <div class="h-full px-3 py-4 overflow-y-auto bg-gray-800">
     <ul class="space-y-2 font-medium">
       <li>
-        <a
-          class="flex items-center p-2 text-white rounded-lg hover: cursor-auto"
-        >
-          <span class="ms-3"><%= appName %></span>
+        <a class="flex items-center p-2 text-white rounded-lg hover: cursor-auto">
+          <span class="ms-3">
+            <%= appName %>
+          </span>
           <span
-            class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-300 bg-gray-700 rounded-full"
-            ><%= appVersion %></span
-          >
+            class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-300 bg-gray-700 rounded-full">
+            <%= appVersion %>
+          </span>
         </a>
       </li>
       <li class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-700">
-        <a
-          href="/web/list"
-          class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white"
-            viewBox="0 0 16 16"
-          >
+        <a href="/web/list" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+            class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white" viewBox="0 0 16 16">
             <path
-              d="M2.5 2A1.5 1.5 0 0 0 1 3.5V12h14V3.5A1.5 1.5 0 0 0 13.5 2zM0 12.5h16a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5"
-            />
+              d="M2.5 2A1.5 1.5 0 0 0 1 3.5V12h14V3.5A1.5 1.5 0 0 0 13.5 2zM0 12.5h16a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5" />
           </svg>
           <span class="flex-1 ms-3 whitespace-nowrap">Websites & Domains</span>
           <!--<span
@@ -70,340 +46,198 @@
         </a>
       </li>
       <li>
-        <a
-          href="#"
-          class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group"
-        >
-          <svg
-            class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
+        <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group">
+          <svg class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white" aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
             <path
-              d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z"
-            />
+              d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" />
           </svg>
           <span class="flex-1 ms-3 whitespace-nowrap">Mail</span>
           <span
-            class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-300 bg-gray-700 rounded-full"
-            >SOON</span
-          >
+            class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-300 bg-gray-700 rounded-full">SOON</span>
         </a>
       </li>
       <li>
-        <a
-          href="/web/backup"
-          class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white"
-            viewBox="0 0 16 16"
-          >
+        <a href="/web/backup" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+            class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white" viewBox="0 0 16 16">
             <path
-              d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383"
-            />
+              d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383" />
           </svg>
           <span class="flex-1 ms-3 whitespace-nowrap">Backup</span>
         </a>
       </li>
       <li>
-        <a
-          href="#"
-          class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white"
-            viewBox="0 0 16 16"
-          >
+        <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+            class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white" viewBox="0 0 16 16">
             <path
-              d="M3.904 1.777C4.978 1.289 6.427 1 8 1s3.022.289 4.096.777C13.125 2.245 14 2.993 14 4s-.875 1.755-1.904 2.223C11.022 6.711 9.573 7 8 7s-3.022-.289-4.096-.777C2.875 5.755 2 5.007 2 4s.875-1.755 1.904-2.223"
-            />
+              d="M3.904 1.777C4.978 1.289 6.427 1 8 1s3.022.289 4.096.777C13.125 2.245 14 2.993 14 4s-.875 1.755-1.904 2.223C11.022 6.711 9.573 7 8 7s-3.022-.289-4.096-.777C2.875 5.755 2 5.007 2 4s.875-1.755 1.904-2.223" />
             <path
-              d="M2 6.161V7c0 1.007.875 1.755 1.904 2.223C4.978 9.71 6.427 10 8 10s3.022-.289 4.096-.777C13.125 8.755 14 8.007 14 7v-.839c-.457.432-1.004.751-1.49.972C11.278 7.693 9.682 8 8 8s-3.278-.307-4.51-.867c-.486-.22-1.033-.54-1.49-.972"
-            />
+              d="M2 6.161V7c0 1.007.875 1.755 1.904 2.223C4.978 9.71 6.427 10 8 10s3.022-.289 4.096-.777C13.125 8.755 14 8.007 14 7v-.839c-.457.432-1.004.751-1.49.972C11.278 7.693 9.682 8 8 8s-3.278-.307-4.51-.867c-.486-.22-1.033-.54-1.49-.972" />
             <path
-              d="M2 9.161V10c0 1.007.875 1.755 1.904 2.223C4.978 12.711 6.427 13 8 13s3.022-.289 4.096-.777C13.125 11.755 14 11.007 14 10v-.839c-.457.432-1.004.751-1.49.972-1.232.56-2.828.867-4.51.867s-3.278-.307-4.51-.867c-.486-.22-1.033-.54-1.49-.972"
-            />
+              d="M2 9.161V10c0 1.007.875 1.755 1.904 2.223C4.978 12.711 6.427 13 8 13s3.022-.289 4.096-.777C13.125 11.755 14 11.007 14 10v-.839c-.457.432-1.004.751-1.49.972-1.232.56-2.828.867-4.51.867s-3.278-.307-4.51-.867c-.486-.22-1.033-.54-1.49-.972" />
             <path
-              d="M2 12.161V13c0 1.007.875 1.755 1.904 2.223C4.978 15.711 6.427 16 8 16s3.022-.289 4.096-.777C13.125 14.755 14 14.007 14 13v-.839c-.457.432-1.004.751-1.49.972-1.232.56-2.828.867-4.51.867s-3.278-.307-4.51-.867c-.486-.22-1.033-.54-1.49-.972"
-            />
+              d="M2 12.161V13c0 1.007.875 1.755 1.904 2.223C4.978 15.711 6.427 16 8 16s3.022-.289 4.096-.777C13.125 14.755 14 14.007 14 13v-.839c-.457.432-1.004.751-1.49.972-1.232.56-2.828.867-4.51.867s-3.278-.307-4.51-.867c-.486-.22-1.033-.54-1.49-.972" />
           </svg>
           <span class="flex-1 ms-3 whitespace-nowrap">Database</span>
           <span
-            class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-300 bg-gray-700 rounded-full"
-            >SOON</span
-          >
+            class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-300 bg-gray-700 rounded-full">SOON</span>
         </a>
       </li>
       <li>
-        <a
-          href="#"
-          class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white"
-            viewBox="0 0 16 16"
-          >
+        <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+            class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white" viewBox="0 0 16 16">
             <path
-              d="M10 .5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5.5.5 0 0 1-.5.5.5.5 0 0 0-.5.5V2a.5.5 0 0 0 .5.5h5A.5.5 0 0 0 11 2v-.5a.5.5 0 0 0-.5-.5.5.5 0 0 1-.5-.5"
-            />
+              d="M10 .5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5.5.5 0 0 1-.5.5.5.5 0 0 0-.5.5V2a.5.5 0 0 0 .5.5h5A.5.5 0 0 0 11 2v-.5a.5.5 0 0 0-.5-.5.5.5 0 0 1-.5-.5" />
             <path
-              d="M4.085 1H3.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1h-.585q.084.236.085.5V2a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 4 2v-.5q.001-.264.085-.5M10 7a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0zm-6 4a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0zm4-3a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0V9a1 1 0 0 1 1-1"
-            />
+              d="M4.085 1H3.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1h-.585q.084.236.085.5V2a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 4 2v-.5q.001-.264.085-.5M10 7a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0zm-6 4a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0zm4-3a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0V9a1 1 0 0 1 1-1" />
           </svg>
           <span class="flex-1 ms-3 whitespace-nowrap">Statistics</span>
           <span
-            class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-300 bg-gray-700 rounded-full"
-            >SOON</span
-          >
+            class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-300 bg-gray-700 rounded-full">SOON</span>
         </a>
       </li>
       <li>
-        <a
-          href="#"
-          class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"
-            />
+        <a href="#" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+            class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white" viewBox="0 0 16 16">
+            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
           </svg>
           <span class="flex-1 ms-3 whitespace-nowrap">Users</span>
           <span
-            class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-300 bg-gray-700 rounded-full"
-            >SOON</span
-          >
+            class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-300 bg-gray-700 rounded-full">SOON</span>
         </a>
       </li>
       <li>
-        <a
-          href="/web/account"
-          class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white"
-            viewBox="0 0 16 16"
-          >
+        <a href="/web/account" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+            class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white" viewBox="0 0 16 16">
             <path
-              d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"
-            />
+              d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
           </svg>
           <span class="flex-1 ms-3 whitespace-nowrap">Account</span>
         </a>
       </li>
 
       <li>
-        <a
-          href="/logout"
-          class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white"
-            viewBox="0 0 16 16"
-          >
-            <path
-              fill-rule="evenodd"
-              d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"
-            />
-            <path
-              fill-rule="evenodd"
-              d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708z"
-            />
+        <a href="/logout" class="flex items-center p-2 text-white rounded-lg hover:bg-gray-700 group">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+            class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z" />
+            <path fill-rule="evenodd"
+              d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708z" />
           </svg>
           <span class="flex-1 ms-3 whitespace-nowrap">Logout</span>
         </a>
       </li>
     </ul>
     <!--Administrator-->
-    <% if (rank === "admin") { %>
-    <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-700">
-      <li>
-        <a
-          class="flex items-center p-2 text-white rounded-lg hover: cursor-auto"
-        >
-          <span class="ms-3">Admin</span>
-        </a>
-      </li>
+    <% if (rank==="admin" ) { %>
+      <ul class="pt-4 mt-4 space-y-2 font-medium border-t border-gray-700">
+        <li>
+          <a class="flex items-center p-2 text-white rounded-lg hover: cursor-auto">
+            <span class="ms-3">Admin</span>
+          </a>
+        </li>
 
-      <li>
-        <a
-          href="/web/admin/customers"
-          class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-gray-700 group"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"
-            />
-          </svg>
-          <span class="ms-3">Customers</span>
-        </a>
-      </li>
-      <li>
-        <a
-          href=""
-          class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-gray-700 group"
-        >
-          <svg
-            class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 16 20"
-          >
-            <path
-              d="M16 14V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 0 0 0-2h-1v-2a2 2 0 0 0 2-2ZM4 2h2v12H4V2Zm8 16H3a1 1 0 0 1 0-2h9v2Z"
-            />
-          </svg>
-          <span class="ms-3">Service Plans</span>
-          <span
-            class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-300 bg-gray-700 rounded-full"
-            >SOON</span
-          >
-        </a>
-      </li>
-      <li>
-        <a
-          href="/web/admin/subscriptions"
-          class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-gray-700 group"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.468 15.426.943 9h14.114l-1.525 6.426a.75.75 0 0 1-.729.574H3.197a.75.75 0 0 1-.73-.574z"
-            />
-          </svg>
-          <span class="ms-3">Subscriptions</span>
-        </a>
-      </li>
+        <li>
+          <a href="#"
+            class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-gray-700 group">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="shrink-0 w-5 h-5 text-gray-400" viewBox="0 0 16 16">
+              <path
+                d="M0 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2H2a2 2 0 0 1-2-2zm5 10v2a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1h-2v5a2 2 0 0 1-2 2z" />
+            </svg>
+            <span class="ms-3">Overview</span>
+          </a>
+        </li>
 
-      <li>
-        <a
-          href="/web/admin/information"
-          class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-gray-700 group"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2"
-            />
-          </svg>
-          <span class="ms-3">Information</span>
-        </a>
-      </li>
-      <li>
-        <a
-          href="/web/admin/settings"
-          class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-gray-700"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"
-            />
-          </svg>
-          <span class="ms-3">Settings</span>
-        </a>
-      </li>
-      <li>
-        <a
-          href="/web/admin/modules"
-          class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-gray-700"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="M3.112 3.645A1.5 1.5 0 0 1 4.605 2H7a.5.5 0 0 1 .5.5v.382c0 .696-.497 1.182-.872 1.469a.5.5 0 0 0-.115.118l-.012.025L6.5 4.5v.003l.003.01q.005.015.036.053a.9.9 0 0 0 .27.194C7.09 4.9 7.51 5 8 5c.492 0 .912-.1 1.19-.24a.9.9 0 0 0 .271-.194.2.2 0 0 0 .036-.054l.003-.01v-.008l-.012-.025a.5.5 0 0 0-.115-.118c-.375-.287-.872-.773-.872-1.469V2.5A.5.5 0 0 1 9 2h2.395a1.5 1.5 0 0 1 1.493 1.645L12.645 6.5h.237c.195 0 .42-.147.675-.48.21-.274.528-.52.943-.52.568 0 .947.447 1.154.862C15.877 6.807 16 7.387 16 8s-.123 1.193-.346 1.638c-.207.415-.586.862-1.154.862-.415 0-.733-.246-.943-.52-.255-.333-.48-.48-.675-.48h-.237l.243 2.855A1.5 1.5 0 0 1 11.395 14H9a.5.5 0 0 1-.5-.5v-.382c0-.696.497-1.182.872-1.469a.5.5 0 0 0 .115-.118l.012-.025.001-.006v-.003l-.003-.01a.2.2 0 0 0-.036-.053.9.9 0 0 0-.27-.194C8.91 11.1 8.49 11 8 11s-.912.1-1.19.24a.9.9 0 0 0-.271.194.2.2 0 0 0-.036.054l-.003.01v.002l.001.006.012.025c.016.027.05.068.115.118.375.287.872.773.872 1.469v.382a.5.5 0 0 1-.5.5H4.605a1.5 1.5 0 0 1-1.493-1.645L3.356 9.5h-.238c-.195 0-.42.147-.675.48-.21.274-.528.52-.943.52-.568 0-.947-.447-1.154-.862C.123 9.193 0 8.613 0 8s.123-1.193.346-1.638C.553 5.947.932 5.5 1.5 5.5c.415 0 .733.246.943.52.255.333.48.48.675.48h.238z"
-            />
-          </svg>
-          <span class="ms-3">Modules</span>
-        </a>
-      </li>
 
-      <li>
-        <a
-          href=""
-          class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-gray-700"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white"
-            viewBox="0 0 16 16"
-          >
-            <path
-              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z"
-            />
-          </svg>
-          <span class="ms-3">Logs</span>
-          <span
-            class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-300 bg-gray-700 rounded-full"
-            >SOON</span
-          >
-        </a>
-      </li>
-    </ul>
-    <% } %>
+        <li>
+          <a href="/web/admin/customers"
+            class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-gray-700 group">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white" viewBox="0 0 16 16">
+              <path
+                d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
+            </svg>
+            <span class="ms-3">Customers</span>
+          </a>
+        </li>
+        <li>
+          <a href="" class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-gray-700 group">
+            <svg class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
+              <path
+                d="M16 14V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 0 0 0-2h-1v-2a2 2 0 0 0 2-2ZM4 2h2v12H4V2Zm8 16H3a1 1 0 0 1 0-2h9v2Z" />
+            </svg>
+            <span class="ms-3">Service Plans</span>
+            <span
+              class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-300 bg-gray-700 rounded-full">SOON</span>
+          </a>
+        </li>
+        <li>
+          <a href="/web/admin/subscriptions"
+            class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-gray-700 group">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white" viewBox="0 0 16 16">
+              <path
+                d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.468 15.426.943 9h14.114l-1.525 6.426a.75.75 0 0 1-.729.574H3.197a.75.75 0 0 1-.73-.574z" />
+            </svg>
+            <span class="ms-3">Subscriptions</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="/web/admin/information"
+            class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-gray-700 group">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white" viewBox="0 0 16 16">
+              <path
+                d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16m.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2" />
+            </svg>
+            <span class="ms-3">Information / Nodes</span>
+          </a>
+        </li>
+        <li>
+          <a href="/web/admin/settings"
+            class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white" viewBox="0 0 16 16">
+              <path
+                d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
+            </svg>
+            <span class="ms-3">Settings</span>
+          </a>
+        </li>
+        <li>
+          <a href="/web/admin/modules"
+            class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white" viewBox="0 0 16 16">
+              <path
+                d="M3.112 3.645A1.5 1.5 0 0 1 4.605 2H7a.5.5 0 0 1 .5.5v.382c0 .696-.497 1.182-.872 1.469a.5.5 0 0 0-.115.118l-.012.025L6.5 4.5v.003l.003.01q.005.015.036.053a.9.9 0 0 0 .27.194C7.09 4.9 7.51 5 8 5c.492 0 .912-.1 1.19-.24a.9.9 0 0 0 .271-.194.2.2 0 0 0 .036-.054l.003-.01v-.008l-.012-.025a.5.5 0 0 0-.115-.118c-.375-.287-.872-.773-.872-1.469V2.5A.5.5 0 0 1 9 2h2.395a1.5 1.5 0 0 1 1.493 1.645L12.645 6.5h.237c.195 0 .42-.147.675-.48.21-.274.528-.52.943-.52.568 0 .947.447 1.154.862C15.877 6.807 16 7.387 16 8s-.123 1.193-.346 1.638c-.207.415-.586.862-1.154.862-.415 0-.733-.246-.943-.52-.255-.333-.48-.48-.675-.48h-.237l.243 2.855A1.5 1.5 0 0 1 11.395 14H9a.5.5 0 0 1-.5-.5v-.382c0-.696.497-1.182.872-1.469a.5.5 0 0 0 .115-.118l.012-.025.001-.006v-.003l-.003-.01a.2.2 0 0 0-.036-.053.9.9 0 0 0-.27-.194C8.91 11.1 8.49 11 8 11s-.912.1-1.19.24a.9.9 0 0 0-.271.194.2.2 0 0 0-.036.054l-.003.01v.002l.001.006.012.025c.016.027.05.068.115.118.375.287.872.773.872 1.469v.382a.5.5 0 0 1-.5.5H4.605a1.5 1.5 0 0 1-1.493-1.645L3.356 9.5h-.238c-.195 0-.42.147-.675.48-.21.274-.528.52-.943.52-.568 0-.947-.447-1.154-.862C.123 9.193 0 8.613 0 8s.123-1.193.346-1.638C.553 5.947.932 5.5 1.5 5.5c.415 0 .733.246.943.52.255.333.48.48.675.48h.238z" />
+            </svg>
+            <span class="ms-3">Modules</span>
+          </a>
+        </li>
+
+        <li>
+          <a href="" class="flex items-center p-2 text-white transition duration-75 rounded-lg hover:bg-gray-700">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="shrink-0 w-5 h-5 text-gray-400 transition duration-75 group-hover:text-white" viewBox="0 0 16 16">
+              <path
+                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71z" />
+            </svg>
+            <span class="ms-3">Logs</span>
+            <span
+              class="inline-flex items-center justify-center px-2 ms-3 text-sm font-medium text-gray-300 bg-gray-700 rounded-full">SOON</span>
+          </a>
+        </li>
+      </ul>
+      <% } %>
   </div>
 </aside>

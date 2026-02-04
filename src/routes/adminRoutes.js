@@ -3,7 +3,35 @@ const router = express.Router();
 const adminCustomerController = require("../controllers/adminCustomerController.js");
 const adminSubscriptionController = require("../controllers/adminSubscriptionController.js");
 const adminController = require("../controllers/adminController.js");
+const adminNodeController = require("../controllers/adminNodeController.js");
 const { isAuthenticated } = require("../middleware/auth-admin.js");
+
+// Nodes
+router.get(
+    "/web/admin/nodes/create",
+    isAuthenticated,
+    adminNodeController.getCreateNode,
+);
+router.post(
+    "/web/admin/nodes/create",
+    isAuthenticated,
+    adminNodeController.createNode,
+);
+router.get(
+    "/web/admin/nodes/delete/:id",
+    isAuthenticated,
+    adminNodeController.deleteNode,
+);
+router.get(
+    "/web/admin/nodes/edit/:id",
+    isAuthenticated,
+    adminNodeController.getEditNode,
+);
+router.post(
+    "/web/admin/nodes/edit/:id",
+    isAuthenticated,
+    adminNodeController.updateNode,
+);
 
 // Customers
 router.get(

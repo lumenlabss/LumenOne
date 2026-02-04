@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Node - <%= appName %>
+    </title>
+    <script src="https://unpkg.com/lucide@0.276.0/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            min-height: 100vh;
+            background-attachment: fixed;
+        }
+
+        .glass-card {
+            background: rgba(31, 41, 55, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-primary {
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: rgba(59, 130, 246, 0.3);
+            border-color: rgba(59, 130, 246, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 0.3);
+            border-color: rgba(239, 68, 68, 0.4);
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+
+<%- include('../../../components/sidebar') %>
+
+    <body class="gradient-bg text-white min-h-screen flex flex-col sm:ml-64">
+        <div class="flex-grow p-8">
+            <div class="max-w-2xl mx-auto">
+                <h1 class="text-3xl font-bold gradient-text mb-8">Edit Node</h1>
+
+                <div class="glass-card p-8 rounded-xl shadow-2xl">
+                    <form action="/web/admin/nodes/edit/<%= node.id %>" method="POST" class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Node Name</label>
+                            <input type="text" name="name" required value="<%= node.name %>"
+                                class="bg-gray-800 text-white border border-gray-600 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Node IP Address</label>
+                            <input type="text" name="ip" required value="<%= node.ip %>"
+                                class="bg-gray-800 text-white border border-gray-600 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                        </div>
+
+                        <div class="flex gap-4 pt-4">
+                            <button type="submit"
+                                class="btn-primary px-6 py-2 rounded-lg text-blue-400 text-sm font-medium">
+                                Save Changes
+                            </button>
+                            <button type="button" onclick="window.history.back()"
+                                class="btn-danger px-6 py-2 rounded-lg text-red-400 text-sm font-medium">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="mt-8 p-6 bg-red-600/10 rounded-2xl border border-red-600/20">
+                    <div class="flex items-start gap-4">
+                        <i data-lucide="alert-triangle" class="w-6 h-6 text-red-400 mt-1"></i>
+                        <div>
+                            <h3 class="font-semibold text-red-400 mb-1">Danger Zone</h3>
+                            <p class="text-sm text-gray-400">Be careful when changing node details. Halo nodes might
+                                disconnect if the IP address is incorrect.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            lucide.createIcons();
+        </script>
+    </body>
+
+</html>

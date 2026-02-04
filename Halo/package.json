@@ -1,0 +1,15 @@
+{
+    "name": "halo",
+    "version": "1.0.0",
+    "description": "LumenOne Node Manager (Halo)",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js"
+    },
+    "dependencies": {
+        "axios": "^1.6.0",
+        "dotenv": "^16.3.1",
+        "express": "^4.18.2",
+        "cors": "^2.8.5"
+    }
+}

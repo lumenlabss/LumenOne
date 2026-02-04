@@ -1,85 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Manages - <%= appName %></title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        font-family: "Inter", sans-serif;
-      }
-      .glass-card {
-        background: rgba(17, 25, 40, 0.75);
-        backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        transition: all 0.3s ease;
-      }
-      .glass-card:hover {
-        transform: translateY(-4px);
-        border-color: rgba(59, 130, 246, 0.5);
-        box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
-      }
-      .gradient-bg {
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-      }
-      .gradient-text {
-        background: linear-gradient(135deg, #60a5fa, #3b82f6);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-      .stat-card {
-        background: rgba(59, 130, 246, 0.1);
-        border: 1px solid rgba(59, 130, 246, 0.2);
-        backdrop-filter: blur(12px);
-        transition: all 0.3s ease;
-      }
-      .stat-card:hover {
-        background: rgba(59, 130, 246, 0.15);
-        border-color: rgba(59, 130, 246, 0.3);
-      }
-      .table-container {
-        background: rgba(17, 25, 40, 0.75);
-        backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 1rem;
-      }
-      .table-header {
-        background: rgba(59, 130, 246, 0.1);
-        border-bottom: 1px solid rgba(59, 130, 246, 0.2);
-      }
-      .table-row-hover:hover {
-        background: rgba(59, 130, 246, 0.1);
-      }
-      .btn-primary {
-        background: rgba(59, 130, 246, 0.2);
-        border: 1px solid rgba(59, 130, 246, 0.3);
-        transition: all 0.3s ease;
-      }
-      .btn-primary:hover {
-        background: rgba(59, 130, 246, 0.3);
-        border-color: rgba(59, 130, 246, 0.4);
-        transform: translateY(-1px);
-      }
-      .btn-danger {
-        background: rgba(239, 68, 68, 0.2);
-        border: 1px solid rgba(239, 68, 68, 0.3);
-        transition: all 0.3s ease;
-      }
-      .btn-danger:hover {
-        background: rgba(239, 68, 68, 0.3);
-        border-color: rgba(239, 68, 68, 0.4);
-        transform: translateY(-1px);
-      }
-    </style>
-  </head>
 
-  <!-- Sidebar -->
-  <%- include('../components/sidebar') %>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manages - <%= appName %>
+  </title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+    }
+
+    .glass-card {
+      background: rgba(17, 25, 40, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(59, 130, 246, 0.5);
+      box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
+    }
+
+    .gradient-bg {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #60a5fa, #3b82f6);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stat-card {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      backdrop-filter: blur(12px);
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      background: rgba(59, 130, 246, 0.15);
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+
+    .table-container {
+      background: rgba(17, 25, 40, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1rem;
+    }
+
+    .table-header {
+      background: rgba(59, 130, 246, 0.1);
+      border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .table-row-hover:hover {
+      background: rgba(59, 130, 246, 0.1);
+    }
+
+    .btn-primary {
+      background: rgba(59, 130, 246, 0.2);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: rgba(59, 130, 246, 0.3);
+      border-color: rgba(59, 130, 246, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.3);
+      border-color: rgba(239, 68, 68, 0.4);
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+
+<!-- Sidebar -->
+<%- include('../components/sidebar') %>
 
   <body class="gradient-bg text-white min-h-screen flex flex-col sm:ml-64">
     <!-- Main content -->
@@ -99,26 +112,16 @@
           <div class="stat-card rounded-xl p-6">
             <div class="text-sm text-gray-300 mb-2">IP</div>
             <div class="text-2xl font-semibold flex items-center space-x-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="currentColor"
-                class="bi bi-ethernet"
-                viewBox="0 0 16 16"
-              >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-ethernet"
+                viewBox="0 0 16 16">
                 <path
-                  d="M14 13.5v-7a.5.5 0 0 0-.5-.5H12V4.5a.5.5 0 0 0-.5-.5h-1v-.5A.5.5 0 0 0 10 3H6a.5.5 0 0 0-.5.5V4h-1a.5.5 0 0 0-.5.5V6H2.5a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5M3.75 11h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25m2 0h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25m1.75.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25zM9.75 11h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25m1.75.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25z"
-                />
+                  d="M14 13.5v-7a.5.5 0 0 0-.5-.5H12V4.5a.5.5 0 0 0-.5-.5h-1v-.5A.5.5 0 0 0 10 3H6a.5.5 0 0 0-.5.5V4h-1a.5.5 0 0 0-.5.5V6H2.5a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5M3.75 11h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25m2 0h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25m1.75.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25zM9.75 11h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-1.5a.25.25 0 0 1 .25-.25m1.75.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v1.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25z" />
                 <path
-                  d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 2a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z"
-                />
+                  d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 2a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z" />
               </svg>
               &nbsp;
-              <span
-                id="network-ip-<%= website.uuid %>"
-                class="inline-block h-5 rounded-full animate-pulse bg-gradient-to-r from-blue-400 via-blue-500 to-blue-400 w-[8ch]"
-              ></span>
+              <span id="network-ip-<%= website.uuid %>"
+                class="inline-block h-5 rounded-full animate-pulse bg-gradient-to-r from-blue-400 via-blue-500 to-blue-400 w-[8ch]"></span>
             </div>
           </div>
 
@@ -166,17 +169,10 @@
           <div class="stat-card rounded-xl p-6">
             <div class="text-sm text-blue-400 mb-2">Disk Limit</div>
             <div class="text-2xl font-semibold flex items-center space-x-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="currentColor"
-                class="bi bi-hdd-fill"
-                viewBox="0 0 16 16"
-              >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-hdd-fill"
+                viewBox="0 0 16 16">
                 <path
-                  d="M0 10a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m2 0a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1M.91 7.204A3 3 0 0 1 2 7h12c.384 0 .752.072 1.09.204l-1.867-3.422A1.5 1.5 0 0 0 11.906 3H4.094a1.5 1.5 0 0 0-1.317.782z"
-                />
+                  d="M0 10a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m2 0a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1M.91 7.204A3 3 0 0 1 2 7h12c.384 0 .752.072 1.09.204l-1.867-3.422A1.5 1.5 0 0 0 11.906 3H4.094a1.5 1.5 0 0 0-1.317.782z" />
               </svg>
               &nbsp;<%= website.disk_limit %> MB
             </div>
@@ -187,22 +183,11 @@
           <h2 class="text-xl font-semibold mb-6">Files Manager</h2>
 
           <!-- File creation form -->
-          <form
-            action="/web/manage/<%= websiteUuid %>/create-file"
-            method="POST"
-            class="mb-6 flex gap-4 items-center"
-          >
-            <input
-              type="text"
-              name="filename"
-              placeholder="Ex: index.html"
-              required
-              class="px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full max-w-xs"
-            />
-            <button
-              type="submit"
-              class="btn-primary px-4 py-2 rounded-lg text-blue-400 text-sm font-medium flex items-center"
-            >
+          <form action="/web/manage/<%= websiteUuid %>/create-file" method="POST" class="mb-6 flex gap-4 items-center">
+            <input type="text" name="filename" placeholder="Ex: index.html" required
+              class="px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full max-w-xs" />
+            <button type="submit"
+              class="btn-primary px-4 py-2 rounded-lg text-blue-400 text-sm font-medium flex items-center">
               + Create File
             </button>
           </form>
@@ -222,27 +207,27 @@
                 </tr>
               </thead>
               <tbody>
-                <% files.forEach(file => { %>
-                <tr class="table-row-hover border-b border-gray-700/50">
-                  <td class="px-6 py-4"><%= file.name %></td>
-                  <td class="px-6 py-4">
-                    <div class="flex gap-3">
-                      <button
-                        onclick="window.location.href='/web/manage/<%= websiteUuid %>/edit/<%= file.name %>'"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onclick="window.location.href='/web/manage/<%= websiteUuid %>/delete/<%= file.name %>'"
-                        class="btn-danger px-4 py-2 rounded-lg text-red-400 text-sm font-medium flex items-center"
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 text-gray-300"><%= file.size %> MB</td>
-                </tr>
-                <% }) %>
+                <% files.forEach(file=> { %>
+                  <tr class="table-row-hover border-b border-gray-700/50">
+                    <td class="px-6 py-4">
+                      <%= file.name %>
+                    </td>
+                    <td class="px-6 py-4">
+                      <div class="flex gap-3">
+                        <button onclick="window.location.href='/web/manage/<%= websiteUuid %>/edit/<%= file.name %>'">
+                          Edit
+                        </button>
+                        <button onclick="window.location.href='/web/manage/<%= websiteUuid %>/delete/<%= file.name %>'"
+                          class="btn-danger px-4 py-2 rounded-lg text-red-400 text-sm font-medium flex items-center">
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 text-gray-300">
+                      <%= file.size %> MB
+                    </td>
+                  </tr>
+                  <% }) %>
               </tbody>
             </table>
           </div>
@@ -252,6 +237,7 @@
 
     <!-- Footer -->
     <%- include('../components/footer') %>
-    <script src="/js/sidebar.js"></script>
+      <script src="/js/sidebar.js"></script>
   </body>
+
 </html>

@@ -1,159 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Create Website - <%= appName %></title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        font-family: "Inter", sans-serif;
-      }
 
-      .glass-card {
-        background: rgba(31, 41, 55, 0.75);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 1rem;
-        transition: all 0.3s ease;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Website - <%= appName %>
+  </title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+    }
 
-      .glass-card:hover {
-        transform: translateY(-4px);
-        border-color: rgba(59, 130, 246, 0.5);
-        box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
-      }
+    .glass-card {
+      background: rgba(31, 41, 55, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 1rem;
+      transition: all 0.3s ease;
+    }
 
-      .gradient-bg {
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-      }
+    .glass-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(59, 130, 246, 0.5);
+      box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
+    }
 
-      .gradient-text {
-        background: linear-gradient(135deg, #60a5fa, #3b82f6);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
+    .gradient-bg {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    }
 
-      .btn-primary {
-        background: rgba(59, 130, 246, 0.2);
-        border: 1px solid rgba(59, 130, 246, 0.3);
-        border-radius: 0.5rem;
-        transition: all 0.3s ease;
-      }
+    .gradient-text {
+      background: linear-gradient(135deg, #60a5fa, #3b82f6);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
 
-      .btn-primary:hover {
-        background: rgba(59, 130, 246, 0.3);
-        border-color: rgba(59, 130, 246, 0.4);
-        transform: translateY(-1px);
-      }
+    .btn-primary {
+      background: rgba(59, 130, 246, 0.2);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+    }
 
-      .btn-danger {
-        background: rgba(239, 68, 68, 0.2);
-        border: 1px solid rgba(239, 68, 68, 0.3);
-        border-radius: 0.5rem;
-        transition: all 0.3s ease;
-      }
+    .btn-primary:hover {
+      background: rgba(59, 130, 246, 0.3);
+      border-color: rgba(59, 130, 246, 0.4);
+      transform: translateY(-1px);
+    }
 
-      .btn-danger:hover {
-        background: rgba(239, 68, 68, 0.3);
-        border-color: rgba(239, 68, 68, 0.4);
-        transform: translateY(-1px);
-      }
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+    }
 
-      .text-muted {
-        color: rgba(255, 255, 255, 0.6);
-      }
-    </style>
-  </head>
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.3);
+      border-color: rgba(239, 68, 68, 0.4);
+      transform: translateY(-1px);
+    }
 
-  <!-- Sidebar -->
-  <%- include('../../../components/sidebar') %>
+    .text-muted {
+      color: rgba(255, 255, 255, 0.6);
+    }
+  </style>
+</head>
+
+<!-- Sidebar -->
+<%- include('../../../components/sidebar') %>
 
   <body class="gradient-bg text-white min-h-screen flex flex-col sm:ml-64">
     <div class="flex-grow p-8">
       <div class="max-w-2xl mx-auto">
         <h1 class="text-3xl font-bold gradient-text mb-8">Create Website</h1>
 
-        <form
-          action="/web/admin/subscriptions/create"
-          method="POST"
-          class="glass-card p-8 rounded-xl"
-        >
+        <form action="/web/admin/subscriptions/create" method="POST" class="glass-card p-8 rounded-xl">
           <div class="mb-6">
-            <label for="userId" class="block text-sm font-medium mb-2"
-              >User</label
-            >
-            <select
-              id="userId"
-              name="userId"
+            <label for="userId" class="block text-sm font-medium mb-2">User</label>
+            <select id="userId" name="userId"
               class="bg-gray-800 text-white border border-gray-600 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            >
-              <% users.forEach((user) => { %>
-              <option value="<%= user.id %>"><%= user.username %></option>
-              <% }); %>
+              required>
+              <% users.forEach((user)=> { %>
+                <option value="<%= user.id %>">
+                  <%= user.username %>
+                </option>
+                <% }); %>
             </select>
           </div>
 
           <div class="mb-6">
-            <label for="name" class="block text-sm font-medium mb-2"
-              >Domain Name</label
-            >
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="e.g. example.com"
+            <label for="nodeId" class="block text-sm font-medium mb-2">Node</label>
+            <select id="nodeId" name="nodeId"
               class="bg-gray-800 text-white border border-gray-600 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
+              required>
+              <% nodes.forEach((node)=> { %>
+                <option value="<%= node.id %>">
+                  <%= node.name %> (<%= node.status %>)
+                </option>
+                <% }); %>
+            </select>
           </div>
 
           <div class="mb-6">
-            <label for="diskLimit" class="block text-sm font-medium mb-2"
-              >Disk Limit (MB)</label
-            >
-            <input
-              type="number"
-              id="diskLimit"
-              name="diskLimit"
-              placeholder="e.g. 1000"
+            <label for="name" class="block text-sm font-medium mb-2">Domain Name</label>
+            <input type="text" id="name" name="name" placeholder="e.g. example.com"
               class="bg-gray-800 text-white border border-gray-600 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
+              required />
           </div>
 
           <div class="mb-6">
-            <label for="port" class="block text-sm font-medium mb-2"
-              >Port</label
-            >
-            <input
-              type="number"
-              id="port"
-              name="port"
-              placeholder="e.g. 8080"
+            <label for="diskLimit" class="block text-sm font-medium mb-2">Disk Limit (MB)</label>
+            <input type="number" id="diskLimit" name="diskLimit" placeholder="e.g. 1000"
               class="bg-gray-800 text-white border border-gray-600 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
+              required />
+          </div>
+
+          <div class="mb-6">
+            <label for="port" class="block text-sm font-medium mb-2">Port</label>
+            <input type="number" id="port" name="port" placeholder="e.g. 8080"
+              class="bg-gray-800 text-white border border-gray-600 rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required />
           </div>
 
           <div class="flex gap-4">
-            <button
-              type="submit"
-              class="btn-primary px-6 py-2 rounded-lg text-blue-400 text-sm font-medium"
-            >
+            <button type="submit" class="btn-primary px-6 py-2 rounded-lg text-blue-400 text-sm font-medium">
               Create
             </button>
 
-            <button
-              type="button"
-              class="btn-danger px-6 py-2 rounded-lg text-red-400 text-sm font-medium"
-              onclick="window.location.href='/web/admin/subscriptions'"
-            >
+            <button type="button" class="btn-danger px-6 py-2 rounded-lg text-red-400 text-sm font-medium"
+              onclick="window.location.href='/web/admin/subscriptions'">
               Cancel
             </button>
           </div>
@@ -163,6 +142,7 @@
 
     <!-- Footer -->
     <%- include('../../../components/footer') %>
-    <script src="/js/sidebar.js"></script>
+      <script src="/js/sidebar.js"></script>
   </body>
+
 </html>

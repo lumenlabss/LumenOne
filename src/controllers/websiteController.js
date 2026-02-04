@@ -1,77 +1,47 @@
-const fs = require("fs");
-const path = require("path");
 const db = require("../db.js");
-const { checkSizeBeforeCreate } = require("../web/size-limit.js");
-
-const getVolumesDir = () => path.join(__dirname, "../../storage/volumes");
+const HaloProxy = require("../utils/haloProxy.js");
 
 exports.getManageWebsite = (req, res) => {
     const userId = req.session.user.id;
     const websiteUuid = req.params.id;
 
-    db.get(
-        "SELECT * FROM websites WHERE uuid = ? AND user_id = ?",
-        [websiteUuid, userId],
-        (err, website) => {
-            if (err) {
-                console.error("DB error:", err.message);
-                return res.status(500).render("error/500.ejs");
+    const sql = `
+        SELECT websites.*, nodes.ip as node_ip, nodes.port as node_port, users.rank
+        FROM websites 
+        JOIN users ON websites.user_id = users.id
+        LEFT JOIN nodes ON websites.node_id = nodes.id
+        WHERE websites.uuid = ? AND websites.user_id = ?
+    `;
+
+    db.get(sql, [websiteUuid, userId], async (err, website) => {
+        if (err) {
+            console.error("DB error:", err.message);
+            return res.status(500).render("error/500.ejs");
+        }
+        if (!website) {
+            return res.status(404).render("error/404.ejs");
+        }
+
+        let files = [];
+        if (website.node_ip && website.node_port) {
+            try {
+                const proxy = new HaloProxy(website.node_ip, website.node_port);
+                files = await proxy.listFiles(websiteUuid);
+            } catch (proxyError) {
+                console.error("HaloProxy listFiles error:", proxyError.message);
+                // Optionally show a warning in the UI that node is unreachable
             }
-            if (!website) {
-                return res.status(404).render("error/404.ejs");
-            }
+        }
 
-            db.get(
-                "SELECT rank FROM users WHERE id = ?",
-                [userId],
-                (err, row) => {
-                    if (err) {
-                        console.error("Error retrieving rank:", err.message);
-                        return res.status(500).render("error/500.ejs");
-                    }
-
-                    const filesPath = path.join(getVolumesDir(), websiteUuid);
-
-                    fs.readdir(filesPath, (err, fileList) => {
-                        if (err) {
-                            console.error(
-                                "Error reading directory:",
-                                err.message,
-                            );
-                            return res.status(500).render("error/500.ejs");
-                        }
-
-                        const files = fileList.map((fileName) => {
-                            const fileFullPath = path.join(filesPath, fileName);
-                            let size = 0;
-                            try {
-                                const stats = fs.statSync(fileFullPath);
-                                size = (stats.size / 1024 / 1024).toFixed(2);
-                            } catch (e) {
-                                console.error(
-                                    `Error reading stats for file ${fileFullPath}:`,
-                                    e,
-                                );
-                            }
-                            return {
-                                name: fileName,
-                                size: size, // Size in MB
-                            };
-                        });
-
-                        res.render("web/manage.ejs", {
-                            user: req.session.user,
-                            website,
-                            rank: row ? row.rank : null,
-                            websiteUuid,
-                            files,
-                            NetworkIP: "Loading...", // placeholder
-                        });
-                    });
-                },
-            );
-        },
-    );
+        res.render("web/manage.ejs", {
+            user: req.session.user,
+            website,
+            rank: website.rank,
+            websiteUuid,
+            files,
+            NetworkIP: website.node_ip || "Unknown",
+        });
+    });
 };
 
 exports.createFile = (req, res) => {
@@ -79,51 +49,33 @@ exports.createFile = (req, res) => {
     const websiteUuid = req.params.id;
     const filename = req.body.filename;
 
-    // Basic security check
-    if (
-        !filename ||
-        filename.includes("..") ||
-        filename.includes("/") ||
-        filename.includes("php.ini") ||
-        filename.length > 100
-    ) {
+    if (!filename || filename.includes("..") || filename.includes("/") || filename.length > 100) {
         return res.status(400).send("Invalid file name.");
     }
 
-    db.get(
-        "SELECT * FROM websites WHERE uuid = ? AND user_id = ?",
-        [websiteUuid, userId],
-        (err, website) => {
-            if (err) {
-                console.error("DB error:", err.message);
-                return res.status(500).render("error/500.ejs");
+    const sql = `
+        SELECT websites.*, nodes.ip as node_ip, nodes.port as node_port
+        FROM websites 
+        LEFT JOIN nodes ON websites.node_id = nodes.id
+        WHERE uuid = ? AND user_id = ?
+    `;
+
+    db.get(sql, [websiteUuid, userId], async (err, website) => {
+        if (err || !website) return res.status(404).send("Website not found.");
+
+        if (website.node_ip && website.node_port) {
+            try {
+                const proxy = new HaloProxy(website.node_ip, website.node_port);
+                await proxy.createFile(websiteUuid, filename);
+                res.redirect(`/web/manage/${websiteUuid}`);
+            } catch (proxyError) {
+                console.error("HaloProxy createFile error:", proxyError.message);
+                res.status(500).send("Failed to create file on node.");
             }
-            if (!website) {
-                return res.status(404).render("error/404.ejs");
-            }
-
-            const filePath = path.join(getVolumesDir(), websiteUuid, filename);
-
-            // Check the size before creating
-            checkSizeBeforeCreate(websiteUuid, 0, (err) => {
-                if (err) {
-                    console.error("Disk quota error:", err.message);
-                    return res
-                        .status(403)
-                        .send("Disk limit exceeded, cannot create file.");
-                }
-
-                fs.writeFile(filePath, "", (err) => {
-                    if (err) {
-                        console.error("File creation error:", err.message);
-                        return res.status(500).render("error/500.ejs");
-                    }
-
-                    res.redirect(`/web/manage/${websiteUuid}`);
-                });
-            });
-        },
-    );
+        } else {
+            res.status(400).send("No node assigned to this website.");
+        }
+    });
 };
 
 exports.deleteFile = (req, res) => {
@@ -131,41 +83,66 @@ exports.deleteFile = (req, res) => {
     const websiteUuid = req.params.id;
     const fileToDelete = req.params.file;
 
-    // Basic security check
-    if (
-        !fileToDelete ||
-        fileToDelete.includes("..") ||
-        fileToDelete.includes("/")
-    ) {
+    if (!fileToDelete || fileToDelete.includes("..") || fileToDelete.includes("/")) {
         return res.status(400).send("Invalid file name.");
     }
 
-    db.get(
-        "SELECT * FROM websites WHERE uuid = ? AND user_id = ?",
-        [websiteUuid, userId],
-        (err, website) => {
-            if (err) {
-                console.error("Database error:", err.message);
-                return res.status(500).render("error/500.ejs");
-            }
-            if (!website) {
-                return res.status(404).render("error/404.ejs");
-            }
+    const sql = `
+        SELECT websites.*, nodes.ip as node_ip, nodes.port as node_port
+        FROM websites 
+        LEFT JOIN nodes ON websites.node_id = nodes.id
+        WHERE uuid = ? AND user_id = ?
+    `;
 
-            const filePath = path.join(
-                getVolumesDir(),
-                websiteUuid,
-                fileToDelete,
-            );
+    db.get(sql, [websiteUuid, userId], async (err, website) => {
+        if (err || !website) return res.status(404).send("Website not found.");
 
-            fs.unlink(filePath, (err) => {
-                if (err) {
-                    console.error("File deletion error:", err.message);
-                    return res.status(500).render("error/500.ejs");
-                }
+        if (website.node_ip && website.node_port) {
+            try {
+                const proxy = new HaloProxy(website.node_ip, website.node_port);
+                await proxy.deleteFile(websiteUuid, fileToDelete);
+                res.redirect(`/web/manage/${websiteUuid}`);
+            } catch (proxyError) {
+                console.error("HaloProxy deleteFile error:", proxyError.message);
+                res.status(500).send("Failed to delete file on node.");
+            }
+        } else {
+            res.status(400).send("No node assigned to this website.");
+        }
+    });
+};
+
+exports.resetWebsite = (req, res) => {
+    const userId = req.session.user.id;
+    const websiteUuid = req.params.id;
+    const engine = req.query.engine || "php";
+
+    const sql = `
+        SELECT websites.*, nodes.ip as node_ip, nodes.port as node_port
+        FROM websites 
+        LEFT JOIN nodes ON websites.node_id = nodes.id
+        WHERE uuid = ? AND user_id = ?
+    `;
+
+    db.get(sql, [websiteUuid, userId], async (err, website) => {
+        if (err || !website) return res.status(404).send("Website not found.");
+
+        if (website.node_ip && website.node_port) {
+            try {
+                const proxy = new HaloProxy(website.node_ip, website.node_port);
+                await proxy.resetSite(websiteUuid, engine);
+
+                // Update engine in DB
+                db.run("UPDATE websites SET engine = ? WHERE uuid = ?", [engine, websiteUuid]);
 
                 res.redirect(`/web/manage/${websiteUuid}`);
-            });
-        },
-    );
+            } catch (proxyError) {
+                console.error("HaloProxy reset error:", proxyError.message);
+                res.status(500).send("Failed to reset site on node.");
+            }
+        } else {
+            res.status(400).send("No node assigned to this website.");
+        }
+    });
 };
+

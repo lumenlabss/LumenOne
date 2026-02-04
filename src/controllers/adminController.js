@@ -38,6 +38,10 @@ exports.getInformation = async (req, res) => {
             ),
         );
 
+        const nodes = await new Promise((resolve) =>
+            db.all("SELECT * FROM nodes", (err, rows) => resolve(rows || [])),
+        );
+
         res.render("web/admin/information.ejs", {
             user: req.session.user,
             rank: req.session.user.rank,
@@ -69,6 +73,7 @@ exports.getInformation = async (req, res) => {
             totalUsers: usersCount,
             totalListWebsite: websitesCount,
             totalBackups: backupsCount,
+            nodes: nodes,
             error: null,
         });
     } catch (error) {

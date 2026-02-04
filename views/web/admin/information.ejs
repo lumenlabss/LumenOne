@@ -1,52 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>System Information - <%= appName %></title>
-    <script src="https://unpkg.com/lucide@0.276.0/dist/umd/lucide.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        font-family: "Inter", sans-serif;
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-        min-height: 100vh;
-        background-attachment: fixed;
-      }
-      .glass-card {
-        background: rgba(31, 41, 55, 0.7);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        transition: all 0.3s ease;
-      }
-      .glass-card:hover {
-        transform: translateY(-4px);
-        border-color: rgba(59, 130, 246, 0.5);
-        box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
-      }
-      .gradient-text {
-        background: linear-gradient(135deg, #60a5fa, #3b82f6);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-      .stat-badge {
-        background: rgba(59, 130, 246, 0.1);
-        border: 1px solid rgba(59, 130, 246, 0.2);
-        transition: all 0.3s ease;
-      }
-      .stat-badge:hover {
-        background: rgba(59, 130, 246, 0.2);
-        border-color: rgba(59, 130, 246, 0.3);
-      }
-    </style>
-  </head>
 
-  <!-- Sidebar -->
-  <%- include('../../components/sidebar') %>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Information / Nodes - <%= appName %>
+  </title>
+  <script src="https://unpkg.com/lucide@0.276.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      min-height: 100vh;
+      background-attachment: fixed;
+    }
+
+    .glass-card {
+      background: rgba(31, 41, 55, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .glass-card2 {
+      background: rgba(31, 41, 55, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(59, 130, 246, 0.5);
+      box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #60a5fa, #3b82f6);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stat-badge {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .stat-badge:hover {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+
+    .btn-primary {
+      background: rgba(59, 130, 246, 0.2);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: rgba(59, 130, 246, 0.3);
+      border-color: rgba(59, 130, 246, 0.4);
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+
+<!-- Sidebar -->
+<%- include('../../components/sidebar') %>
 
   <body class="gradient-bg text-white min-h-screen flex flex-col sm:ml-64">
     <div class="flex-grow p-8">
@@ -57,6 +82,10 @@
           </h1>
           <p class="text-gray-400">Show system information</p>
         </div>
+        <button onclick="window.location.href='/web/admin/nodes/create'"
+          class="btn-primary px-6 py-3 rounded-lg text-blue-300 text-sm font-medium">
+          + Add Node
+        </button>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
@@ -69,11 +98,12 @@
             <div>
               <h3 class="text-sm text-gray-400 mb-1">Processor</h3>
               <p class="text-lg font-semibold">
-                <%= CPUname %> <%= CPUfrequence %>
+                <%= CPUname %>
+                  <%= CPUfrequence %>
               </p>
               <p class="text-sm text-gray-400 mt-1">
                 <%= CPUCores %> Cores
-                <!-- %= CPUThreads %> Threads-->
+                  <!-- %= CPUThreads %> Threads-->
               </p>
             </div>
           </div>
@@ -86,8 +116,13 @@
             </div>
             <div>
               <h3 class="text-sm text-gray-400 mb-1">Memory (RAM)</h3>
-              <p class="text-lg font-semibold"><%= RAMsize %> <%= RAMtype %></p>
-              <p class="text-sm text-gray-400 mt-1"><%= RAMspeed %></p>
+              <p class="text-lg font-semibold">
+                <%= RAMsize %>
+                  <%= RAMtype %>
+              </p>
+              <p class="text-sm text-gray-400 mt-1">
+                <%= RAMspeed %>
+              </p>
             </div>
           </div>
         </div>
@@ -99,10 +134,14 @@
             </div>
             <div>
               <h3 class="text-sm text-gray-400 mb-1">Storage</h3>
-              <p class="text-lg font-semibold"><%= StorageSize %></p>
-              <% if (StorageType !== "Unknown") { %>
-              <p class="text-sm text-gray-400 mt-1"><%= StorageType %></p>
-              <% } %>
+              <p class="text-lg font-semibold">
+                <%= StorageSize %>
+              </p>
+              <% if (StorageType !=="Unknown" ) { %>
+                <p class="text-sm text-gray-400 mt-1">
+                  <%= StorageType %>
+                </p>
+                <% } %>
             </div>
           </div>
         </div>
@@ -114,8 +153,12 @@
             </div>
             <div>
               <h3 class="text-sm text-gray-400 mb-1">Operating System</h3>
-              <p class="text-lg font-semibold"><%= OSname %></p>
-              <p class="text-sm text-gray-400 mt-1"><%= Osversion %></p>
+              <p class="text-lg font-semibold">
+                <%= OSname %>
+              </p>
+              <p class="text-sm text-gray-400 mt-1">
+                <%= Osversion %>
+              </p>
             </div>
           </div>
         </div>
@@ -127,8 +170,11 @@
             </div>
             <div>
               <h3 class="text-sm text-gray-400 mb-1">Network</h3>
-              <p class="text-lg font-semibold">IPv4: <%= NetworkIP %></p>
-              <p class="text-sm text-gray-400 mt-1"><%= NetworkSpeed %></p>
+              <p class="text-lg font-semibold">IPv4: <%= NetworkIP %>
+              </p>
+              <p class="text-sm text-gray-400 mt-1">
+                <%= NetworkSpeed %>
+              </p>
             </div>
           </div>
         </div>
@@ -140,55 +186,140 @@
             </div>
             <div>
               <h3 class="text-sm text-gray-400 mb-1">System Uptime</h3>
-              <p class="text-lg font-semibold"><%= SystemUptime %></p>
-              <p class="text-sm text-gray-400 mt-1"><%= LastBoot %></p>
+              <p class="text-lg font-semibold">
+                <%= SystemUptime %>
+              </p>
+              <p class="text-sm text-gray-400 mt-1">
+                <%= LastBoot %>
+              </p>
             </div>
           </div>
         </div>
       </div>
 
+      <!--Table for nodes-->
+      <div class="glass-card2 rounded-xl overflow-hidden">
+        <div class="overflow-x-auto custom-scrollbar">
+          <table class="w-full">
+            <thead>
+              <tr class="bg-gray-800/50">
+                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-300">
+                  ID
+                </th>
+                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-300">
+                  Name
+                </th>
+                <th class="px-6 py-4 text-left text-sm font-semibold text-gray-300">
+                  Status
+                </th>
+                <th class="px-6 py-4 text-right text-sm font-semibold text-gray-300">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-700/30">
+              <% if (nodes.length===0) { %>
+                <tr>
+                  <td colspan="4" class="px-6 py-8 text-center text-gray-400">
+                    No nodes found in the database.
+                  </td>
+                </tr>
+                <% } else { %>
+                  <% nodes.forEach(node=> { %>
+                    <tr class="table-row-hover">
+                      <td class="px-6 py-4 text-sm text-gray-300">
+                        <%= node.id %>
+                      </td>
+                      <td class="px-6 py-4">
+                        <div class="flex items-center">
+                          <div class="h-8 w-8 rounded-full bg-blue-600/20 flex items-center justify-center mr-3">
+                            <i data-lucide="server" class="w-4 h-4 text-blue-400"></i>
+                          </div>
+                          <span class="text-sm font-medium">
+                            <%= node.name %>
+                          </span>
+                        </div>
+                      </td>
+                      <td class="px-6 py-4">
+                        <span
+                          class="px-3 py-1 rounded-full text-xs font-medium <%= node.status === 'online' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400' %>">
+                          <%= node.status.charAt(0).toUpperCase() + node.status.slice(1) %>
+                        </span>
+                      </td>
+                      <td class="px-6 py-4">
+                        <div class="flex items-center justify-end space-x-3">
+                          <button onclick="window.location.href='/web/admin/nodes/edit/<%= node.id %>'"
+                            class="px-3 py-1.5 bg-blue-600/20 text-blue-400 hover:bg-blue-600/30 rounded-lg transition-colors duration-200 flex items-center">
+                            <i data-lucide="edit-2" class="w-4 h-4 mr-1"></i>
+                            Edit
+                          </button>
+                          <button onclick="window.location.href='/web/admin/nodes/delete/<%= node.id %>'"
+                            class="px-3 py-1.5 bg-red-600/20 text-red-400 hover:bg-red-600/30 rounded-lg transition-colors duration-200 flex items-center">
+                            <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i>
+                            Delete
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    <% }) %>
+                      <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+      <!-- Sera deplacer dans la page "Overview" plus tard
       <div class="glass-card rounded-xl p-8">
         <h2 class="text-2xl font-bold mb-6 gradient-text">LumenOne Overview</h2>
         <div class="space-y-4">
-          <div
-            class="flex items-center justify-between py-3 border-b border-gray-700"
-          >
+          <div class="flex items-center justify-between py-3 border-b border-gray-700">
             <span class="text-gray-400">LumenOne Version</span>
-            <span class="font-medium"><%= appVersion %></span>
+            <span class="font-medium">
+              <%= appVersion %>
+            </span>
           </div>
-          <div
-            class="flex items-center justify-between py-3 border-b border-gray-700"
-          >
+          <div class="flex items-center justify-between py-3 border-b border-gray-700">
             <span class="text-gray-400">Update Available</span>
-            <span class="font-medium"><%= updateAvailable %></span>
+            <span class="font-medium">
+              <%= updateAvailable %>
+            </span>
           </div>
-          <div
-            class="flex items-center justify-between py-3 border-b border-gray-700"
-          >
+          <div class="flex items-center justify-between py-3 border-b border-gray-700">
             <span class="text-gray-400">Total Users</span>
-            <span class="font-medium"><%= totalUsers %></span>
+            <span class="font-medium">
+              <%= totalUsers %>
+            </span>
           </div>
-          <div
-            class="flex items-center justify-between py-3 border-b border-gray-700"
-          >
+          <div class="flex items-center justify-between py-3 border-b border-gray-700">
             <span class="text-gray-400">Total Websites</span>
-            <span class="font-medium"><%= totalListWebsite %></span>
+            <span class="font-medium">
+              <%= totalListWebsite %>
+            </span>
           </div>
-          <div
-            class="flex items-center justify-between py-3 border-b border-gray-700"
-          >
+          <div class="flex items-center justify-between py-3 border-b border-gray-700">
             <span class="text-gray-400">Total Backups</span>
-            <span class="font-medium"><%= totalBackups %></span>
+            <span class="font-medium">
+              <%= totalBackups %>
+            </span>
           </div>
         </div>
-      </div>
+      </div>-->
     </div>
+
+    <!-- Node Icon -> 
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-diagram-3" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M6 3.5A1.5 1.5 0 0 1 7.5 2h1A1.5 1.5 0 0 1 10 3.5v1A1.5 1.5 0 0 1 8.5 6v1H14a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0V8h-5v.5a.5.5 0 0 1-1 0v-1A.5.5 0 0 1 2 7h5.5V6A1.5 1.5 0 0 1 6 4.5zM8.5 5a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5zM0 11.5A1.5 1.5 0 0 1 1.5 10h1A1.5 1.5 0 0 1 4 11.5v1A1.5 1.5 0 0 1 2.5 14h-1A1.5 1.5 0 0 1 0 12.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm4.5.5A1.5 1.5 0 0 1 7.5 10h1a1.5 1.5 0 0 1 1.5 1.5v1A1.5 1.5 0 0 1 8.5 14h-1A1.5 1.5 0 0 1 6 12.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm4.5.5a1.5 1.5 0 0 1 1.5-1.5h1a1.5 1.5 0 0 1 1.5 1.5v1a1.5 1.5 0 0 1-1.5 1.5h-1a1.5 1.5 0 0 1-1.5-1.5zm1.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5z"/>
+</svg>
+    -->
 
     <!--Footer-->
     <%- include('../../components/footer') %>
 
-    <script>
-      lucide.createIcons();
-    </script>
+      <script>
+        lucide.createIcons();
+      </script>
   </body>
+
 </html>

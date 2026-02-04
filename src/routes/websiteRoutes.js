@@ -26,4 +26,10 @@ router.get(
     websiteController.deleteFile,
 );
 
+router.get(
+    "/web/manage/:id/reset",
+    isAuthenticated,
+    websiteController.resetWebsite,
+);
+
 module.exports = router;

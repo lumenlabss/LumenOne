@@ -1,57 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Websites & Domains - <%= appName %></title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        font-family: "Inter", sans-serif;
-      }
-      .glass-card {
-        background: rgba(31, 41, 55, 0.7);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        transition: all 0.3s ease;
-      }
 
-      /*.glass-card:hover {
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Websites & Domains - <%= appName %>
+  </title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: "Inter", sans-serif;
+    }
+
+    .glass-card {
+      background: rgba(31, 41, 55, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    /*.glass-card:hover {
         transform: translateY(-4px);
         border-color: rgba(59, 130, 246, 0.5);
         box-shadow: 0 10px 30px -10px rgba(59, 130, 246, 0.3);
       }*/
-      .gradient-bg {
-        background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-      }
-      .gradient-text {
-        background: linear-gradient(135deg, #60a5fa, #3b82f6);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-      .stat-badge {
-        background: rgba(59, 130, 246, 0.1);
-        border: 1px solid rgba(59, 130, 246, 0.2);
-        transition: all 0.3s ease;
-      }
-      .stat-badge:hover {
-        background: rgba(59, 130, 246, 0.2);
-        border-color: rgba(59, 130, 246, 0.3);
-      }
-      .glass-dropdown {
-        background: rgba(31, 41, 55, 0.7);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-      }
-    </style>
-  </head>
+    .gradient-bg {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    }
 
-  <!-- Sidebar -->
-  <%- include('../components/sidebar') %>
+    .gradient-text {
+      background: linear-gradient(135deg, #60a5fa, #3b82f6);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stat-badge {
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .stat-badge:hover {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: rgba(59, 130, 246, 0.3);
+    }
+
+    .glass-dropdown {
+      background: rgba(31, 41, 55, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  </style>
+</head>
+
+<!-- Sidebar -->
+<%- include('../components/sidebar') %>
 
   <body class="gradient-bg text-white min-h-screen flex flex-col sm:ml-64">
     <!-- Main content -->
@@ -64,175 +69,153 @@
           </div>
         </div>
 
-        <% if (websites.length === 0) { %>
-        <div class="glass-card rounded-xl p-8 text-center">
-          <div class="mb-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-16 w-16 mx-auto text-gray-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-              />
-            </svg>
+        <% if (websites.length===0) { %>
+          <div class="glass-card rounded-xl p-8 text-center">
+            <div class="mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-400" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              </svg>
+            </div>
+            <h2 class="text-xl font-semibold mb-2">No Websites Yet</h2>
+            <p class="text-gray-400 mb-6">
+              Start by creating your first website to begin building your online
+              presence.
+            </p>
           </div>
-          <h2 class="text-xl font-semibold mb-2">No Websites Yet</h2>
-          <p class="text-gray-400 mb-6">
-            Start by creating your first website to begin building your online
-            presence.
-          </p>
-        </div>
-        <% } else { %>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <% websites.forEach(site => { %>
-          <div class="glass-card rounded-xl p-6">
-            <div class="flex items-start justify-between mb-4">
-              <h2 class="text-xl font-semibold"><%= site.name %></h2>
-            </div>
-            <div class="space-y-3">
-              <!--Disk Limit-->
-              <div
-                class="stat-badge rounded-lg px-3 py-2 flex items-center justify-between"
-              >
-                <span class="text-sm text-gray-300">Disk Limit</span>
-                <span class="font-medium"><%= site.disk_limit %> MB</span>
-              </div>
-              <!--Disk Limit End-->
-              <!--IP-->
-              <div
-                class="stat-badge rounded-lg px-3 py-2 flex items-center justify-between"
-              >
-                <span class="text-sm text-gray-300">IP</span>
-                <span class="font-medium flex justify-end">
-                  <span
-                    id="network-ip-<%= site.uuid %>"
-                    class="inline-block w-20 h-5 rounded-full animate-pulse bg-gradient-to-r from-blue-400 via-blue-500 to-blue-400"
-                  ></span>
-                </span>
-              </div>
-              <!--IP End-->
-            </div>
-            <div class="mt-6 flex space-x-3">
-              <button
-                onclick="window.location.href='/web/manage/<%= site.uuid %>'"
-                class="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors duration-200"
-              >
-                Manage
-              </button>
-              <div class="relative inline-block text-left">
-                <button
-                  type="button"
-                  class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors duration-200"
-                  id="dropdown-button-<%= websites.uuid %>"
-                  aria-expanded="true"
-                  aria-haspopup="true"
-                  onclick="toggleDropdown('<%= websites.uuid %>')"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                </button>
+          <% } else { %>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <% websites.forEach(site=> { %>
+                <div class="glass-card rounded-xl p-6">
+                  <div class="flex items-start justify-between mb-4">
+                    <h2 class="text-xl font-semibold">
+                      <%= site.name %>
+                    </h2>
+                  </div>
+                  <div class="space-y-3">
+                    <!--Disk Limit-->
+                    <div class="stat-badge rounded-lg px-3 py-2 flex items-center justify-between">
+                      <span class="text-sm text-gray-300">Disk Limit</span>
+                      <span class="font-medium">
+                        <%= site.disk_limit %> MB
+                      </span>
+                    </div>
+                    <!--Disk Limit End-->
+                    <!--IP-->
+                    <div class="stat-badge rounded-lg px-3 py-2 flex items-center justify-between">
+                      <span class="text-sm text-gray-300">IP</span>
+                      <span class="font-medium flex justify-end">
+                        <span id="network-ip-<%= site.uuid %>"
+                          class="inline-block w-20 h-5 rounded-full animate-pulse bg-gradient-to-r from-blue-400 via-blue-500 to-blue-400"></span>
+                      </span>
+                    </div>
+                    <!--IP End-->
+                  </div>
+                  <div class="mt-6 flex space-x-3">
+                    <button onclick="window.location.href='/web/manage/<%= site.uuid %>'"
+                      class="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors duration-200">
+                      Manage
+                    </button>
+                    <div class="relative inline-block text-left">
+                      <button type="button"
+                        class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg transition-colors duration-200"
+                        id="dropdown-button-<%= websites.uuid %>" aria-expanded="true" aria-haspopup="true"
+                        onclick="toggleDropdown('<%= websites.uuid %>')">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd"
+                            d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                            clip-rule="evenodd" />
+                        </svg>
+                      </button>
 
-                <!-- Dropdown Menu -->
-                <div
-                  id="dropdown-menu-<%= websites.uuid %>"
-                  class="hidden absolute right-0 mt-2 w-48 rounded-lg glass-dropdown ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
-                >
-                  <div class="py-1 flex flex-col">
-                    <!--<a
+                      <!-- Dropdown Menu -->
+                      <div id="dropdown-menu-<%= websites.uuid %>"
+                        class="hidden absolute right-0 mt-2 w-48 rounded-lg glass-dropdown ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+                        <div class="py-1 flex flex-col">
+                          <!--<a
                       href="#"
                       class="block px-4 py-2 text-sm hover:bg-blue-500/20 rounded transition"
                       >Change domain</a
                     >-->
-                    <a
-                      href="#"
-                      class="block px-4 py-2 text-sm text-red-500 hover:bg-red-500/20 rounded transition"
-                      >Reset the site</a
-                    >
+                          <a href="/web/manage/<%= site.uuid %>/reset?engine=php"
+                            class="block px-4 py-2 text-sm text-red-500 hover:bg-red-500/20 rounded transition"
+                            onclick="return confirm('Are you sure you want to reset this site with PHP?')">Reset with
+                            PHP</a>
+                          <a href="/web/manage/<%= site.uuid %>/reset?engine=nodejs"
+                            class="block px-4 py-2 text-sm text-red-500 hover:bg-red-500/20 rounded transition"
+                            onclick="return confirm('Are you sure you want to reset this site with NodeJS?')">Reset with
+                            NodeJS</a>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+                <script>
+                  fetch("/web/get-ip")
+                    .then((res) => res.json())
+                    .then((data) => {
+                      const ipSpan = document.getElementById(
+                        "network-ip-<%= site.uuid %>"
+                      );
+                      ipSpan.textContent = data.ip;
+                      ipSpan.classList.remove(
+                        "w-20",
+                        "h-5",
+                        "rounded-full",
+                        "animate-pulse",
+                        "bg-gradient-to-r",
+                        "from-blue-400",
+                        "via-blue-500",
+                        "to-blue-400"
+                      );
+                    })
+                    .catch(() => {
+                      const ipSpan = document.getElementById(
+                        "network-ip-<%= site.uuid %>"
+                      );
+                      ipSpan.textContent = "Unknown";
+                      ipSpan.classList.remove(
+                        "w-20",
+                        "h-5",
+                        "rounded-full",
+                        "animate-pulse",
+                        "bg-gradient-to-r",
+                        "from-blue-400",
+                        "via-blue-500",
+                        "to-blue-400"
+                      );
+                    });
+                </script>
+                <% }) %>
             </div>
-          </div>
-          <script>
-            fetch("/web/get-ip")
-              .then((res) => res.json())
-              .then((data) => {
-                const ipSpan = document.getElementById(
-                  "network-ip-<%= site.uuid %>"
-                );
-                ipSpan.textContent = data.ip;
-                ipSpan.classList.remove(
-                  "w-20",
-                  "h-5",
-                  "rounded-full",
-                  "animate-pulse",
-                  "bg-gradient-to-r",
-                  "from-blue-400",
-                  "via-blue-500",
-                  "to-blue-400"
-                );
-              })
-              .catch(() => {
-                const ipSpan = document.getElementById(
-                  "network-ip-<%= site.uuid %>"
-                );
-                ipSpan.textContent = "Unknown";
-                ipSpan.classList.remove(
-                  "w-20",
-                  "h-5",
-                  "rounded-full",
-                  "animate-pulse",
-                  "bg-gradient-to-r",
-                  "from-blue-400",
-                  "via-blue-500",
-                  "to-blue-400"
-                );
-              });
-          </script>
-          <% }) %>
-        </div>
-        <% } %>
+            <% } %>
       </div>
     </div>
 
     <!-- Footer -->
     <%- include('../components/footer') %>
-    <script src="/js/restart.js"></script>
-    <script src="/js/sidebar.js"></script>
-    <script>
-      function toggleDropdown(uuid) {
-        const menu = document.getElementById(`dropdown-menu-${uuid}`);
-        menu.classList.toggle("hidden");
-      }
+      <script src="/js/restart.js"></script>
+      <script src="/js/sidebar.js"></script>
+      <script>
+        function toggleDropdown(uuid) {
+          const menu = document.getElementById(`dropdown-menu-${uuid}`);
+          menu.classList.toggle("hidden");
+        }
 
-      // Clique en dehors pour fermer
-      window.addEventListener("click", function (e) {
-        const dropdowns = document.querySelectorAll('[id^="dropdown-menu-"]');
-        dropdowns.forEach((menu) => {
-          if (
-            !menu.contains(e.target) &&
-            !menu.previousElementSibling.contains(e.target)
-          ) {
-            menu.classList.add("hidden");
-          }
+        // Clique en dehors pour fermer
+        window.addEventListener("click", function (e) {
+          const dropdowns = document.querySelectorAll('[id^="dropdown-menu-"]');
+          dropdowns.forEach((menu) => {
+            if (
+              !menu.contains(e.target) &&
+              !menu.previousElementSibling.contains(e.target)
+            ) {
+              menu.classList.add("hidden");
+            }
+          });
         });
-      });
-    </script>
+      </script>
   </body>
+
 </html>
