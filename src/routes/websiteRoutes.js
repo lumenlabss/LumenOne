@@ -22,7 +22,7 @@ router.post(
 router.get(
     "/web/manage/:id/delete/:file",
     isAuthenticated,
-    protectSensitiveFiles(getVolumesDir()),
+    protectSensitiveFiles(),
     websiteController.deleteFile,
 );
 

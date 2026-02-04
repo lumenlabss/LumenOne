@@ -21,6 +21,16 @@ class HaloProxy {
         }
     }
 
+    async readFile(siteUuid, filename) {
+        try {
+            const response = await axios.get(`${this.baseUrl}/files/read/${siteUuid}/${filename}`, { headers: this.headers });
+            return response.data.content;
+        } catch (error) {
+            console.error(`HaloProxy readFile error for ${siteUuid}/${filename}:`, error.message);
+            throw error;
+        }
+    }
+
     async createFile(siteUuid, filename, content = '') {
         try {
             const response = await axios.post(`${this.baseUrl}/files/create/${siteUuid}`, { filename, content }, { headers: this.headers });
@@ -47,6 +57,26 @@ class HaloProxy {
             return response.data;
         } catch (error) {
             console.error(`HaloProxy resetSite error for ${siteUuid}:`, error.message);
+            throw error;
+        }
+    }
+
+    async restartSite(siteUuid, port) {
+        try {
+            const response = await axios.post(`${this.baseUrl}/sites/restart/${siteUuid}`, { port }, { headers: this.headers });
+            return response.data;
+        } catch (error) {
+            console.error(`HaloProxy restartSite error for ${siteUuid}:`, error.message);
+            throw error;
+        }
+    }
+
+    async getFolderSize(siteUuid) {
+        try {
+            const response = await axios.get(`${this.baseUrl}/files/size/${siteUuid}`, { headers: this.headers });
+            return response.data.size;
+        } catch (error) {
+            console.error(`HaloProxy getFolderSize error for ${siteUuid}:`, error.message);
             throw error;
         }
     }
