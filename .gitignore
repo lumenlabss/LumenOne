@@ -1,5 +1,7 @@
 node_modules
 lumenone.db
+lumenone.err
+lumenone.log
 package-lock.json
 .vscode
 storage/volumes/
